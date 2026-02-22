@@ -315,7 +315,7 @@ export default async function HomePage() {
       <div className="card">
         <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "baseline" }}>
           <h2 className="h2" style={{ marginTop: 0 }}>
-            Le nostre news da fpcgil.it
+            Le nostre news da FpCgil.it
           </h2>
           <a
             className="btn"
@@ -328,9 +328,7 @@ export default async function HomePage() {
           </a>
         </div>
 
-        <div className="muted" style={{ marginTop: 6 }}>
-          Fonte: {fpSources.CATEGORY_URL}
-        </div>
+    
 
         {hero ? (
           <a
