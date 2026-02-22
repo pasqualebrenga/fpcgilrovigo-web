@@ -1,4 +1,3 @@
-export { metadata } from "./metadata";
 import type { Metadata } from "next";
 import "./globals.css";
 
