@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -66,7 +67,9 @@ function ChipLink({
       rel={external ? "noreferrer" : undefined}
       style={{
         borderRadius: 999,
-        border: isDark ? "1px solid rgba(255,255,255,0.18)" : "1px solid rgba(0,0,0,0.10)",
+        border: isDark
+          ? "1px solid rgba(255,255,255,0.18)"
+          : "1px solid rgba(0,0,0,0.10)",
         background: isDark ? "rgba(255,255,255,0.12)" : "#fff",
         color: isDark ? "#fff" : "inherit",
         padding: "10px 12px",
@@ -96,7 +99,7 @@ export default async function HomePage() {
   const rest = items.slice(1);
 
   return (
-    <div style={{ display: "grid", gap: 14 }}>
+    <div className="fpHomeGrid">
       <style>{`
         @keyframes fpFloat {
           0% { transform: translate3d(0,0,0); opacity: .85; }
@@ -115,6 +118,23 @@ export default async function HomePage() {
         }
       `}</style>
 
+      {/* BANNER FP CGIL: fascia rossa LARGA COME IL BANNER (no full-bleed), non cliccabile */}
+      <section aria-label="FP CGIL — Il sindacato per davvero">
+        <div className="fpContainer">
+          <div className="fpHomeBannerBar">
+            <Image
+              src="/images/brand/FP_banner.png"
+              alt="FP CGIL — Il sindacato per davvero"
+              width={1600}
+              height={360}
+              priority
+              sizes="(max-width: 1100px) 100vw, 1100px"
+              style={{ width: "100%", height: "auto" }}
+            />
+          </div>
+        </div>
+      </section>
+
       {/* HERO */}
       <div
         style={{
@@ -126,10 +146,17 @@ export default async function HomePage() {
           overflow: "hidden",
         }}
       >
-        {/* barra rossa */}
-        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 6, background: FP_RED }} />
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: 6,
+            background: FP_RED,
+          }}
+        />
 
-        {/* texture/shine */}
         <div
           style={{
             position: "absolute",
@@ -155,7 +182,6 @@ export default async function HomePage() {
           }}
         />
 
-        {/* blob */}
         <div
           style={{
             position: "absolute",
@@ -171,7 +197,14 @@ export default async function HomePage() {
         />
 
         <div style={{ position: "relative" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              gap: 12,
+              flexWrap: "wrap",
+            }}
+          >
             <Pill>
               <Sparkles size={16} /> FP CGIL Rovigo
             </Pill>
@@ -202,7 +235,8 @@ export default async function HomePage() {
               maxWidth: 860,
             }}
           >
-            Per iscrizione e richieste: usa il percorso guidato. In pochi secondi ti indirizziamo al referente corretto.
+            Per iscrizione e richieste: usa il percorso guidato. In pochi secondi
+            ti indirizziamo al referente corretto.
           </div>
 
           <div style={{ marginTop: 14, display: "flex", gap: 10, flexWrap: "wrap" }}>
@@ -224,11 +258,19 @@ export default async function HomePage() {
               Vai a Iscrizione <ArrowRight size={18} />
             </Link>
 
-            <Link className="btn" href="/contatti" style={{ borderRadius: 999, padding: "12px 16px", fontWeight: 900 }}>
+            <Link
+              className="btn"
+              href="/contatti"
+              style={{ borderRadius: 999, padding: "12px 16px", fontWeight: 900 }}
+            >
               Contatti
             </Link>
 
-            <Link className="btn" href="/convenzioni" style={{ borderRadius: 999, padding: "12px 16px", fontWeight: 900 }}>
+            <Link
+              className="btn"
+              href="/convenzioni"
+              style={{ borderRadius: 999, padding: "12px 16px", fontWeight: 900 }}
+            >
               Convenzioni
             </Link>
 
@@ -245,7 +287,7 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* STRISCIA “IN EVIDENZA” (movimento leggero) */}
+      {/* STRISCIA “IN EVIDENZA” */}
       <div
         style={{
           borderRadius: 14,
@@ -282,23 +324,28 @@ export default async function HomePage() {
               }}
             >
               <span>
-                Per iscrizione: usa il percorso guidato →<span style={{ marginLeft: 10, fontWeight: 900 }}>Iscrizione</span>
+                Per iscrizione: usa il percorso guidato →
+                <span style={{ marginLeft: 10, fontWeight: 900 }}>Iscrizione</span>
               </span>
               <span>
-                News aggiornate automaticamente da fpcgil.it →<span style={{ marginLeft: 10, fontWeight: 900 }}>News</span>
+                News aggiornate automaticamente da fpcgil.it →
+                <span style={{ marginLeft: 10, fontWeight: 900 }}>News</span>
               </span>
               <span>
-                Convenzioni locali + nazionali (PDF) →<span style={{ marginLeft: 10, fontWeight: 900 }}>Convenzioni</span>
-              </span>
-              {/* duplicato per loop */}
-              <span>
-                Per iscrizione: usa il percorso guidato →<span style={{ marginLeft: 10, fontWeight: 900 }}>Iscrizione</span>
+                Convenzioni locali + nazionali (PDF) →
+                <span style={{ marginLeft: 10, fontWeight: 900 }}>Convenzioni</span>
               </span>
               <span>
-                News aggiornate automaticamente da fpcgil.it →<span style={{ marginLeft: 10, fontWeight: 900 }}>News</span>
+                Per iscrizione: usa il percorso guidato →
+                <span style={{ marginLeft: 10, fontWeight: 900 }}>Iscrizione</span>
               </span>
               <span>
-                Convenzioni locali + nazionali (PDF) →<span style={{ marginLeft: 10, fontWeight: 900 }}>Convenzioni</span>
+                News aggiornate automaticamente da fpcgil.it →
+                <span style={{ marginLeft: 10, fontWeight: 900 }}>News</span>
+              </span>
+              <span>
+                Convenzioni locali + nazionali (PDF) →
+                <span style={{ marginLeft: 10, fontWeight: 900 }}>Convenzioni</span>
               </span>
             </div>
           </div>
@@ -313,7 +360,15 @@ export default async function HomePage() {
 
       {/* ULTIME NEWS */}
       <div className="card">
-        <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "baseline" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            gap: 12,
+            flexWrap: "wrap",
+            alignItems: "baseline",
+          }}
+        >
           <h2 className="h2" style={{ marginTop: 0 }}>
             Le nostre news da FpCgil.it
           </h2>
@@ -327,8 +382,6 @@ export default async function HomePage() {
             Continua su FP nazionale <ArrowRight size={18} />
           </a>
         </div>
-
-    
 
         {hero ? (
           <a
@@ -350,7 +403,9 @@ export default async function HomePage() {
               <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 6, background: FP_RED }} />
               <div style={{ paddingLeft: 10 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
-                  <div style={{ fontWeight: 950, fontSize: 18, lineHeight: 1.25 }}>{hero.title}</div>
+                  <div style={{ fontWeight: 950, fontSize: 18, lineHeight: 1.25 }}>
+                    {hero.title}
+                  </div>
                   {hero.date ? (
                     <div className="muted" style={{ fontWeight: 900 }}>
                       {hero.date}

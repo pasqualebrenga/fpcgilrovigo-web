@@ -1,55 +1,74 @@
 import Image from "next/image";
 import Link from "next/link";
 
-function NavLink({ href, label }: { href: string; label: string }) {
+type NavItem = {
+  label: string;
+  href: string;
+  external?: boolean;
+};
+
+const NAV: NavItem[] = [
+  { label: "News", href: "/news" },
+  {
+    label: "Formazione",
+    href: "https://formazionepartecipazione.fpcgil.it/",
+    external: true,
+  },
+  { label: "Iscrizione", href: "/iscrizione" },
+  { label: "Chi siamo", href: "/chi-siamo" },
+  { label: "Contatti", href: "/contatti" },
+  { label: "Convenzioni", href: "/convenzioni" },
+];
+
+function HeaderLink({ item }: { item: NavItem }) {
+  if (item.external) {
+    return (
+      <a className="fpNavLink" href={item.href} target="_blank" rel="noreferrer">
+        {item.label}
+        <span className="fpCaret" aria-hidden="true" />
+      </a>
+    );
+  }
+
   return (
-    <Link href={href} className="fpNavLink">
-      {label}
+    <Link className="fpNavLink" href={item.href}>
+      {item.label}
       <span className="fpCaret" aria-hidden="true" />
     </Link>
   );
 }
 
-function ExternalNavLink({ href, label }: { href: string; label: string }) {
-  return (
-    <a href={href} target="_blank" rel="noreferrer" className="fpNavLink">
-      {label}
-      <span className="fpCaret" aria-hidden="true" />
-    </a>
-  );
-}
-
 export default function SiteHeader() {
-  // cambia qui se il file si chiama diversamente
+  // se il tuo logo ha un altro path, cambia qui
   const logoSrc = "/images/brand/logo-fp-cgil-rovigo.jpg";
 
   return (
     <header className="fpHeader">
       <div className="fpTopStrip" />
 
+      {/* fascia grigia con righe diagonali (stacco) */}
+      <div className="fpHeaderBackdrop">
+        <div className="fpContainer fpHeaderInner">
+          <Link href="/" className="fpBrandLink" aria-label="Home">
+            <Image
+              src={logoSrc}
+              alt="FP CGIL Rovigo"
+              width={360}
+              height={140}
+              priority
+              className="fpLogoImg"
+            />
+          </Link>
+        </div>
+      </div>
+
+      {/* navbar su bianco */}
       <div className="fpNavBar">
         <div className="fpContainer fpNavInner">
-          <Link href="/" className="fpBrandLink" aria-label="Home">
-            <div className="fpLogoBox" aria-hidden="true">
-              <Image
-                src={logoSrc}
-                alt="FP CGIL Rovigo"
-                width={120}
-                height={120}
-                style={{ objectFit: "contain", width: "100%", height: "100%" }}
-                priority
-              />
-            </div>
-          </Link>
-
           <nav aria-label="Navigazione principale" className="fpNav">
-            {/* ordine richiesto: News, Formazione, Iscrizione, Chi siamo, Contatti, Convenzioni */}
-            <NavLink href="/news" label="News" />
-            <ExternalNavLink href="https://formazionepartecipazione.fpcgil.it/" label="Formazione" />
-            <NavLink href="/iscrizione" label="Iscrizione" />
-            <NavLink href="/chi-siamo" label="Chi siamo" />
-            <NavLink href="/contatti" label="Contatti" />
-            <NavLink href="/convenzioni" label="Convenzioni" />
+            {NAV.map((item) => (
+              <HeaderLink key={item.href} item={item} />
+            ))}
           </nav>
         </div>
       </div>
