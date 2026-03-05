@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Facebook, Instagram } from "lucide-react";
+import { ChevronDown, Facebook, Instagram } from "lucide-react";
 
 type NavItem = {
   label: string;
@@ -10,11 +10,7 @@ type NavItem = {
 
 const NAV: NavItem[] = [
   { label: "News", href: "/news" },
-  {
-    label: "Formazione",
-    href: "https://formazionepartecipazione.fpcgil.it/",
-    external: true,
-  },
+  { label: "Formazione", href: "https://formazionepartecipazione.fpcgil.it/", external: true },
   { label: "Iscrizione", href: "/iscrizione" },
   { label: "Chi siamo", href: "/chi-siamo" },
   { label: "Contatti", href: "/contatti" },
@@ -22,16 +18,24 @@ const NAV: NavItem[] = [
 ];
 
 function NavLink({ item }: { item: NavItem }) {
+  const content = (
+    <>
+      <span className="rvNavLabel">{item.label}</span>
+      <ChevronDown className="rvNavChevron" size={16} aria-hidden="true" />
+    </>
+  );
+
   if (item.external) {
     return (
       <a className="rvNavLink" href={item.href} target="_blank" rel="noreferrer">
-        {item.label}
+        {content}
       </a>
     );
   }
+
   return (
     <Link className="rvNavLink" href={item.href}>
-      {item.label}
+      {content}
     </Link>
   );
 }
@@ -45,32 +49,34 @@ export default function SiteHeader() {
         .rvHeader { width: 100%; }
         .rvTopStrip { height: 6px; background: #d40000; }
 
-        /* Fascia unica (logo + nav + social) con pattern */
+        /* Barra unica con righe diagonali rosse fitte */
         .rvBar {
           background:
-           repeating-linear-gradient(
-             135deg,
-            rgba(212, 0, 0, 0.06) 0px,
-            rgba(212, 0, 0, 0.06) 4px,
-            rgba(255, 255, 255, 0) 4px,
-            rgba(255, 255, 255, 0) 8px
-           ),
-          #ffffff;
-           border-bottom: 1px solid rgba(0,0,0,0.10);
-         }
-
-        .rvInner {
-          display: flex;
-          align-items: center;
-          gap: 18px;
-          padding: 10px 0; /* qui tagliamo lo “spazio morto” */
+            repeating-linear-gradient(
+              135deg,
+              rgba(212, 0, 0, 0.06) 0px,
+              rgba(212, 0, 0, 0.06) 4px,
+              rgba(255, 255, 255, 0) 4px,
+              rgba(255, 255, 255, 0) 8px
+            ),
+            #ffffff;
+          border-bottom: 1px solid rgba(0,0,0,0.10);
         }
 
-        /* Logo: più compatto e allineato a sinistra */
+        /* Layout: logo | nav | social (come fpCGIL) */
+        .rvInner {
+          display: grid;
+          grid-template-columns: auto 1fr auto;
+          align-items: center;
+          gap: 16px;
+          padding: 10px 0;
+        }
+
         .rvBrand {
           display: inline-flex;
           align-items: center;
           text-decoration: none;
+          justify-self: start;
         }
         .rvLogo {
           height: auto;
@@ -81,17 +87,16 @@ export default function SiteHeader() {
           display: block;
         }
 
-        /* Nav orizzontale tipo fpCGIL */
         .rvNav {
           display: flex;
           align-items: center;
           flex-wrap: wrap;
           gap: 0;
-          margin-left: 6px;
           border-left: 1px solid rgba(0,0,0,0.12);
           padding-left: 10px;
-          flex: 1;
+          min-height: 44px;
         }
+
         .rvNavLink {
           text-decoration: none;
           color: rgba(0,0,0,0.86);
@@ -103,24 +108,32 @@ export default function SiteHeader() {
           border-radius: 10px;
           display: inline-flex;
           align-items: center;
+          gap: 6px;
+          white-space: nowrap;
         }
         .rvNavLink:hover {
           background: rgba(212,0,0,0.08);
           color: #d40000;
         }
 
-        /* Social a destra */
+        .rvNavChevron {
+          color: #d40000; /* freccia rossa */
+          opacity: 0.95;
+          margin-top: 1px;
+        }
+
         .rvSocial {
           display: inline-flex;
           align-items: center;
           gap: 10px;
+          justify-self: end; /* segue sempre il bordo destro */
         }
         .rvSocialBtn {
           width: 38px;
           height: 38px;
           border-radius: 999px;
           border: 1px solid rgba(0,0,0,0.12);
-          background: rgba(255,255,255,0.9);
+          background: rgba(255,255,255,0.92);
           display: inline-flex;
           align-items: center;
           justify-content: center;
@@ -133,10 +146,22 @@ export default function SiteHeader() {
           color: #d40000;
         }
 
-        /* Mobile: nav va sotto, social resta visibile */
+        /* Mobile: prima riga brand + social, seconda riga nav */
         @media (max-width: 760px) {
-          .rvInner { flex-wrap: wrap; gap: 12px; }
-          .rvNav { flex-basis: 100%; margin-left: 0; border-left: 0; padding-left: 0; }
+          .rvInner {
+            grid-template-columns: 1fr auto;
+            grid-template-rows: auto auto;
+            gap: 10px 12px;
+            padding: 10px 0;
+          }
+          .rvBrand { grid-column: 1; grid-row: 1; }
+          .rvSocial { grid-column: 2; grid-row: 1; }
+          .rvNav {
+            grid-column: 1 / -1;
+            grid-row: 2;
+            border-left: 0;
+            padding-left: 0;
+          }
           .rvNavLink { padding: 10px 10px; }
         }
       `}</style>
