@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { getFpHomepageNews, fpSources } from "../../lib/fpnews";
 
-export const revalidate = 1800;
+// 1 volta al giorno (24h)
+export const revalidate = 86400;
 
 function safeDate(d?: string) {
   return d ? d : "";
@@ -81,11 +82,10 @@ function NewsCard({
 }
 
 export default async function NewsPage() {
-  // prendiamo un po' di margine e poi scegliamo cosa mostrare
   const items = await getFpHomepageNews(18);
 
   const hero = items[0];
-  const secondary = items.slice(1, 3); // almeno 2
+  const secondary = items.slice(1, 3);
   const rest = items.slice(3);
 
   return (
@@ -95,9 +95,9 @@ export default async function NewsPage() {
           Le nostre news da FpCgil.it
         </h1>
         <div className="muted">
-          Questa sezione si aggiorna automaticamente: selezioniamo le notizie “In Evidenza” dal portale FP CGIL nazionale e rimandiamo sempre alla fonte ufficiale.
+          Questa sezione si aggiorna automaticamente (circa 1 volta al giorno): selezioniamo le notizie “In Evidenza”
+          dal portale FP CGIL nazionale e rimandiamo sempre alla fonte ufficiale.
         </div>
-       
       </div>
 
       {/* HERO */}
@@ -163,7 +163,7 @@ export default async function NewsPage() {
         </a>
       ) : null}
 
-      {/* SECONDARY (almeno 2, se disponibili) */}
+      {/* SECONDARY */}
       {secondary.length ? (
         <div
           style={{
@@ -178,7 +178,7 @@ export default async function NewsPage() {
         </div>
       ) : null}
 
-      {/* REST GRID */}
+      {/* REST */}
       {rest.length ? (
         <div
           style={{
@@ -193,7 +193,7 @@ export default async function NewsPage() {
         </div>
       ) : null}
 
-      {/* CTA forte */}
+      {/* CTA */}
       <div className="card">
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
           <a
@@ -217,7 +217,7 @@ export default async function NewsPage() {
           </Link>
         </div>
         <div className="muted" style={{ marginTop: 10 }}>
-          FpCgil.it Tutti i diritti riservati. 
+          FpCgil.it Tutti i diritti riservati.
         </div>
       </div>
     </div>

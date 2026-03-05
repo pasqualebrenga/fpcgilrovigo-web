@@ -12,7 +12,8 @@ import {
 } from "lucide-react";
 import { getFpHomepageNews, fpSources } from "../lib/fpnews";
 
-export const revalidate = 1800;
+// 1 volta al giorno (24h)
+export const revalidate = 86400;
 
 const FP_RED = "#d40000";
 
@@ -93,6 +94,148 @@ function telUrl(numero: string) {
   return `tel:${digits}`;
 }
 
+function BgImg({ src, alt }: { src?: string; alt: string }) {
+  // <img> per evitare blocchi di hostname (come nella pagina news)
+  if (!src) return null;
+  return (
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+    />
+  );
+}
+
+function HomeNewsHero({ n }: { n: NewsItem }) {
+  return (
+    <a
+      href={n.url}
+      target="_blank"
+      rel="noreferrer"
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        borderRadius: 18,
+        border: "1px solid rgba(0,0,0,0.10)",
+        background: "#111",
+        minHeight: 240,
+        textDecoration: "none",
+        color: "white",
+        display: "block",
+        marginTop: 12,
+      }}
+    >
+      <div style={{ position: "absolute", inset: 0, opacity: 0.9 }}>
+        <BgImg src={n.image} alt={n.title} />
+      </div>
+
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(90deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.40) 70%, rgba(0,0,0,0.18) 100%)",
+        }}
+      />
+
+      <div style={{ position: "relative", padding: 18, maxWidth: 920 }}>
+        <div style={{ display: "inline-flex", gap: 10, alignItems: "center", marginBottom: 10 }}>
+          <span
+            style={{
+              background: FP_RED,
+              padding: "6px 10px",
+              borderRadius: 999,
+              fontWeight: 900,
+              textTransform: "uppercase",
+              letterSpacing: 0.4,
+              fontSize: 12,
+            }}
+          >
+            Ultima news
+          </span>
+          {n.date ? <span style={{ opacity: 0.9, fontWeight: 800 }}>{n.date}</span> : null}
+        </div>
+
+        <div style={{ fontWeight: 950, fontSize: 24, lineHeight: 1.12 }}>{n.title}</div>
+
+        {n.excerpt ? (
+          <div style={{ marginTop: 10, opacity: 0.92, maxWidth: 760, lineHeight: 1.45 }}>
+            {n.excerpt}
+          </div>
+        ) : null}
+
+        <div style={{ marginTop: 14, display: "inline-flex" }}>
+          <span className="btn" style={{ background: FP_RED, borderColor: FP_RED, color: "white" }}>
+            Leggi su fpcgil.it
+          </span>
+        </div>
+      </div>
+    </a>
+  );
+}
+
+function HomeNewsCard({ n }: { n: NewsItem }) {
+  return (
+    <a
+      href={n.url}
+      target="_blank"
+      rel="noreferrer"
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        borderRadius: 16,
+        border: "1px solid rgba(0,0,0,0.10)",
+        background: "#111",
+        minHeight: 170,
+        textDecoration: "none",
+        color: "white",
+      }}
+    >
+      <div style={{ position: "absolute", inset: 0, opacity: 0.9 }}>
+        <BgImg src={n.image} alt={n.title} />
+      </div>
+
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(0deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.18) 100%)",
+        }}
+      />
+
+      <div style={{ position: "relative", padding: 14 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
+          <span
+            style={{
+              background: "rgba(212,0,0,0.95)",
+              color: "white",
+              fontWeight: 900,
+              textTransform: "uppercase",
+              letterSpacing: 0.35,
+              fontSize: 12,
+              padding: "6px 10px",
+              borderRadius: 999,
+            }}
+          >
+            News
+          </span>
+          {n.date ? <span style={{ opacity: 0.9, fontWeight: 800 }}>{n.date}</span> : null}
+        </div>
+
+        <div style={{ marginTop: 10, fontWeight: 950, fontSize: 16, lineHeight: 1.2 }}>
+          {n.title}
+        </div>
+
+        <div style={{ marginTop: 12, display: "inline-flex", gap: 8, alignItems: "center", fontWeight: 950 }}>
+          Leggi <ArrowRight size={18} />
+        </div>
+      </div>
+    </a>
+  );
+}
+
 export default async function HomePage() {
   const items = (await getFpHomepageNews(3)) as NewsItem[];
   const hero = items[0];
@@ -118,7 +261,7 @@ export default async function HomePage() {
         }
       `}</style>
 
-      {/* BANNER FP CGIL: fascia rossa LARGA COME IL BANNER (no full-bleed), non cliccabile */}
+      {/* BANNER FP CGIL */}
       <section aria-label="FP CGIL — Il sindacato per davvero">
         <div className="fpContainer">
           <div className="fpHomeBannerBar">
@@ -174,7 +317,7 @@ export default async function HomePage() {
             width: "60%",
             height: "100%",
             background:
-              "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.65) 50%, rgba(255,255,255,0) 100%)",
+              "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,65) 50%, rgba(255,255,255,0) 100%)",
             filter: "blur(2px)",
             opacity: 0,
             animation: "fpShine 6.5s ease-in-out infinite",
@@ -197,14 +340,7 @@ export default async function HomePage() {
         />
 
         <div style={{ position: "relative" }}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              gap: 12,
-              flexWrap: "wrap",
-            }}
-          >
+          <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
             <Pill>
               <Sparkles size={16} /> FP CGIL Rovigo
             </Pill>
@@ -235,8 +371,7 @@ export default async function HomePage() {
               maxWidth: 860,
             }}
           >
-            Per iscrizione e richieste: usa il percorso guidato. In pochi secondi
-            ti indirizziamo al referente corretto.
+            Per iscrizione e richieste: usa il percorso guidato. In pochi secondi ti indirizziamo al referente corretto.
           </div>
 
           <div style={{ marginTop: 14, display: "flex", gap: 10, flexWrap: "wrap" }}>
@@ -258,11 +393,7 @@ export default async function HomePage() {
               Vai a Iscrizione <ArrowRight size={18} />
             </Link>
 
-            <Link
-              className="btn"
-              href="/contatti"
-              style={{ borderRadius: 999, padding: "12px 16px", fontWeight: 900 }}
-            >
+            <Link className="btn" href="/contatti" style={{ borderRadius: 999, padding: "12px 16px", fontWeight: 900 }}>
               Contatti
             </Link>
 
@@ -324,28 +455,22 @@ export default async function HomePage() {
               }}
             >
               <span>
-                Per iscrizione: usa il percorso guidato →
-                <span style={{ marginLeft: 10, fontWeight: 900 }}>Iscrizione</span>
+                Per iscrizione: usa il percorso guidato → <span style={{ marginLeft: 10, fontWeight: 900 }}>Iscrizione</span>
               </span>
               <span>
-                News aggiornate automaticamente da fpcgil.it →
-                <span style={{ marginLeft: 10, fontWeight: 900 }}>News</span>
+                News aggiornate automaticamente da fpcgil.it → <span style={{ marginLeft: 10, fontWeight: 900 }}>News</span>
               </span>
               <span>
-                Convenzioni locali + nazionali (PDF) →
-                <span style={{ marginLeft: 10, fontWeight: 900 }}>Convenzioni</span>
+                Convenzioni locali + nazionali (PDF) → <span style={{ marginLeft: 10, fontWeight: 900 }}>Convenzioni</span>
               </span>
               <span>
-                Per iscrizione: usa il percorso guidato →
-                <span style={{ marginLeft: 10, fontWeight: 900 }}>Iscrizione</span>
+                Per iscrizione: usa il percorso guidato → <span style={{ marginLeft: 10, fontWeight: 900 }}>Iscrizione</span>
               </span>
               <span>
-                News aggiornate automaticamente da fpcgil.it →
-                <span style={{ marginLeft: 10, fontWeight: 900 }}>News</span>
+                News aggiornate automaticamente da fpcgil.it → <span style={{ marginLeft: 10, fontWeight: 900 }}>News</span>
               </span>
               <span>
-                Convenzioni locali + nazionali (PDF) →
-                <span style={{ marginLeft: 10, fontWeight: 900 }}>Convenzioni</span>
+                Convenzioni locali + nazionali (PDF) → <span style={{ marginLeft: 10, fontWeight: 900 }}>Convenzioni</span>
               </span>
             </div>
           </div>
@@ -383,85 +508,24 @@ export default async function HomePage() {
           </a>
         </div>
 
-        {hero ? (
-          <a
-            href={hero.url}
-            target="_blank"
-            rel="noreferrer"
+        {hero ? <HomeNewsHero n={hero} /> : null}
+
+        {rest.length ? (
+          <div
             style={{
-              display: "block",
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: 12,
               marginTop: 12,
-              borderRadius: 16,
-              border: "1px solid rgba(0,0,0,0.10)",
-              background: "#fff",
-              textDecoration: "none",
-              color: "inherit",
-              overflow: "hidden",
             }}
           >
-            <div style={{ position: "relative", padding: 16 }}>
-              <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 6, background: FP_RED }} />
-              <div style={{ paddingLeft: 10 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
-                  <div style={{ fontWeight: 950, fontSize: 18, lineHeight: 1.25 }}>
-                    {hero.title}
-                  </div>
-                  {hero.date ? (
-                    <div className="muted" style={{ fontWeight: 900 }}>
-                      {hero.date}
-                    </div>
-                  ) : null}
-                </div>
-                {hero.excerpt ? (
-                  <div className="muted" style={{ marginTop: 10, lineHeight: 1.5 }}>
-                    {hero.excerpt}
-                  </div>
-                ) : null}
-                <div style={{ marginTop: 12, display: "inline-flex", gap: 8, alignItems: "center", fontWeight: 950, color: FP_RED }}>
-                  Leggi <ArrowRight size={18} />
-                </div>
-              </div>
-            </div>
-          </a>
+            {rest.map((n) => (
+              <HomeNewsCard key={n.url} n={n} />
+            ))}
+          </div>
         ) : null}
 
-        <div style={{ display: "grid", gap: 10, marginTop: 12 }}>
-          {rest.map((n) => (
-            <a
-              key={n.url}
-              href={n.url}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                borderRadius: 14,
-                border: "1px solid rgba(0,0,0,0.10)",
-                background: "#fff",
-                padding: 12,
-                textDecoration: "none",
-                color: "inherit",
-              }}
-            >
-              <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
-                <div style={{ fontWeight: 950, fontSize: 16, lineHeight: 1.25 }}>{n.title}</div>
-                {n.date ? (
-                  <div className="muted" style={{ fontWeight: 900 }}>
-                    {n.date}
-                  </div>
-                ) : null}
-              </div>
-              {n.excerpt ? (
-                <div className="muted" style={{ marginTop: 8, lineHeight: 1.45 }}>
-                  {n.excerpt}
-                </div>
-              ) : null}
-              <div style={{ marginTop: 10, display: "inline-flex", gap: 8, alignItems: "center", fontWeight: 950, color: FP_RED }}>
-                Leggi <ArrowRight size={18} />
-              </div>
-            </a>
-          ))}
-
-          {items.length === 0 ? <div className="muted">Nessuna notizia disponibile in questo momento.</div> : null}
-        </div>
+        {items.length === 0 ? <div className="muted">Nessuna notizia disponibile in questo momento.</div> : null}
 
         <div style={{ marginTop: 12, display: "flex", gap: 10, flexWrap: "wrap" }}>
           <Link
