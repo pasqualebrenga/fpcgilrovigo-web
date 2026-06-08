@@ -122,7 +122,7 @@ export async function POST(req: Request) {
     }
 
     if (!process.env.OPENAI_API_KEY) {
-      return NextResponse.json({ answer: await fallbackAnswer(messages), mode: "fallback" });
+      return NextResponse.json({ answer: await fallbackAnswer(messages), mode: "fallback", reason: "missing_openai_api_key" });
     }
 
     const knowledgeContext = await buildKnowledgeContext();
@@ -144,7 +144,8 @@ export async function POST(req: Request) {
     });
 
     if (!response.ok) {
-      return NextResponse.json({ answer: await fallbackAnswer(messages), mode: "fallback" });
+      console.warn("OpenAI chat request failed", response.status, await response.text());
+      return NextResponse.json({ answer: await fallbackAnswer(messages), mode: "fallback", reason: `openai_http_${response.status}` });
     }
 
     const data = await response.json();
