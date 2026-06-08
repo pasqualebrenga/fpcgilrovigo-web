@@ -190,13 +190,13 @@ export const localConventions: LocalConvention[] = [
   {
     name: "Studio Dentistico Guido Crepaldi",
     offer: "Sconto del 20% su ogni prestazione odontoiatrica.",
-    tags: ["dentista", "salute", "odontoiatria"],
+    tags: ["dentista", "dentisti", "dentistico", "dentistica", "salute", "odontoiatria", "odontoiatrico", "odontoiatrica"],
     page: "/convenzioni/locali",
   },
   {
     name: "Studio Dentistico Quadretti",
     offer: "Sconto del 10% su implantologia. Sconto del 20% su protesica.",
-    tags: ["dentista", "salute", "implantologia", "protesica"],
+    tags: ["dentista", "dentisti", "dentistico", "dentistica", "salute", "odontoiatria", "odontoiatrico", "odontoiatrica", "implantologia", "protesica"],
     page: "/convenzioni/locali",
   },
   {

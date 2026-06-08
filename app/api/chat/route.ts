@@ -41,6 +41,29 @@ function normalizeText(value: string) {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
+function wordsFrom(value: string) {
+  return normalizeText(value)
+    .split(/[^a-z0-9]+/i)
+    .filter((word) => word.length >= 4);
+}
+
+function commonPrefixLength(a: string, b: string) {
+  let index = 0;
+  while (index < a.length && index < b.length && a[index] === b[index]) index += 1;
+  return index;
+}
+
+function wordsAreClose(queryWord: string, targetWord: string) {
+  return queryWord === targetWord || queryWord.startsWith(targetWord) || targetWord.startsWith(queryWord) || commonPrefixLength(queryWord, targetWord) >= 6;
+}
+
+function conventionMatchesQuery(convention: (typeof localConventions)[number], query: string) {
+  const queryWords = wordsFrom(query);
+  const conventionWords = wordsFrom(`${convention.name} ${convention.offer} ${convention.tags.join(" ")}`);
+
+  return queryWords.some((queryWord) => conventionWords.some((conventionWord) => wordsAreClose(queryWord, conventionWord)));
+}
+
 function personMatches(personName: string, text: string) {
   const normalizedName = normalizeText(personName);
   const tokens = normalizedName.split(/\s+/).filter(Boolean);
@@ -111,7 +134,7 @@ async function fallbackAnswer(messages: ChatMessage[]) {
     return formatPersonAnswer(person);
   }
 
-  const conventionMatches = localConventions.filter((conv) => conv.tags.some((tag) => normalizedLast.includes(normalizeText(tag))));
+  const conventionMatches = localConventions.filter((conv) => conventionMatchesQuery(conv, normalizedLast));
   if (conventionMatches.length > 0) {
     return formatConventionAnswer(conventionMatches);
   }
