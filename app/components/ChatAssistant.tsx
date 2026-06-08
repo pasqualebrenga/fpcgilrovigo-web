@@ -12,14 +12,15 @@ type Message = {
 const STARTERS = [
   "Voglio parlare con Riccardo Mantovan",
   "Abbiamo convenzioni con il mare?",
-  "Quali sono le ultime news FP CGIL?",
+  "Chi segue il mio ente?",
+  "Cosa trovo nella pagina RSU?",
   "Voglio iscrivermi",
 ];
 
 const WELCOME: Message = {
   role: "assistant",
   content:
-    "Ciao, sono Quadrato Rosso. Dimmi cosa ti serve: posso orientarti tra contatti, referenti, convenzioni, iscrizione, formazione e ultime news FP CGIL.",
+    "Ciao, sono Quadrato Rosso. Ti aiuto a trovare la persona giusta, una convenzione, una notizia FP CGIL o il percorso migliore per iscrizione, formazione e RSU.",
 };
 
 function linkify(text: string) {
@@ -384,7 +385,7 @@ export default function ChatAssistant() {
               </div>
             ) : null}
 
-            {loading ? <div className="fpChatLoading">Sto cercando la risposta...</div> : null}
+            {loading ? <div className="fpChatLoading">Incrocio sito, referenti e notizie: ti rispondo tra poco.</div> : null}
             <div ref={messagesEndRef} aria-hidden="true" />
           </div>
 

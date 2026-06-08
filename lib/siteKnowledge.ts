@@ -61,6 +61,11 @@ export const sitePages = [
     path: "/formazione",
     summary: "Rimando al portale Formazione e Partecipazione FP CGIL.",
   },
+  {
+    title: "RSU",
+    path: "/rsu",
+    summary: "Sezione dedicata a cosa sono le RSU, come si formano, cosa fanno, programma FP CGIL Rovigo e contatti per candidarsi o sapere chi segue il proprio ente.",
+  },
 ];
 
 export const officialContacts = {
@@ -202,6 +207,39 @@ export const localConventions: LocalConvention[] = [
   },
 ];
 
+export const categoryHints = [
+  {
+    area: "Sanità pubblica e ULSS5 Polesana",
+    words: ["sanita pubblica", "ulss", "ulss5", "ospedale", "distretto", "dirigenza sanitaria", "medici"],
+    answer: "Per sanita pubblica, ULSS5 Polesana e dirigenza sanitaria i riferimenti principali sono Riccardo Mantovan e Pasquale Brenga, in base al tema specifico.",
+  },
+  {
+    area: "Sanità privata, IPAB e socio-sanitario",
+    words: ["sanita privata", "case di cura", "ipab", "casa di riposo", "cooperative sociali", "socio sanitario"],
+    answer: "Per sanita privata, IPAB e socio-sanitario i riferimenti indicati sono Pasquale Brenga, Sabrina Venzo e Roberta Denanni, a seconda dell'ente.",
+  },
+  {
+    area: "Funzioni Locali",
+    words: ["comune", "comuni", "provincia", "funzioni locali", "enti locali", "camera di commercio", "cur"],
+    answer: "Per Funzioni Locali ed enti locali i riferimenti indicati sono Riccardo Mantovan, Pasquale Brenga e Sabrina Venzo, a seconda dell'ente.",
+  },
+  {
+    area: "Funzioni Centrali",
+    words: ["ministero", "ministeri", "agenzia entrate", "inps", "aci", "funzioni centrali"],
+    answer: "Per Funzioni Centrali il riferimento indicato e Riccardo Mantovan.",
+  },
+  {
+    area: "Igiene ambientale",
+    words: ["igiene ambientale", "ecoambiente", "rifiuti", "ambiente"],
+    answer: "Per Igiene Ambientale ed Ecoambiente il riferimento indicato e Roberta Denanni.",
+  },
+  {
+    area: "Formazione, convenzioni e previdenza complementare",
+    words: ["formazione", "concorsi", "convenzioni", "perseo", "previambiente", "previdenza complementare"],
+    answer: "Per formazione, convenzioni e previdenza complementare i riferimenti indicati sono Silvia Saccardin e Roberta Denanni, in base al tema.",
+  },
+];
+
 export function buildStaticKnowledge() {
   const pageText = sitePages.map((page) => `- ${page.title} (${page.path}): ${page.summary}`).join("\n");
   const peopleText = people
@@ -210,6 +248,7 @@ export function buildStaticKnowledge() {
   const conventionsText = localConventions
     .map((conv) => `- ${conv.name}: ${conv.offer} Tag: ${conv.tags.join(", ")}. Pagina: ${conv.page}. ${conv.phone ? `Telefono: ${conv.phone}.` : ""}`)
     .join("\n");
+  const categoryText = categoryHints.map((hint) => `- ${hint.area}: ${hint.answer} Parole utili: ${hint.words.join(", ")}.`).join("\n");
 
   return `
 Contatti ufficiali:
@@ -228,9 +267,21 @@ ${peopleText}
 Convenzioni locali:
 ${conventionsText}
 
+Orientamento per categoria:
+${categoryText}
+
 Formazione:
 - Portale esterno: https://fpformazione.it/
 
-Regola: le convenzioni sono riservate agli iscritti; per dubbi rimandare a /convenzioni/locali o ai contatti ufficiali.
+RSU:
+- Pagina interna: /rsu
+- Usa /rsu quando l'utente chiede cosa sono le RSU, come candidarsi, chi e il proprio delegato, programma RSU, materiali o elezioni RSU.
+- Se l'utente chiede "chi e il mio delegato" o "chi segue il mio ente", chiedi ente o comparto se non lo dice, poi orienta verso /iscrizione o /contatti.
+
+Regole operative:
+- Le convenzioni sono riservate agli iscritti; per dubbi rimandare a /convenzioni/locali o ai contatti ufficiali.
+- Se l'utente chiede una persona, rispondi con ruolo, deleghe, telefono/WhatsApp ed email se presenti.
+- Se l'utente chiede una convenzione per tema, elenca solo le convenzioni pertinenti e chiudi con /convenzioni/locali.
+- Se l'utente chiede contatto umano, proponi subito telefono sede, email e la pagina /contatti.
 `;
 }
