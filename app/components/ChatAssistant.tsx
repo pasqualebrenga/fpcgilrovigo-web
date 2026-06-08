@@ -98,7 +98,7 @@ export default function ChatAssistant() {
   }
 
   return (
-    <div className="fpChat">
+    <div className={`fpChat ${open ? "fpChatOpen" : ""}`}>
       <style>{`
         .fpChat {
           position: fixed;
@@ -215,6 +215,7 @@ export default function ChatAssistant() {
           cursor: pointer;
         }
         .fpChatBody {
+          min-height: 0;
           padding: 14px;
           overflow-y: auto;
           display: flex;
@@ -338,12 +339,17 @@ export default function ChatAssistant() {
             right: 12px;
             bottom: 12px;
           }
+          .fpChatOpen {
+            inset: max(8px, env(safe-area-inset-top)) 8px max(8px, env(safe-area-inset-bottom)) 8px;
+          }
           .fpChatToggleLabel {
             display: none;
           }
           .fpChatPanel {
-            width: calc(100vw - 24px);
-            height: calc(100vh - 24px);
+            width: 100%;
+            height: 100%;
+            max-height: calc(100dvh - 16px);
+            border-radius: 14px;
           }
         }
       `}</style>
