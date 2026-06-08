@@ -157,7 +157,7 @@ export default function RsuPage() {
               Una sezione dedicata alle RSU: cosa sono, cosa fanno, come candidarsi con FP CGIL Rovigo e dove trovare materiali e programma.
             </p>
             <div style={{ marginTop: 18, display: "flex", flexWrap: "wrap", gap: 10 }}>
-              <ActionLink href={`https://wa.me/393425614635?text=${WHATSAPP_TEXT}`} icon={<MessageCircle size={18} />} primary>
+              <ActionLink href={`https://wa.me/393405614635?text=${WHATSAPP_TEXT}`} icon={<MessageCircle size={18} />} primary>
                 Chiedi informazioni
               </ActionLink>
               <ActionLink href="#programma" icon={<FileText size={18} />}>
@@ -295,7 +295,7 @@ export default function RsuPage() {
           Ti aiutiamo a capire chi segue il tuo ente, quale referente contattare e come partecipare al percorso RSU con FP CGIL Rovigo.
         </p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-          <ActionLink href={`https://wa.me/393425614635?text=${WHATSAPP_TEXT}`} icon={<MessageCircle size={18} />} primary>
+          <ActionLink href={`https://wa.me/393405614635?text=${WHATSAPP_TEXT}`} icon={<MessageCircle size={18} />} primary>
             Scrivici su WhatsApp
           </ActionLink>
           <ActionLink href="mailto:fp.rovigo@veneto.cgil.it?subject=Informazioni%20RSU%20FP%20CGIL%20Rovigo" icon={<Mail size={18} />}>
