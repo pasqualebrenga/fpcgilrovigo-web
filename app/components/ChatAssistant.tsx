@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useRef, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { ExternalLink, MessageCircle, Send, Sparkles, X } from "lucide-react";
 
 type Message = {
@@ -51,9 +51,19 @@ export default function ChatAssistant() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const canSend = input.trim().length > 0 && !loading;
   const apiMessages = useMemo(() => messages.filter((message) => message !== WELCOME), [messages]);
+
+  useEffect(() => {
+    if (!open) return;
+    requestAnimationFrame(() => {
+      bodyRef.current?.scrollTo({ top: bodyRef.current.scrollHeight, behavior: "smooth" });
+      messagesEndRef.current?.scrollIntoView({ block: "end", behavior: "smooth" });
+    });
+  }, [messages, loading, open]);
 
   async function sendMessage(text: string) {
     const cleanText = text.trim();
@@ -357,7 +367,7 @@ export default function ChatAssistant() {
             </button>
           </div>
 
-          <div className="fpChatBody" aria-live="polite">
+          <div ref={bodyRef} className="fpChatBody" aria-live="polite">
             {messages.map((message, index) => (
               <div key={`${message.role}-${index}`} className={`fpChatMessage fpChatMessage${message.role === "assistant" ? "Assistant" : "User"}`}>
                 {linkify(message.content)}
@@ -375,6 +385,7 @@ export default function ChatAssistant() {
             ) : null}
 
             {loading ? <div className="fpChatLoading">Sto cercando la risposta...</div> : null}
+            <div ref={messagesEndRef} aria-hidden="true" />
           </div>
 
           <div className="fpChatFoot">
