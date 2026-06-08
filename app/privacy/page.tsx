@@ -31,7 +31,7 @@ export default function PrivacyPage() {
           di contatto eventualmente indicati sul sito.
         </li>
         <li>
-          <b>Messaggi inviati all’assistente digitale</b>: testi digitati volontariamente nella chat
+          <b>Messaggi inviati a Quadrato Rosso</b>: testi digitati volontariamente nella chat
           del sito, trattati per fornire una risposta automatizzata e indirizzare l’utente verso pagine,
           contatti o informazioni utili.
         </li>
@@ -47,7 +47,7 @@ export default function PrivacyPage() {
           adempimento di obblighi connessi alla richiesta).
         </li>
         <li>
-          <b>Assistente digitale</b>: supporto informativo di primo orientamento su contenuti del sito,
+          <b>Quadrato Rosso</b>: supporto informativo di primo orientamento su contenuti del sito,
           referenti, convenzioni e news FP CGIL, sulla base della richiesta volontaria dell’utente.
         </li>
       </ul>
@@ -64,12 +64,12 @@ export default function PrivacyPage() {
         (es. hosting e manutenzione), nominati – se necessario – responsabili del trattamento.
       </p>
 
-      <h2>Assistente digitale</h2>
+      <h2>Quadrato Rosso</h2>
       <p>
-        Il sito può mettere a disposizione un assistente digitale basato su tecnologie di intelligenza
+        Il sito può mettere a disposizione Quadrato Rosso, un assistente digitale basato su tecnologie di intelligenza
         artificiale per aiutare l’utente a trovare pagine, contatti, convenzioni o notizie. I messaggi
         digitati nella chat possono essere elaborati da fornitori tecnici del servizio AI per generare
-        la risposta. L’assistente non sostituisce consulenza sindacale, legale, amministrativa o fiscale.
+        la risposta. Quadrato Rosso non sostituisce consulenza sindacale, legale, amministrativa o fiscale.
       </p>
       <p>
         Si invita a non inserire nella chat dati sensibili, informazioni sanitarie, dati identificativi

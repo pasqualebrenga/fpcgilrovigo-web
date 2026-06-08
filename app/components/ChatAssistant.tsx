@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useMemo, useRef, useState } from "react";
-import { Bot, ExternalLink, MessageCircle, Send, Sparkles, X } from "lucide-react";
+import { ExternalLink, MessageCircle, Send, Sparkles, X } from "lucide-react";
 
 type Message = {
   role: "user" | "assistant";
@@ -17,7 +17,8 @@ const STARTERS = [
 
 const WELCOME: Message = {
   role: "assistant",
-  content: "Ciao, sono l'assistente FP CGIL Rovigo. Posso aiutarti con referenti, convenzioni, iscrizione, contatti e ultime news FP CGIL.",
+  content:
+    "Ciao, sono Quadrato Rosso. Dimmi cosa ti serve: posso orientarti tra contatti, referenti, convenzioni, iscrizione, formazione e ultime news FP CGIL.",
 };
 
 function linkify(text: string) {
@@ -156,6 +157,23 @@ export default function ChatAssistant() {
           font-size: 12px;
           color: rgba(255,255,255,0.72);
           margin-top: 2px;
+        }
+        .fpChatMark {
+          width: 38px;
+          height: 38px;
+          border-radius: 8px;
+          background: #e30613;
+          color: #fff;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          flex: 0 0 auto;
+          box-shadow: inset 0 0 0 2px rgba(255,255,255,0.18), 0 10px 24px rgba(0,0,0,0.22);
+          font-size: 12px;
+          font-weight: 1000;
+          line-height: 0.9;
+          text-align: center;
+          letter-spacing: 0;
         }
         .fpChatAiBadge {
           display: inline-flex;
@@ -318,15 +336,19 @@ export default function ChatAssistant() {
       `}</style>
 
       {open ? (
-        <section className="fpChatPanel" aria-label="Assistente FP CGIL Rovigo">
+        <section className="fpChatPanel" aria-label="Quadrato Rosso, assistente FP CGIL Rovigo">
           <div className="fpChatHead">
             <div className="fpChatTitle">
-              <Bot size={22} aria-hidden="true" />
+              <span className="fpChatMark" aria-hidden="true">
+                FP
+                <br />
+                AI
+              </span>
               <div>
-                <strong>Assistente FP CGIL Rovigo</strong>
-                <span>Trova servizio, contatto o pagina utile</span>
+                <strong>Quadrato Rosso</strong>
+                <span>Chiedi al Quadrato: ti orienta nel sito</span>
                 <span className="fpChatAiBadge">
-                  <Sparkles size={12} /> AI su sito e news FP CGIL
+                  <Sparkles size={12} /> Risponde su FP CGIL Rovigo e news nazionali
                 </span>
               </div>
             </div>
@@ -364,7 +386,7 @@ export default function ChatAssistant() {
                 onChange={(event) => setInput(event.target.value)}
                 placeholder="Scrivi qui..."
                 maxLength={700}
-                aria-label="Messaggio per l'assistente"
+                aria-label="Messaggio per Quadrato Rosso"
               />
               <button className="fpChatSend" type="submit" disabled={!canSend} aria-label="Invia messaggio">
                 <Send size={18} />
@@ -376,9 +398,9 @@ export default function ChatAssistant() {
           </div>
         </section>
       ) : (
-        <button className="fpChatToggle" type="button" onClick={() => setOpen(true)} aria-label="Apri assistente FP CGIL Rovigo">
+        <button className="fpChatToggle" type="button" onClick={() => setOpen(true)} aria-label="Apri Quadrato Rosso">
           <MessageCircle size={22} />
-          <span className="fpChatToggleLabel">Assistente</span>
+          <span className="fpChatToggleLabel">Chiedi al Quadrato</span>
         </button>
       )}
     </div>
