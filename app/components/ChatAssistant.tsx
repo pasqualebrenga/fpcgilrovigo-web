@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import { ExternalLink, MessageCircle, Send, Sparkles, X } from "lucide-react";
 
 type Message = {
@@ -169,21 +170,22 @@ export default function ChatAssistant() {
           margin-top: 2px;
         }
         .fpChatMark {
-          width: 38px;
-          height: 38px;
+          width: 48px;
+          height: 48px;
           border-radius: 8px;
           background: #e30613;
-          color: #fff;
           display: inline-flex;
           align-items: center;
           justify-content: center;
           flex: 0 0 auto;
           box-shadow: inset 0 0 0 2px rgba(255,255,255,0.18), 0 10px 24px rgba(0,0,0,0.22);
-          font-size: 12px;
-          font-weight: 1000;
-          line-height: 0.9;
-          text-align: center;
-          letter-spacing: 0;
+          overflow: hidden;
+        }
+        .fpChatMark img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
         }
         .fpChatAiBadge {
           display: inline-flex;
@@ -350,9 +352,7 @@ export default function ChatAssistant() {
           <div className="fpChatHead">
             <div className="fpChatTitle">
               <span className="fpChatMark" aria-hidden="true">
-                FP
-                <br />
-                AI
+                <Image src="/images/brand/logo.png" alt="" width={96} height={96} sizes="48px" priority={false} />
               </span>
               <div>
                 <strong>Quadrato Rosso</strong>
