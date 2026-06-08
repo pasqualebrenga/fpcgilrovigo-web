@@ -407,7 +407,7 @@ export default async function HomePage() {
 
             <a
               className="btn"
-              href="https://formazionepartecipazione.it"
+              href="https://fpformazione.it/"
               target="_blank"
               rel="noreferrer"
               style={{ borderRadius: 999, padding: "12px 16px", fontWeight: 900 }}

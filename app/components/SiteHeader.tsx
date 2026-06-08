@@ -15,7 +15,7 @@ const NAV: NavItem[] = [
   { label: "Chi siamo", href: "/chi-siamo" },
   { label: "Convenzioni", href: "/convenzioni" },
   { label: "News", href: "/news" },
-  { label: "Formazione", href: "https://formazionepartecipazione.fpcgil.it/", external: true },
+  { label: "Formazione", href: "https://fpformazione.it/", external: true },
   { label: "Iscrizione", href: "/iscrizione" },
   { label: "Contatti", href: "/contatti" },
 ];

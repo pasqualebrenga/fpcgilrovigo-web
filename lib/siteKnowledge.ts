@@ -229,7 +229,7 @@ Convenzioni locali:
 ${conventionsText}
 
 Formazione:
-- Portale esterno: https://formazionepartecipazione.fpcgil.it/
+- Portale esterno: https://fpformazione.it/
 
 Regola: le convenzioni sono riservate agli iscritti; per dubbi rimandare a /convenzioni/locali o ai contatti ufficiali.
 `;

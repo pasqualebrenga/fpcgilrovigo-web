@@ -105,7 +105,7 @@ async function fallbackAnswer(messages: ChatMessage[]) {
   }
 
   if (last.includes("formazione") || last.includes("corso")) {
-    return "Per la formazione puoi usare il portale dedicato: https://formazionepartecipazione.fpcgil.it/ . Si apre fuori dal sito FP CGIL Rovigo.";
+    return "Per la formazione puoi usare il portale dedicato: https://fpformazione.it/ . Si apre fuori dal sito FP CGIL Rovigo.";
   }
 
   if (last.includes("contatt") || last.includes("telefono") || last.includes("mail") || last.includes("sede")) {
