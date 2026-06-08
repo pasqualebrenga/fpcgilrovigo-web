@@ -2,6 +2,7 @@
 "use client";
 import Link from "next/link";
 import { PhoneCall, Mail, MapPin, ArrowRight, ShieldCheck } from "lucide-react";
+import ExternalEmbedGate from "../components/ExternalEmbedGate";
 
 const FP_RED = "#d40000";
 
@@ -269,17 +270,22 @@ export default function ContattiPage() {
             background: "#f2f2f2",
           }}
         >
-          <iframe
-            title="Mappa – FP CGIL Rovigo"
-            src={`https://www.google.com/maps?q=${encodeURIComponent(
-              `${CONTATTI.indirizzoRiga1} ${CONTATTI.indirizzoRiga2}`
-            )}&output=embed`}
-            width="100%"
-            height="360"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            style={{ border: 0, display: "block" }}
-          />
+          <ExternalEmbedGate
+            title="Mappa Google"
+            description="La mappa è fornita da Google Maps. Viene caricata solo dopo aver abilitato i contenuti esterni."
+          >
+            <iframe
+              title="Mappa – FP CGIL Rovigo"
+              src={`https://www.google.com/maps?q=${encodeURIComponent(
+                `${CONTATTI.indirizzoRiga1} ${CONTATTI.indirizzoRiga2}`
+              )}&output=embed`}
+              width="100%"
+              height="360"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              style={{ border: 0, display: "block" }}
+            />
+          </ExternalEmbedGate>
         </div>
 
         <div style={{ marginTop: 12, display: "flex", gap: 10, flexWrap: "wrap" }}>

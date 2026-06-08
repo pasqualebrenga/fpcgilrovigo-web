@@ -3,9 +3,9 @@
 import type { CSSProperties } from "react";
 
 export default function SiteFooter() {
-  const reopenCookieInfo = () => {
-    // Cancella il cookie "ho visto il banner" e ricarica: al reload il banner informativo ricompare
+  const reopenCookieSettings = () => {
     document.cookie = `fp_cookie_info=; Path=/; Max-Age=0; SameSite=Lax`;
+    document.cookie = `fp_consent=; Path=/; Max-Age=0; SameSite=Lax`;
     window.location.reload();
   };
 
@@ -57,8 +57,8 @@ export default function SiteFooter() {
               Cookie
             </a>
 
-            <button type="button" onClick={reopenCookieInfo} style={btnStyle}>
-              Info cookie
+            <button type="button" onClick={reopenCookieSettings} style={btnStyle}>
+              Gestisci cookie
             </button>
           </div>
         </div>

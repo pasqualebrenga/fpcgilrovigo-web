@@ -7,6 +7,8 @@ export type FpNewsItem = {
   source: "rss" | "html";
 };
 
+type RssItem = Record<string, unknown>;
+
 const CATEGORY_URL = "https://www.fpcgil.it/category/_in_homepage/";
 const FEED_URL = "https://www.fpcgil.it/category/_in_homepage/feed/";
 
@@ -29,19 +31,22 @@ function decodeEntities(s: string) {
     .replace(/&nbsp;/g, " ");
 }
 
-function pickImageFromRssItem(it: any): string | undefined {
+function pickImageFromRssItem(it: RssItem): string | undefined {
   const mc = it?.["media:content"];
   if (Array.isArray(mc)) {
-    const url = mc[0]?.["@_url"] || mc[0]?.url;
+    const first = mc[0] as RssItem | undefined;
+    const url = first?.["@_url"] || first?.url;
     if (typeof url === "string" && url.startsWith("http")) return decodeEntities(url);
-  } else if (mc) {
-    const url = mc?.["@_url"] || mc?.url;
+  } else if (mc && typeof mc === "object") {
+    const media = mc as RssItem;
+    const url = media?.["@_url"] || media?.url;
     if (typeof url === "string" && url.startsWith("http")) return decodeEntities(url);
   }
 
   const enc = it?.enclosure;
-  if (enc) {
-    const url = enc?.["@_url"] || enc?.url;
+  if (enc && typeof enc === "object") {
+    const enclosure = enc as RssItem;
+    const url = enclosure?.["@_url"] || enclosure?.url;
     if (typeof url === "string" && url.startsWith("http")) return decodeEntities(url);
   }
 
@@ -99,8 +104,8 @@ async function fetchRss(limit: number): Promise<FpNewsItem[]> {
     const items = parsed?.rss?.channel?.item;
     const arr = Array.isArray(items) ? items : items ? [items] : [];
 
-    let mapped: FpNewsItem[] = arr
-      .map((it: any) => {
+    let mapped: FpNewsItem[] = (arr as RssItem[])
+      .map((it) => {
         const title = decodeEntities(String(it?.title ?? "")).trim();
         const url = String(it?.link ?? "").trim();
         const date = it?.pubDate ? String(it.pubDate) : undefined;

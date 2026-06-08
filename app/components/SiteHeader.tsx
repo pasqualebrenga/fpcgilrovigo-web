@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, Facebook, Instagram } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { ChevronDown, Facebook, Instagram, Linkedin } from "lucide-react";
 
 type NavItem = {
   label: string;
@@ -9,32 +12,38 @@ type NavItem = {
 };
 
 const NAV: NavItem[] = [
+  { label: "Chi siamo", href: "/chi-siamo" },
+  { label: "Convenzioni", href: "/convenzioni" },
   { label: "News", href: "/news" },
   { label: "Formazione", href: "https://formazionepartecipazione.fpcgil.it/", external: true },
   { label: "Iscrizione", href: "/iscrizione" },
-  { label: "Chi siamo", href: "/chi-siamo" },
   { label: "Contatti", href: "/contatti" },
-  { label: "Convenzioni", href: "/convenzioni" },
 ];
 
-function NavLink({ item }: { item: NavItem }) {
+function NavLink({ item, active }: { item: NavItem; active: boolean }) {
   const content = (
     <>
       <span className="rvNavLabel">{item.label}</span>
-      <ChevronDown className="rvNavChevron" size={16} aria-hidden="true" />
+      <ChevronDown className="rvNavChevron" size={14} aria-hidden="true" />
     </>
   );
 
   if (item.external) {
     return (
-      <a className="rvNavLink" href={item.href} target="_blank" rel="noreferrer">
+      <a
+        className="rvNavLink"
+        href={item.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${item.label} - apre una nuova scheda`}
+      >
         {content}
       </a>
     );
   }
 
   return (
-    <Link className="rvNavLink" href={item.href}>
+    <Link className={`rvNavLink${active ? " rvNavLinkActive" : ""}`} href={item.href} aria-current={active ? "page" : undefined}>
       {content}
     </Link>
   );
@@ -42,6 +51,7 @@ function NavLink({ item }: { item: NavItem }) {
 
 export default function SiteHeader() {
   const logoSrc = "/images/brand/logo-fp-cgil-rovigo.jpg";
+  const pathname = usePathname();
 
   return (
     <header className="rvHeader">
@@ -49,7 +59,6 @@ export default function SiteHeader() {
         .rvHeader { width: 100%; }
         .rvTopStrip { height: 6px; background: #d40000; }
 
-        /* Barra unica con righe diagonali rosse fitte */
         .rvBar {
           background:
             repeating-linear-gradient(
@@ -60,16 +69,15 @@ export default function SiteHeader() {
               rgba(255, 255, 255, 0) 8px
             ),
             #ffffff;
-          border-bottom: 1px solid rgba(0,0,0,0.10);
+          border-bottom: 1px solid rgba(0,0,0,0.12);
         }
 
-        /* Layout: logo | nav | social (come fpCGIL) */
         .rvInner {
           display: grid;
           grid-template-columns: auto 1fr auto;
           align-items: center;
-          gap: 16px;
-          padding: 10px 0;
+          gap: 14px;
+          padding: 12px 0 11px;
         }
 
         .rvBrand {
@@ -81,7 +89,7 @@ export default function SiteHeader() {
         .rvLogo {
           height: auto;
           width: auto;
-          max-height: 68px;
+          max-height: 76px;
           object-fit: contain;
           object-position: left center;
           display: block;
@@ -91,46 +99,52 @@ export default function SiteHeader() {
           display: flex;
           align-items: center;
           flex-wrap: wrap;
-          gap: 0;
-          border-left: 1px solid rgba(0,0,0,0.12);
-          padding-left: 10px;
-          min-height: 44px;
+          gap: 2px;
+          min-height: 52px;
         }
 
         .rvNavLink {
           text-decoration: none;
-          color: rgba(0,0,0,0.86);
-          font-weight: 900;
+          color: rgb(72,72,72);
+          font-weight: 700;
           text-transform: uppercase;
-          letter-spacing: 0.25px;
-          font-size: 13px;
-          padding: 10px 12px;
-          border-radius: 10px;
+          letter-spacing: 0;
+          font-size: 19px;
+          line-height: 1;
+          padding: 12px 4px;
+          border-radius: 4px;
           display: inline-flex;
           align-items: center;
-          gap: 6px;
+          gap: 5px;
           white-space: nowrap;
         }
         .rvNavLink:hover {
           background: rgba(212,0,0,0.08);
           color: #d40000;
         }
+        .rvNavLinkActive {
+          color: #d40000;
+          background: rgba(212,0,0,0.08);
+        }
+        .rvNavLinkActive .rvNavChevron {
+          color: #d40000;
+        }
 
         .rvNavChevron {
-          color: #d40000; /* freccia rossa */
-          opacity: 0.95;
+          color: #d40000;
+          opacity: 0.9;
           margin-top: 1px;
         }
 
         .rvSocial {
           display: inline-flex;
           align-items: center;
-          gap: 10px;
+          gap: 8px;
           justify-self: end; /* segue sempre il bordo destro */
         }
         .rvSocialBtn {
-          width: 38px;
-          height: 38px;
+          width: 36px;
+          height: 36px;
           border-radius: 999px;
           border: 1px solid rgba(0,0,0,0.12);
           background: rgba(255,255,255,0.92);
@@ -146,7 +160,19 @@ export default function SiteHeader() {
           color: #d40000;
         }
 
-        /* Mobile: prima riga brand + social, seconda riga nav */
+        @media (max-width: 1180px) {
+          .rvInner {
+            gap: 10px;
+          }
+          .rvLogo {
+            max-height: 70px;
+          }
+          .rvNavLink {
+            font-size: 16px;
+            padding: 11px 5px;
+          }
+        }
+
         @media (max-width: 760px) {
           .rvInner {
             grid-template-columns: 1fr auto;
@@ -159,10 +185,26 @@ export default function SiteHeader() {
           .rvNav {
             grid-column: 1 / -1;
             grid-row: 2;
-            border-left: 0;
-            padding-left: 0;
+            min-height: 0;
           }
-          .rvNavLink { padding: 10px 10px; }
+          .rvLogo {
+            max-height: 70px;
+          }
+          .rvNavLink {
+            font-size: 14px;
+            padding: 10px 8px;
+          }
+        }
+
+        @media (max-width: 420px) {
+          .rvNavLink {
+            font-size: 13px;
+            padding: 9px 7px;
+          }
+          .rvSocialBtn {
+            width: 34px;
+            height: 34px;
+          }
         }
       `}</style>
 
@@ -174,18 +216,19 @@ export default function SiteHeader() {
             <Image
               src={logoSrc}
               alt="FP CGIL Rovigo"
-              width={210}
+              width={240}
               height={80}
               priority
               className="rvLogo"
-              sizes="(max-width: 760px) 180px, 210px"
+              sizes="(max-width: 760px) 190px, 240px"
             />
           </Link>
 
           <nav className="rvNav" aria-label="Navigazione principale">
-            {NAV.map((item) => (
-              <NavLink key={item.href} item={item} />
-            ))}
+            {NAV.map((item) => {
+              const active = !item.external && (pathname === item.href || pathname.startsWith(`${item.href}/`));
+              return <NavLink key={item.href} item={item} active={active} />;
+            })}
           </nav>
 
           <div className="rvSocial" aria-label="Social">
@@ -193,7 +236,7 @@ export default function SiteHeader() {
               className="rvSocialBtn"
               href="https://www.facebook.com/funzionepubblicacgil.rovigo"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               aria-label="Facebook FP CGIL Rovigo"
               title="Facebook"
             >
@@ -204,11 +247,22 @@ export default function SiteHeader() {
               className="rvSocialBtn"
               href="https://www.instagram.com/fpcgilrovigo/"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               aria-label="Instagram FP CGIL Rovigo"
               title="Instagram"
             >
               <Instagram size={18} />
+            </a>
+
+            <a
+              className="rvSocialBtn"
+              href="https://www.linkedin.com/in/funzione-pubblica-cgil-rovigo-0a75543b5/?skipRedirect=true"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn FP CGIL Rovigo"
+              title="LinkedIn"
+            >
+              <Linkedin size={18} />
             </a>
           </div>
         </div>

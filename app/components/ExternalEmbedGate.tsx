@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useSyncExternalStore } from "react";
 
 type ConsentV2 = {
   v: 2;
@@ -11,6 +11,7 @@ type ConsentV2 = {
 };
 
 const CONSENT_COOKIE = "fp_consent";
+const CONSENT_EVENT = "fp-consent-changed";
 
 function getCookie(name: string): string | null {
   const match = document.cookie
@@ -44,6 +45,19 @@ function parseConsent(raw: string | null): ConsentV2 | null {
   }
 }
 
+function subscribeConsent(callback: () => void) {
+  window.addEventListener(CONSENT_EVENT, callback);
+  return () => window.removeEventListener(CONSENT_EVENT, callback);
+}
+
+function getConsentSnapshot() {
+  return getCookie(CONSENT_COOKIE) ?? "";
+}
+
+function getServerConsentSnapshot() {
+  return "";
+}
+
 export default function ExternalEmbedGate({
   title = "Contenuto esterno",
   description = "Per visualizzare questo contenuto è necessario abilitare i contenuti esterni.",
@@ -53,23 +67,12 @@ export default function ExternalEmbedGate({
   description?: string;
   children: React.ReactNode;
 }) {
-  const [mounted, setMounted] = useState(false);
-  const [tick, setTick] = useState(0);
-
-  useEffect(() => setMounted(true), []);
-  useEffect(() => {
-    if (!mounted) return;
-    const onChange = () => setTick((t) => t + 1);
-    window.addEventListener("fp-consent-changed", onChange);
-    return () => window.removeEventListener("fp-consent-changed", onChange);
-  }, [mounted]);
-
-  const consent = useMemo(() => {
-    if (!mounted) return null;
-    return parseConsent(getCookie(CONSENT_COOKIE));
-  }, [mounted, tick]);
-
-  if (!mounted) return null;
+  const consentRaw = useSyncExternalStore(
+    subscribeConsent,
+    getConsentSnapshot,
+    getServerConsentSnapshot
+  );
+  const consent = parseConsent(consentRaw);
 
   if (consent?.external) return <>{children}</>;
 

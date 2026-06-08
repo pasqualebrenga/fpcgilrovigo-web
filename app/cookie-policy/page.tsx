@@ -21,14 +21,16 @@ export default function CookiePolicyPage() {
 
       <h2>Cookie utilizzati da questo sito</h2>
       <p>
-        Il sito utilizza <b>solo cookie tecnici</b>, necessari al funzionamento e alla sicurezza.
-        Non vengono utilizzati cookie di profilazione né sistemi di tracciamento pubblicitario.
+        Il sito utilizza <b>cookie tecnici</b>, necessari al funzionamento, alla sicurezza e alla
+        memorizzazione delle preferenze espresse dall’utente. Non vengono utilizzati cookie di
+        profilazione né sistemi di tracciamento pubblicitario.
       </p>
 
       <h3>Cookie tecnici</h3>
       <ul>
         <li>
-          <b>fp_cookie_info</b> – memorizza la presa visione del banner informativo cookie – durata ~180 giorni.
+          <b>fp_consent</b> – memorizza le preferenze sui cookie tecnici e sui contenuti esterni –
+          durata circa 180 giorni.
         </li>
         <li>
           Eventuali cookie tecnici di base del framework/hosting (es. sicurezza, bilanciamento, prestazioni),
@@ -36,16 +38,19 @@ export default function CookiePolicyPage() {
         </li>
       </ul>
 
-      <h2>Link verso servizi esterni</h2>
+      <h2>Contenuti e link verso servizi esterni</h2>
       <p>
-        Alcune pagine possono contenere link che rimandano a siti o servizi esterni (ad esempio mappe).
-        Cliccando su tali link, l’utente accede a un sito terzo che applica proprie policy e può impostare
-        cookie secondo le proprie regole.
+        Alcune pagine possono contenere link o contenuti collegati a servizi esterni, ad esempio
+        Google Maps, WhatsApp, social network, siti FP CGIL esterni o documenti aperti in una nuova
+        scheda. I contenuti esterni incorporati nella pagina vengono caricati solo dopo l’abilitazione
+        da parte dell’utente. Cliccando su link verso siti terzi, l’utente accede invece a servizi che
+        applicano le proprie informative e possono impostare cookie secondo le rispettive regole.
       </p>
 
-      <h2>Come gestire o cancellare i cookie</h2>
+      <h2>Come gestire o cancellare le preferenze</h2>
       <p>
-        È possibile gestire o cancellare i cookie dalle impostazioni del browser. Le procedure variano
+        È possibile riaprire la scelta dal pulsante <b>Gestisci cookie</b> nel footer del sito.
+        È inoltre possibile cancellare i cookie dalle impostazioni del browser; le procedure variano
         a seconda del browser utilizzato.
       </p>
 
