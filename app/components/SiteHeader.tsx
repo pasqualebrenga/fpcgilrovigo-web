@@ -13,6 +13,7 @@ type NavItem = {
 
 const NAV: NavItem[] = [
   { label: "Chi siamo", href: "/chi-siamo" },
+  { label: "RSU", href: "/rsu" },
   { label: "Convenzioni", href: "/convenzioni" },
   { label: "News", href: "/news" },
   { label: "Formazione", href: "https://fpformazione.it/", external: true },
