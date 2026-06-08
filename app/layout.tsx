@@ -4,6 +4,7 @@ import "./globals.css";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 import CookieBanner from "./components/CookieBanner";
+import ChatAssistant from "./components/ChatAssistant";
 
 // Next consiglia themeColor qui (viewport) per l'App Router
 export const viewport: Viewport = {
@@ -62,6 +63,8 @@ export default function RootLayout({
 
         {/* Banner cookie informativo */}
         <CookieBanner />
+
+        <ChatAssistant />
       </body>
     </html>
   );

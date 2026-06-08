@@ -30,6 +30,11 @@ export default function PrivacyPage() {
           <b>Dati forniti volontariamente</b>: dati inviati dall’utente tramite email o altri canali
           di contatto eventualmente indicati sul sito.
         </li>
+        <li>
+          <b>Messaggi inviati all’assistente digitale</b>: testi digitati volontariamente nella chat
+          del sito, trattati per fornire una risposta automatizzata e indirizzare l’utente verso pagine,
+          contatti o informazioni utili.
+        </li>
       </ul>
 
       <h2>Finalità e basi giuridiche</h2>
@@ -40,6 +45,10 @@ export default function PrivacyPage() {
         <li>
           <b>Riscontro a richieste dell’utente</b> (esecuzione di misure precontrattuali/contrattuali o
           adempimento di obblighi connessi alla richiesta).
+        </li>
+        <li>
+          <b>Assistente digitale</b>: supporto informativo di primo orientamento su contenuti del sito,
+          referenti, convenzioni e news FP CGIL, sulla base della richiesta volontaria dell’utente.
         </li>
       </ul>
 
@@ -53,6 +62,20 @@ export default function PrivacyPage() {
       <p>
         I dati possono essere trattati da fornitori tecnici che supportano l’erogazione del servizio
         (es. hosting e manutenzione), nominati – se necessario – responsabili del trattamento.
+      </p>
+
+      <h2>Assistente digitale</h2>
+      <p>
+        Il sito può mettere a disposizione un assistente digitale basato su tecnologie di intelligenza
+        artificiale per aiutare l’utente a trovare pagine, contatti, convenzioni o notizie. I messaggi
+        digitati nella chat possono essere elaborati da fornitori tecnici del servizio AI per generare
+        la risposta. L’assistente non sostituisce consulenza sindacale, legale, amministrativa o fiscale.
+      </p>
+      <p>
+        Si invita a non inserire nella chat dati sensibili, informazioni sanitarie, dati identificativi
+        non necessari, documenti personali o dettagli relativi a procedimenti e situazioni individuali
+        delicate. Per tali casi è preferibile contattare direttamente FP CGIL Rovigo tramite i canali
+        ufficiali.
       </p>
 
       <h2>Conservazione</h2>
