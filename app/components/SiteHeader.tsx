@@ -176,35 +176,57 @@ export default function SiteHeader() {
 
         @media (max-width: 760px) {
           .rvInner {
-            grid-template-columns: 1fr auto;
+            grid-template-columns: auto auto;
             grid-template-rows: auto auto;
-            gap: 10px 12px;
-            padding: 10px 0;
+            justify-content: center;
+            justify-items: center;
+            gap: 10px 16px;
+            padding: 12px 0 11px;
           }
-          .rvBrand { grid-column: 1; grid-row: 1; }
-          .rvSocial { grid-column: 2; grid-row: 1; }
+          .rvBrand {
+            grid-column: 1;
+            grid-row: 1;
+            justify-self: end;
+          }
+          .rvSocial {
+            grid-column: 2;
+            grid-row: 1;
+            justify-self: start;
+          }
           .rvNav {
             grid-column: 1 / -1;
             grid-row: 2;
             min-height: 0;
+            justify-content: center;
+            row-gap: 8px;
+            column-gap: 10px;
           }
           .rvLogo {
-            max-height: 70px;
+            max-height: 66px;
           }
           .rvNavLink {
             font-size: 14px;
-            padding: 10px 8px;
+            padding: 9px 5px;
           }
         }
 
         @media (max-width: 420px) {
+          .rvInner {
+            gap: 9px 14px;
+          }
           .rvNavLink {
             font-size: 13px;
-            padding: 9px 7px;
+            padding: 9px 4px;
+          }
+          .rvNav {
+            column-gap: 8px;
           }
           .rvSocialBtn {
             width: 34px;
             height: 34px;
+          }
+          .rvLogo {
+            max-height: 64px;
           }
         }
       `}</style>
