@@ -123,8 +123,8 @@ const PERSONE: Persona[] = [
   {
     slug: "denanni",
     nome: "Roberta Denanni",
-    ruolo: "Segretario",
-    deleghe: "Igiene Ambientale, IPAB socio-sanitario, Socio-sanitario privato, Previdenza Complementare, Formazione",
+    ruolo: "Segretaria",
+    deleghe: "Igiene Ambientale, IPAB socio-sanitario, Socio-sanitario privato, Previdenza Complementare, Formazione, Politiche di Genere",
     settori:
       "Ecoambiente, Case di riposo pubbliche e private, Cooperative sociali, Perseo / Previdenza Cooperativa / Previambiente",
     telefono: "3450623870",
@@ -134,7 +134,7 @@ const PERSONE: Persona[] = [
   {
     slug: "venzo",
     nome: "Sabrina Venzo",
-    ruolo: "Segretario",
+    ruolo: "Segretaria",
     deleghe: "Sanità Privata, Enti Locali",
     settori: "IPAB, Case di Cura Private",
     telefono: "3427819334",
@@ -144,7 +144,7 @@ const PERSONE: Persona[] = [
   {
     slug: "saccardin",
     nome: "Silvia Saccardin",
-    ruolo: "Segretario",
+    ruolo: "Segretaria",
     deleghe: "Sanità Pubblica, Previdenza Complementare, Formazione, Convenzioni",
     settori: "ULSS5 Polesana, Perseo, Previdenza Cooperativa, Previambiente, Formazione concorsi, Formazione delegati",
     email: "fp.ro.saccardin@veneto.cgil.it",

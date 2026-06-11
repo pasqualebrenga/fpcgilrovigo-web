@@ -47,7 +47,7 @@ const REFERENTI: Record<ReferenteKey, Referente> = {
   denanni: {
     key: "denanni",
     nome: "Roberta Denanni",
-    ruolo: "Segretario",
+    ruolo: "Segretaria",
     telefono: "3450623870",
     whatsapp: "3450623870",
   },

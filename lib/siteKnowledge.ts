@@ -96,15 +96,15 @@ export const people: SitePerson[] = [
   },
   {
     name: "Roberta Denanni",
-    role: "Segretario",
-    areas: "Igiene Ambientale, IPAB socio-sanitario, Socio-sanitario privato, Previdenza Complementare, Formazione",
+    role: "Segretaria",
+    areas: "Igiene Ambientale, IPAB socio-sanitario, Socio-sanitario privato, Previdenza Complementare, Formazione, Politiche di Genere",
     sectors: "Ecoambiente, case di riposo pubbliche e private, cooperative sociali, Perseo, Previdenza Cooperativa, Previambiente",
     phone: "3450623870",
     email: "fp.ro.denanni@veneto.cgil.it",
   },
   {
     name: "Sabrina Venzo",
-    role: "Segretario",
+    role: "Segretaria",
     areas: "Sanità Privata, Enti Locali",
     sectors: "IPAB, case di cura private",
     phone: "3427819334",
@@ -112,7 +112,7 @@ export const people: SitePerson[] = [
   },
   {
     name: "Silvia Saccardin",
-    role: "Segretario",
+    role: "Segretaria",
     areas: "Sanità Pubblica, Previdenza Complementare, Formazione, Convenzioni",
     sectors: "ULSS5 Polesana, Perseo, Previdenza Cooperativa, Previambiente, formazione concorsi, formazione delegati",
     email: "fp.ro.saccardin@veneto.cgil.it",
