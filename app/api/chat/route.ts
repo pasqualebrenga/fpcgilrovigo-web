@@ -11,6 +11,9 @@ type ChatMessage = {
 
 const MODEL = process.env.OPENAI_MODEL || "gpt-5-mini";
 const MAX_MESSAGES = 8;
+const DIGITA_APP_STORE_URL = "https://apps.apple.com/it/app/digita-cgil/id1457216187";
+const DIGITA_PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=it.digitacgil.app&hl=it";
+const DIGITA_SITE_URL = "https://www.digitacgil.it/";
 
 const SYSTEM_PROMPT = `
 Sei Quadrato Rosso, l'assistente digitale di FP CGIL Rovigo.
@@ -139,8 +142,12 @@ async function fallbackAnswer(messages: ChatMessage[]) {
     return formatConventionAnswer(conventionMatches);
   }
 
-  if (last.includes("iscriv") || last.includes("tessera")) {
+  if (last.includes("iscriv")) {
     return `Per iscriverti puoi partire da /iscrizione: il percorso ti indirizza al referente più adatto. Se preferisci parlare con la sede, chiama ${officialContacts.phone} oppure scrivi a ${officialContacts.email}.`;
+  }
+
+  if (normalizedLast.includes("digita") || normalizedLast.includes("app cgil") || normalizedLast.includes("tessera") || normalizedLast.includes("inca") || normalizedLast.includes("caaf")) {
+    return `Per tessera digitale, pratiche, documenti, appuntamenti e servizi collegati puoi usare DIGITA CGIL. Sito ufficiale: ${DIGITA_SITE_URL} App Store: ${DIGITA_APP_STORE_URL} Google Play: ${DIGITA_PLAY_STORE_URL}`;
   }
 
   if (normalizedLast.includes("news") || normalizedLast.includes("notizie") || normalizedLast.includes("novita") || normalizedLast.includes("ultime")) {

@@ -9,6 +9,7 @@ import {
   MapPin,
   Sparkles,
   Dot,
+  Smartphone,
 } from "lucide-react";
 import { getFpHomepageNews, fpSources } from "../lib/fpnews";
 
@@ -16,6 +17,9 @@ import { getFpHomepageNews, fpSources } from "../lib/fpnews";
 export const revalidate = 86400;
 
 const FP_RED = "#d40000";
+const DIGITA_APP_STORE_URL = "https://apps.apple.com/it/app/digita-cgil/id1457216187";
+const DIGITA_PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=it.digitacgil.app&hl=it";
+const DIGITA_SITE_URL = "https://www.digitacgil.it/";
 
 type NewsItem = {
   title: string;
@@ -86,6 +90,86 @@ function ChipLink({
       {children}
       <ArrowRight size={18} />
     </a>
+  );
+}
+
+function DigitaCgilCard() {
+  return (
+    <section
+      aria-label="DIGITA CGIL"
+      style={{
+        borderRadius: 14,
+        border: "1px solid rgba(212,0,0,0.18)",
+        background: "linear-gradient(135deg, rgba(212,0,0,0.08) 0%, #fff 42%, rgba(0,0,0,0.035) 100%)",
+        padding: 14,
+        display: "grid",
+        gridTemplateColumns: "auto 1fr",
+        gap: 14,
+        alignItems: "center",
+        boxShadow: "0 14px 36px rgba(0,0,0,0.05)",
+      }}
+    >
+      <a
+        href={DIGITA_SITE_URL}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Apri DIGITA CGIL"
+        style={{
+          width: 62,
+          height: 62,
+          borderRadius: 16,
+          background: "#fff",
+          border: "1px solid rgba(0,0,0,0.10)",
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+          boxShadow: "0 12px 28px rgba(212,0,0,0.16)",
+          overflow: "hidden",
+        }}
+      >
+        <Image src="/images/brand/digita-cgil-icon.png" alt="" width={50} height={50} sizes="50px" />
+      </a>
+
+      <div style={{ minWidth: 0 }}>
+        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+          <Pill>
+            <Smartphone size={15} /> App CGIL
+          </Pill>
+          <span className="muted" style={{ fontSize: 13, fontWeight: 850 }}>
+            Tessera e servizi sempre a portata di mano
+          </span>
+        </div>
+
+        <h2 style={{ margin: "8px 0 0", fontSize: 24, lineHeight: 1.08, letterSpacing: 0, fontWeight: 950 }}>
+          Hai già DIGITA CGIL?
+        </h2>
+
+        <p style={{ margin: "8px 0 0", color: "rgba(0,0,0,0.72)", lineHeight: 1.45, maxWidth: 900 }}>
+          Tessera CGIL, appuntamenti, pratiche, documenti e servizi collegati sempre sul telefono.
+        </p>
+
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 13 }}>
+          <a
+            className="btn"
+            href={DIGITA_APP_STORE_URL}
+            target="_blank"
+            rel="noreferrer"
+            style={{ borderRadius: 999, padding: "10px 12px", fontWeight: 950, background: "#111", color: "#fff", borderColor: "#111" }}
+          >
+            App Store <ArrowRight size={17} />
+          </a>
+          <a
+            className="btn"
+            href={DIGITA_PLAY_STORE_URL}
+            target="_blank"
+            rel="noreferrer"
+            style={{ borderRadius: 999, padding: "10px 12px", fontWeight: 950, background: FP_RED, color: "#fff", borderColor: FP_RED }}
+          >
+            Google Play <ArrowRight size={17} />
+          </a>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -277,6 +361,8 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      <DigitaCgilCard />
 
       {/* HERO */}
       <div

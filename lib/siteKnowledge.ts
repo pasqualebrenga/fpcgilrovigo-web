@@ -273,6 +273,13 @@ ${categoryText}
 Formazione:
 - Portale esterno: https://fpformazione.it/
 
+DIGITA CGIL:
+- Sito ufficiale: https://www.digitacgil.it/
+- App Store: https://apps.apple.com/it/app/digita-cgil/id1457216187
+- Google Play: https://play.google.com/store/apps/details?id=it.digitacgil.app&hl=it
+- Serve per consultare la tessera CGIL, gestire appuntamenti, pratiche e documenti, comunicare con la CGIL e accedere ai servizi collegati.
+- Se l'utente chiede tessera digitale, app CGIL, servizi INCA/CAAF o documenti/pratiche da mobile, suggerisci DIGITA CGIL e i link di download.
+
 RSU:
 - Pagina interna: /rsu
 - Usa /rsu quando l'utente chiede cosa sono le RSU, come candidarsi, chi e il proprio delegato, programma RSU, materiali o elezioni RSU.
