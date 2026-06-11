@@ -37,15 +37,27 @@ const INTERNAL_LINKS = new Set([
   "/rsu",
 ]);
 
+function splitTrailingPunctuation(value: string) {
+  const match = value.match(/^(.+?)([.,;:!?)]*)$/);
+  return {
+    clean: match?.[1] || value,
+    trailing: match?.[2] || "",
+  };
+}
+
 function linkify(text: string) {
   const parts = text.split(/(https?:\/\/[^\s]+|(?<![a-z0-9])\/[a-z0-9][a-z0-9-]*(?:\/[a-z0-9][a-z0-9-]*)*)/gi);
 
   return parts.map((part, index) => {
     if (/^https?:\/\//i.test(part)) {
+      const { clean, trailing } = splitTrailingPunctuation(part);
       return (
-        <a key={`${part}-${index}`} href={part} target="_blank" rel="noopener noreferrer">
-          {part}
-        </a>
+        <span key={`${part}-${index}`}>
+          <a href={clean} target="_blank" rel="noopener noreferrer">
+            {clean}
+          </a>
+          {trailing}
+        </span>
       );
     }
 
