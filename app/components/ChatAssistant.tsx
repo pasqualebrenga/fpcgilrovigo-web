@@ -23,8 +23,22 @@ const WELCOME: Message = {
     "Ciao, sono Quadrato Rosso. Ti aiuto a trovare la persona giusta, una convenzione, una notizia FP CGIL o il percorso migliore per iscrizione, formazione e RSU.",
 };
 
+const INTERNAL_LINKS = new Set([
+  "/",
+  "/chi-siamo",
+  "/contatti",
+  "/convenzioni",
+  "/convenzioni/locali",
+  "/convenzioni/nazionali",
+  "/cookie-policy",
+  "/iscrizione",
+  "/news",
+  "/privacy",
+  "/rsu",
+]);
+
 function linkify(text: string) {
-  const parts = text.split(/(https?:\/\/[^\s]+|\/[a-z0-9-/]+)/gi);
+  const parts = text.split(/(https?:\/\/[^\s]+|(?<![a-z0-9])\/[a-z0-9][a-z0-9-]*(?:\/[a-z0-9][a-z0-9-]*)*)/gi);
 
   return parts.map((part, index) => {
     if (/^https?:\/\//i.test(part)) {
@@ -35,7 +49,7 @@ function linkify(text: string) {
       );
     }
 
-    if (/^\/[a-z0-9-/]+/i.test(part)) {
+    if (INTERNAL_LINKS.has(part)) {
       return (
         <a key={`${part}-${index}`} href={part}>
           {part}

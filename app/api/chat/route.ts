@@ -74,8 +74,10 @@ function personMatches(personName: string, text: string) {
 }
 
 function formatPersonAnswer(person: (typeof people)[number]) {
+  const whatsappUrl = person.phone ? `https://wa.me/39${person.phone.replace(/\D/g, "")}` : null;
   const contacts = [
-    person.phone ? `Telefono/WhatsApp: ${person.phone}` : null,
+    person.phone ? `Telefono: ${person.phone}` : null,
+    whatsappUrl ? `WhatsApp: ${whatsappUrl}` : null,
     person.email ? `Email: ${person.email}` : null,
   ]
     .filter(Boolean)
