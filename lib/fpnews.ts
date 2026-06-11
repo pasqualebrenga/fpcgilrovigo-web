@@ -31,6 +31,21 @@ function decodeEntities(s: string) {
     .replace(/&nbsp;/g, " ");
 }
 
+function formatNewsDate(input?: string) {
+  if (!input) return undefined;
+
+  const parsed = new Date(input);
+  if (!Number.isNaN(parsed.getTime())) {
+    return new Intl.DateTimeFormat("it-IT", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }).format(parsed);
+  }
+
+  return input.replace(/\s[+-]\d{4}\b/g, "").trim();
+}
+
 function pickImageFromRssItem(it: RssItem): string | undefined {
   const mc = it?.["media:content"];
   if (Array.isArray(mc)) {
@@ -108,7 +123,7 @@ async function fetchRss(limit: number): Promise<FpNewsItem[]> {
       .map((it) => {
         const title = decodeEntities(String(it?.title ?? "")).trim();
         const url = String(it?.link ?? "").trim();
-        const date = it?.pubDate ? String(it.pubDate) : undefined;
+        const date = formatNewsDate(it?.pubDate ? String(it.pubDate) : undefined);
         const excerptRaw = it?.description ? String(it.description) : undefined;
         const excerpt = excerptRaw ? stripTags(decodeEntities(excerptRaw)).slice(0, 240) : undefined;
         const image = pickImageFromRssItem(it);
