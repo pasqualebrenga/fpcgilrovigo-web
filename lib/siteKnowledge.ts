@@ -247,7 +247,8 @@ export const categoryHints = [
   },
 ];
 
-const brengaComuni = [
+const rovigoComuni = [
+  "Adria",
   "Ariano nel Polesine",
   "Arquà Polesine",
   "Badia Polesine",
@@ -286,6 +287,7 @@ const brengaComuni = [
   "Porto Tolle",
   "Porto Viro",
   "Rosolina",
+  "Rovigo",
   "Salara",
   "San Bellino",
   "San Martino di Venezze",
@@ -297,6 +299,21 @@ const brengaComuni = [
   "Villanova del Ghebbo",
   "Villanova Marchesana",
 ];
+
+const brengaComuni = rovigoComuni.filter((name) => name !== "Adria" && name !== "Rovigo");
+
+const ipabAliasPrefixes = [
+  "IPAB",
+  "Casa di riposo",
+  "Case di riposo",
+  "Centro servizi anziani",
+  "Centri servizi anziani",
+  "CSA",
+  "Residenza per anziani",
+  "RSA",
+];
+
+const ipabComuneAliases = rovigoComuni.flatMap((name) => ipabAliasPrefixes.flatMap((prefix) => [`${prefix} ${name}`, `${prefix} di ${name}`]));
 
 export const entityAssignments: EntityAssignment[] = [
   { entity: "Comune di Adria", type: "comune", person: "Riccardo Mantovan", aliases: ["Adria"] },
@@ -311,7 +328,7 @@ export const entityAssignments: EntityAssignment[] = [
     entity: "IPAB della provincia di Rovigo",
     type: "ipab",
     person: "Sabrina Venzo",
-    aliases: ["IPAB", "casa di riposo", "case di riposo", "centro servizi anziani", "centri servizi anziani"],
+    aliases: ["IPAB", "casa di riposo", "case di riposo", "centro servizi anziani", "centri servizi anziani", ...ipabComuneAliases],
   },
 ];
 
@@ -349,7 +366,7 @@ ${categoryText}
 Indice enti:
 - Comune di Adria e Comune di Rovigo: riferimento Riccardo Mantovan.
 - Altri Comuni della provincia di Rovigo: riferimento Pasquale Brenga. Elenco: ${brengaComuniText}.
-- IPAB della provincia di Rovigo, case di riposo e centri servizi anziani: riferimento Sabrina Venzo.
+- IPAB della provincia di Rovigo, case di riposo, RSA e centri servizi anziani: riferimento Sabrina Venzo. Vale anche se l'utente scrive "IPAB di [Comune]", "Casa di riposo di [Comune]", "Centro servizi anziani [Comune]" o formule simili per un Comune della provincia.
 - Se l'utente indica un ente presente in questo indice, usa questo indice prima delle categorie generiche.
 
 Formazione:
