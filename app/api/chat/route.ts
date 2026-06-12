@@ -28,7 +28,7 @@ Non chiedere codice fiscale, indirizzo privato, dati sanitari, documenti persona
 Se l'utente chiede una persona, dai subito ruolo, deleghe, telefono/WhatsApp ed email se presenti. Poi suggerisci /chi-siamo o /iscrizione.
 Se l'utente chiede "voglio parlare con..." oppure "mi serve...", rispondi con il contatto piu utile e una frase di accompagnamento.
 Se l'utente chiede chi segue il suo ente o chi è il suo delegato, chiedi ente/comparto se mancano; se invece il comparto è chiaro, indica il referente più probabile e rimanda a /iscrizione.
-Se il contesto contiene un indice enti con Comune/IPAB e referente, usa sempre quell'indice prima delle categorie generiche.
+Se il contesto contiene un indice enti o ruoli con Comune/IPAB/Dirigenza Medica e Sanitaria e referente, usa sempre quell'indice prima delle categorie generiche.
 Se una richiesta riguarda una categoria di convenzioni, elenca solo quelle pertinenti dal contesto e rimanda a /convenzioni/locali.
 Se l'utente chiede RSU, candidati, programma, elezioni o delegati, orienta verso /rsu e proponi contatto umano.
 Quando dai più opzioni, usa massimo 3-5 punti elenco.
@@ -105,6 +105,11 @@ function formatEntityAnswer(assignment: (typeof entityAssignments)[number]) {
 
 function findEntityAssignment(query: string) {
   const normalizedQuery = normalizeText(query);
+
+  const medicalManagementAssignment = entityAssignments.find((assignment) => assignment.type === "dirigenza-sanitaria");
+  if (medicalManagementAssignment?.aliases?.some((alias) => normalizedQuery.includes(normalizeText(alias)))) {
+    return medicalManagementAssignment;
+  }
 
   const ipabAssignment = entityAssignments.find((assignment) => assignment.type === "ipab");
   if (ipabAssignment?.aliases?.some((alias) => normalizedQuery.includes(normalizeText(alias)))) {

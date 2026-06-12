@@ -17,7 +17,7 @@ export type LocalConvention = {
 
 export type EntityAssignment = {
   entity: string;
-  type: "comune" | "ipab";
+  type: "comune" | "ipab" | "dirigenza-sanitaria";
   person: string;
   aliases?: string[];
 };
@@ -217,8 +217,8 @@ export const localConventions: LocalConvention[] = [
 export const categoryHints = [
   {
     area: "Sanità pubblica e ULSS5 Polesana",
-    words: ["sanita pubblica", "ulss", "ulss5", "ospedale", "distretto", "dirigenza sanitaria", "medici"],
-    answer: "Per sanita pubblica, ULSS5 Polesana e dirigenza sanitaria i riferimenti principali sono Riccardo Mantovan e Pasquale Brenga, in base al tema specifico.",
+    words: ["sanita pubblica", "ulss", "ulss5", "ospedale", "distretto"],
+    answer: "Per sanita pubblica e ULSS5 Polesana i riferimenti principali sono Riccardo Mantovan e Pasquale Brenga, in base al tema specifico. Per dirigenza medica e sanitaria il riferimento indicato e Pasquale Brenga.",
   },
   {
     area: "Sanità privata, IPAB e socio-sanitario",
@@ -344,7 +344,55 @@ const ipabStructures = [
 
 const ipabStructureAliases = ipabStructures.flatMap((structure) => [structure.name, ...structure.aliases]);
 
+const medicalManagementAliases = [
+  "medico",
+  "medici",
+  "dirigenza medica",
+  "dirigenza sanitaria",
+  "dirigente medico",
+  "dirigenti medici",
+  "dirigente sanitario",
+  "dirigenti sanitari",
+  "area sanita",
+  "area sanitaria",
+  "professioni sanitarie dirigenza",
+  "farmacista",
+  "farmacisti",
+  "dirigente farmacista",
+  "dirigenti farmacisti",
+  "fisico",
+  "fisici",
+  "dirigente fisico",
+  "dirigenti fisici",
+  "biologo",
+  "biologi",
+  "dirigente biologo",
+  "dirigenti biologi",
+  "chimico",
+  "chimici",
+  "dirigente chimico",
+  "dirigenti chimici",
+  "psicologo",
+  "psicologi",
+  "dirigente psicologo",
+  "dirigenti psicologi",
+  "veterinario",
+  "veterinari",
+  "dirigente veterinario",
+  "dirigenti veterinari",
+  "odontoiatra",
+  "odontoiatri",
+  "dirigente odontoiatra",
+  "dirigenti odontoiatri",
+];
+
 export const entityAssignments: EntityAssignment[] = [
+  {
+    entity: "Dirigenza Medica e Sanitaria",
+    type: "dirigenza-sanitaria",
+    person: "Pasquale Brenga",
+    aliases: medicalManagementAliases,
+  },
   { entity: "Comune di Adria", type: "comune", person: "Riccardo Mantovan", aliases: ["Adria"] },
   { entity: "Comune di Rovigo", type: "comune", person: "Riccardo Mantovan", aliases: ["Rovigo"] },
   ...brengaComuni.map((name) => ({
@@ -372,6 +420,7 @@ export function buildStaticKnowledge() {
   const categoryText = categoryHints.map((hint) => `- ${hint.area}: ${hint.answer} Parole utili: ${hint.words.join(", ")}.`).join("\n");
   const brengaComuniText = brengaComuni.join(", ");
   const ipabStructuresText = ipabStructures.map((structure) => structure.name).join(", ");
+  const medicalManagementText = medicalManagementAliases.join(", ");
 
   return `
 Contatti ufficiali:
@@ -394,6 +443,7 @@ Orientamento per categoria:
 ${categoryText}
 
 Indice enti:
+- Dirigenza Medica e Sanitaria: riferimento Pasquale Brenga. Include medici e tutte le figure della dirigenza sanitaria: ${medicalManagementText}.
 - Comune di Adria e Comune di Rovigo: riferimento Riccardo Mantovan.
 - Altri Comuni della provincia di Rovigo: riferimento Pasquale Brenga. Elenco: ${brengaComuniText}.
 - IPAB della provincia di Rovigo, case di riposo, RSA e centri servizi anziani: riferimento Sabrina Venzo. Vale anche se l'utente scrive "IPAB di [Comune]", "Casa di riposo di [Comune]", "Centro servizi anziani [Comune]" o formule simili per un Comune della provincia. Strutture IPAB indicate nell'elenco RO: ${ipabStructuresText}.
