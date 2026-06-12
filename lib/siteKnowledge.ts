@@ -15,6 +15,13 @@ export type LocalConvention = {
   page: string;
 };
 
+export type EntityAssignment = {
+  entity: string;
+  type: "comune" | "ipab";
+  person: string;
+  aliases?: string[];
+};
+
 export const sitePages = [
   {
     title: "Home",
@@ -240,6 +247,74 @@ export const categoryHints = [
   },
 ];
 
+const brengaComuni = [
+  "Ariano nel Polesine",
+  "Arquà Polesine",
+  "Badia Polesine",
+  "Bagnolo di Po",
+  "Bergantino",
+  "Bosaro",
+  "Calto",
+  "Canaro",
+  "Canda",
+  "Castelguglielmo",
+  "Castelmassa",
+  "Castelnovo Bariano",
+  "Ceneselli",
+  "Ceregnano",
+  "Corbola",
+  "Costa di Rovigo",
+  "Crespino",
+  "Ficarolo",
+  "Fiesso Umbertiano",
+  "Frassinelle Polesine",
+  "Fratta Polesine",
+  "Gaiba",
+  "Gavello",
+  "Giacciano con Baruchella",
+  "Guarda Veneta",
+  "Lendinara",
+  "Loreo",
+  "Lusia",
+  "Melara",
+  "Occhiobello",
+  "Papozze",
+  "Pettorazza Grimani",
+  "Pincara",
+  "Polesella",
+  "Pontecchio Polesine",
+  "Porto Tolle",
+  "Porto Viro",
+  "Rosolina",
+  "Salara",
+  "San Bellino",
+  "San Martino di Venezze",
+  "Stienta",
+  "Taglio di Po",
+  "Trecenta",
+  "Villadose",
+  "Villamarzana",
+  "Villanova del Ghebbo",
+  "Villanova Marchesana",
+];
+
+export const entityAssignments: EntityAssignment[] = [
+  { entity: "Comune di Adria", type: "comune", person: "Riccardo Mantovan", aliases: ["Adria"] },
+  { entity: "Comune di Rovigo", type: "comune", person: "Riccardo Mantovan", aliases: ["Rovigo"] },
+  ...brengaComuni.map((name) => ({
+    entity: `Comune di ${name}`,
+    type: "comune" as const,
+    person: "Pasquale Brenga",
+    aliases: [name],
+  })),
+  {
+    entity: "IPAB della provincia di Rovigo",
+    type: "ipab",
+    person: "Sabrina Venzo",
+    aliases: ["IPAB", "casa di riposo", "case di riposo", "centro servizi anziani", "centri servizi anziani"],
+  },
+];
+
 export function buildStaticKnowledge() {
   const pageText = sitePages.map((page) => `- ${page.title} (${page.path}): ${page.summary}`).join("\n");
   const peopleText = people
@@ -249,6 +324,7 @@ export function buildStaticKnowledge() {
     .map((conv) => `- ${conv.name}: ${conv.offer} Tag: ${conv.tags.join(", ")}. Pagina: ${conv.page}. ${conv.phone ? `Telefono: ${conv.phone}.` : ""}`)
     .join("\n");
   const categoryText = categoryHints.map((hint) => `- ${hint.area}: ${hint.answer} Parole utili: ${hint.words.join(", ")}.`).join("\n");
+  const brengaComuniText = brengaComuni.join(", ");
 
   return `
 Contatti ufficiali:
@@ -269,6 +345,12 @@ ${conventionsText}
 
 Orientamento per categoria:
 ${categoryText}
+
+Indice enti:
+- Comune di Adria e Comune di Rovigo: riferimento Riccardo Mantovan.
+- Altri Comuni della provincia di Rovigo: riferimento Pasquale Brenga. Elenco: ${brengaComuniText}.
+- IPAB della provincia di Rovigo, case di riposo e centri servizi anziani: riferimento Sabrina Venzo.
+- Se l'utente indica un ente presente in questo indice, usa questo indice prima delle categorie generiche.
 
 Formazione:
 - Portale esterno: https://fpformazione.it/

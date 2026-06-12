@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getFpHomepageNews } from "../../../lib/fpnews";
-import { buildStaticKnowledge, categoryHints, localConventions, officialContacts, people } from "../../../lib/siteKnowledge";
+import { buildStaticKnowledge, categoryHints, entityAssignments, localConventions, officialContacts, people } from "../../../lib/siteKnowledge";
 
 export const runtime = "nodejs";
 
@@ -28,6 +28,7 @@ Non chiedere codice fiscale, indirizzo privato, dati sanitari, documenti persona
 Se l'utente chiede una persona, dai subito ruolo, deleghe, telefono/WhatsApp ed email se presenti. Poi suggerisci /chi-siamo o /iscrizione.
 Se l'utente chiede "voglio parlare con..." oppure "mi serve...", rispondi con il contatto piu utile e una frase di accompagnamento.
 Se l'utente chiede chi segue il suo ente o chi è il suo delegato, chiedi ente/comparto se mancano; se invece il comparto è chiaro, indica il referente più probabile e rimanda a /iscrizione.
+Se il contesto contiene un indice enti con Comune/IPAB e referente, usa sempre quell'indice prima delle categorie generiche.
 Se una richiesta riguarda una categoria di convenzioni, elenca solo quelle pertinenti dal contesto e rimanda a /convenzioni/locali.
 Se l'utente chiede RSU, candidati, programma, elezioni o delegati, orienta verso /rsu e proponi contatto umano.
 Quando dai più opzioni, usa massimo 3-5 punti elenco.
@@ -86,6 +87,37 @@ function formatPersonAnswer(person: (typeof people)[number]) {
   return `Certo. ${person.name} è ${person.role}. Segue: ${person.areas}. ${contacts ? `${contacts}. ` : ""}Se vuoi essere indirizzato nel modo più preciso puoi usare /iscrizione, oppure vedere il riepilogo in /chi-siamo.`;
 }
 
+function formatEntityAnswer(assignment: (typeof entityAssignments)[number]) {
+  const person = people.find((item) => item.name === assignment.person);
+  if (!person) return `Per ${assignment.entity} il riferimento indicato è ${assignment.person}.`;
+
+  const whatsappUrl = person.phone ? `https://wa.me/39${person.phone.replace(/\D/g, "")}` : null;
+  const contacts = [
+    person.phone ? `Telefono: ${person.phone}` : null,
+    whatsappUrl ? `WhatsApp: ${whatsappUrl}` : null,
+    person.email ? `Email: ${person.email}` : null,
+  ]
+    .filter(Boolean)
+    .join(". ");
+
+  return `Per ${assignment.entity} il riferimento è ${person.name}, ${person.role}. ${contacts ? `${contacts}. ` : ""}Trovi il riepilogo in /chi-siamo; per essere indirizzato con precisione puoi usare anche /iscrizione.`;
+}
+
+function findEntityAssignment(query: string) {
+  const normalizedQuery = normalizeText(query);
+
+  const ipabAssignment = entityAssignments.find((assignment) => assignment.type === "ipab");
+  if (ipabAssignment?.aliases?.some((alias) => normalizedQuery.includes(normalizeText(alias)))) {
+    return ipabAssignment;
+  }
+
+  return entityAssignments.find((assignment) => {
+    if (assignment.type !== "comune") return false;
+    const names = [assignment.entity, ...(assignment.aliases || [])];
+    return names.some((name) => normalizedQuery.includes(normalizeText(name)));
+  });
+}
+
 function formatConventionAnswer(matches: typeof localConventions) {
   const items = matches
     .slice(0, 5)
@@ -137,6 +169,11 @@ async function fallbackAnswer(messages: ChatMessage[]) {
   const person = people.find((p) => personMatches(p.name, normalizedLast));
   if (person) {
     return formatPersonAnswer(person);
+  }
+
+  const entityAssignment = findEntityAssignment(normalizedLast);
+  if (entityAssignment) {
+    return formatEntityAnswer(entityAssignment);
   }
 
   const conventionMatches = localConventions.filter((conv) => conventionMatchesQuery(conv, normalizedLast));
