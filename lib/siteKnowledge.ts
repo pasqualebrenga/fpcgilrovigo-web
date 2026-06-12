@@ -315,6 +315,35 @@ const ipabAliasPrefixes = [
 
 const ipabComuneAliases = rovigoComuni.flatMap((name) => ipabAliasPrefixes.flatMap((prefix) => [`${prefix} ${name}`, `${prefix} di ${name}`]));
 
+const ipabStructures = [
+  {
+    name: "Centro Servizi Anziani di Adria",
+    aliases: ["Centro Servizi Anziani Adria", "CSA Adria"],
+  },
+  {
+    name: "Casa del Sorriso di Badia Polesine",
+    aliases: ["Casa del Sorriso", "Casa del Sorriso Badia Polesine"],
+  },
+  {
+    name: "Casa Albergo per Anziani di Lendinara",
+    aliases: ["Casa Albergo per Anziani", "Casa Albergo Anziani Lendinara"],
+  },
+  {
+    name: "Opera Pia F. Bottoni di Papozze",
+    aliases: ["Opera Pia F. Bottoni", "Opera Pia Bottoni", "Bottoni Papozze", "F. Bottoni"],
+  },
+  {
+    name: "I.R.A.S. - Istituto Rodigino di Assistenza Sociale di Rovigo",
+    aliases: ["IRAS", "I.R.A.S.", "IRAS Rovigo", "Istituto Rodigino di Assistenza Sociale", "Istituto Rodigino Assistenza Sociale"],
+  },
+  {
+    name: "Centro dei Servizi Sociali C. Resemini di Stienta",
+    aliases: ["Centro dei Servizi Sociali C. Resemini", "C. Resemini", "Resemini", "Resemini Stienta"],
+  },
+];
+
+const ipabStructureAliases = ipabStructures.flatMap((structure) => [structure.name, ...structure.aliases]);
+
 export const entityAssignments: EntityAssignment[] = [
   { entity: "Comune di Adria", type: "comune", person: "Riccardo Mantovan", aliases: ["Adria"] },
   { entity: "Comune di Rovigo", type: "comune", person: "Riccardo Mantovan", aliases: ["Rovigo"] },
@@ -328,7 +357,7 @@ export const entityAssignments: EntityAssignment[] = [
     entity: "IPAB della provincia di Rovigo",
     type: "ipab",
     person: "Sabrina Venzo",
-    aliases: ["IPAB", "casa di riposo", "case di riposo", "centro servizi anziani", "centri servizi anziani", ...ipabComuneAliases],
+    aliases: ["IPAB", "casa di riposo", "case di riposo", "centro servizi anziani", "centri servizi anziani", ...ipabComuneAliases, ...ipabStructureAliases],
   },
 ];
 
@@ -342,6 +371,7 @@ export function buildStaticKnowledge() {
     .join("\n");
   const categoryText = categoryHints.map((hint) => `- ${hint.area}: ${hint.answer} Parole utili: ${hint.words.join(", ")}.`).join("\n");
   const brengaComuniText = brengaComuni.join(", ");
+  const ipabStructuresText = ipabStructures.map((structure) => structure.name).join(", ");
 
   return `
 Contatti ufficiali:
@@ -366,7 +396,7 @@ ${categoryText}
 Indice enti:
 - Comune di Adria e Comune di Rovigo: riferimento Riccardo Mantovan.
 - Altri Comuni della provincia di Rovigo: riferimento Pasquale Brenga. Elenco: ${brengaComuniText}.
-- IPAB della provincia di Rovigo, case di riposo, RSA e centri servizi anziani: riferimento Sabrina Venzo. Vale anche se l'utente scrive "IPAB di [Comune]", "Casa di riposo di [Comune]", "Centro servizi anziani [Comune]" o formule simili per un Comune della provincia.
+- IPAB della provincia di Rovigo, case di riposo, RSA e centri servizi anziani: riferimento Sabrina Venzo. Vale anche se l'utente scrive "IPAB di [Comune]", "Casa di riposo di [Comune]", "Centro servizi anziani [Comune]" o formule simili per un Comune della provincia. Strutture IPAB indicate nell'elenco RO: ${ipabStructuresText}.
 - Se l'utente indica un ente presente in questo indice, usa questo indice prima delle categorie generiche.
 
 Formazione:
