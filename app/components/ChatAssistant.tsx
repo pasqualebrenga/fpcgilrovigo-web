@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { ExternalLink, MessageCircle, Send, Sparkles, X } from "lucide-react";
+import { ExternalLink, Send, Sparkles, X } from "lucide-react";
 
 type Message = {
   role: "user" | "assistant";
@@ -22,6 +22,8 @@ const WELCOME: Message = {
   content:
     "Ciao, sono Quadrato Rosso. Ti aiuto a trovare la persona giusta, una convenzione, una notizia FP CGIL o il percorso migliore per iscrizione, formazione e RSU.",
 };
+
+const QUADRATO_ROSSO_LOGO = "/images/brand/quadrato-rosso.png";
 
 const INTERNAL_LINKS = new Set([
   "/",
@@ -136,11 +138,11 @@ export default function ChatAssistant() {
         .fpChatToggle {
           border: 0;
           border-radius: 999px;
-          background: linear-gradient(135deg, #d40000 0%, #9d0000 100%);
+          background: linear-gradient(135deg, #df0000 0%, #a60000 100%);
           color: #fff;
           min-width: 58px;
           height: 58px;
-          padding: 0 18px;
+          padding: 0 18px 0 10px;
           display: inline-flex;
           align-items: center;
           justify-content: center;
@@ -156,6 +158,25 @@ export default function ChatAssistant() {
         }
         .fpChatToggleLabel {
           display: inline;
+        }
+        .fpChatToggleLogo {
+          width: 40px;
+          height: 40px;
+          border-radius: 12px;
+          background: #e30613;
+          border: 1px solid rgba(255,255,255,0.28);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          box-shadow: 0 8px 18px rgba(0,0,0,0.20);
+          flex: 0 0 auto;
+        }
+        .fpChatToggleLogo img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
         }
         .fpChatPanel {
           width: min(390px, calc(100vw - 24px));
@@ -173,7 +194,7 @@ export default function ChatAssistant() {
             linear-gradient(135deg, rgba(212,0,0,0.92) 0%, rgba(17,17,17,1) 54%, rgba(17,17,17,1) 100%),
             #111;
           color: #fff;
-          padding: 14px;
+          padding: 14px 14px 14px 12px;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -187,7 +208,7 @@ export default function ChatAssistant() {
         }
         .fpChatTitle strong {
           display: block;
-          font-size: 15px;
+          font-size: 17px;
           line-height: 1.1;
         }
         .fpChatTitle span {
@@ -197,15 +218,15 @@ export default function ChatAssistant() {
           margin-top: 2px;
         }
         .fpChatMark {
-          width: 48px;
-          height: 48px;
-          border-radius: 8px;
-          background: #e30613;
+          width: 64px;
+          height: 64px;
+          border-radius: 14px;
+          background: #df0000;
           display: inline-flex;
           align-items: center;
           justify-content: center;
           flex: 0 0 auto;
-          box-shadow: inset 0 0 0 2px rgba(255,255,255,0.18), 0 10px 24px rgba(0,0,0,0.22);
+          box-shadow: inset 0 0 0 1px rgba(255,255,255,0.22), 0 10px 24px rgba(0,0,0,0.22);
           overflow: hidden;
         }
         .fpChatMark img {
@@ -371,11 +392,29 @@ export default function ChatAssistant() {
           .fpChatToggleLabel {
             display: none;
           }
+          .fpChatToggle {
+            width: 62px;
+            height: 62px;
+            padding: 0;
+          }
+          .fpChatToggleLogo {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+          }
           .fpChatPanel {
             width: 100%;
             height: 100%;
             max-height: calc(100dvh - 16px);
             border-radius: 14px;
+          }
+          .fpChatMark {
+            width: 58px;
+            height: 58px;
+            border-radius: 13px;
+          }
+          .fpChatTitle strong {
+            font-size: 16px;
           }
         }
       `}</style>
@@ -385,7 +424,7 @@ export default function ChatAssistant() {
           <div className="fpChatHead">
             <div className="fpChatTitle">
               <span className="fpChatMark" aria-hidden="true">
-                <Image src="/images/brand/logo.png" alt="" width={96} height={96} sizes="48px" priority={false} />
+                <Image src={QUADRATO_ROSSO_LOGO} alt="" width={128} height={128} sizes="64px" priority={false} />
               </span>
               <div>
                 <strong>Quadrato Rosso</strong>
@@ -443,7 +482,9 @@ export default function ChatAssistant() {
         </section>
       ) : (
         <button className="fpChatToggle" type="button" onClick={() => setOpen(true)} aria-label="Apri Quadrato Rosso">
-          <MessageCircle size={22} />
+          <span className="fpChatToggleLogo" aria-hidden="true">
+            <Image src={QUADRATO_ROSSO_LOGO} alt="" width={92} height={92} sizes="46px" priority={false} />
+          </span>
           <span className="fpChatToggleLabel">Chiedi al Quadrato</span>
         </button>
       )}
