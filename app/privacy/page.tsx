@@ -35,6 +35,12 @@ export default function PrivacyPage() {
           del sito, trattati per fornire una risposta automatizzata e indirizzare l’utente verso pagine,
           contatti o informazioni utili.
         </li>
+        <li>
+          <b>Richieste gestite tramite Quadrato Rosso Segreteria AI</b>: eventuali testi, trascrizioni,
+          contenuti vocali, numero chiamante o recapiti forniti volontariamente dall’utente, trattati
+          esclusivamente per comprendere la richiesta, orientare l’utente o consentire un eventuale
+          ricontatto da parte di FP CGIL Rovigo.
+        </li>
       </ul>
 
       <h2>Finalità e basi giuridiche</h2>
@@ -50,6 +56,11 @@ export default function PrivacyPage() {
           <b>Quadrato Rosso</b>: supporto informativo di primo orientamento su contenuti del sito,
           referenti, convenzioni e news FP CGIL, sulla base della richiesta volontaria dell’utente.
         </li>
+        <li>
+          <b>Quadrato Rosso Segreteria AI</b>: gestione di richieste testuali o vocali di primo
+          orientamento, eventuale raccolta minima dei dati necessari al ricontatto e smistamento verso
+          la sede o il referente competente, sulla base della richiesta volontaria dell’utente.
+        </li>
       </ul>
 
       <h2>Modalità del trattamento</h2>
@@ -61,7 +72,8 @@ export default function PrivacyPage() {
       <h2>Destinatari</h2>
       <p>
         I dati possono essere trattati da fornitori tecnici che supportano l’erogazione del servizio
-        (es. hosting e manutenzione), nominati – se necessario – responsabili del trattamento.
+        (es. hosting, manutenzione, servizi di intelligenza artificiale, eventuali servizi di segreteria
+        AI o telefonia digitale), nominati – se necessario – responsabili del trattamento.
       </p>
 
       <h2>Quadrato Rosso</h2>
@@ -76,6 +88,34 @@ export default function PrivacyPage() {
         non necessari, documenti personali o dettagli relativi a procedimenti e situazioni individuali
         delicate. Per tali casi è preferibile contattare direttamente FP CGIL Rovigo tramite i canali
         ufficiali.
+      </p>
+
+      <h2>Quadrato Rosso Segreteria AI</h2>
+      <p>
+        FP CGIL Rovigo può sperimentare servizi di segreteria AI collegati a Quadrato Rosso, anche tramite
+        fornitori tecnici specializzati come Fonio, per raccogliere richieste di primo orientamento,
+        facilitare il contatto con la sede e indirizzare l’utente al referente più adatto.
+      </p>
+      <p>
+        In base al canale utilizzato, possono essere trattati contenuti testuali o vocali forniti
+        volontariamente dall’utente, eventuali trascrizioni della richiesta, dati tecnici della sessione
+        o della chiamata e recapiti indicati dall’utente per essere ricontattato. Tali dati sono trattati
+        esclusivamente per comprendere e rielaborare la richiesta, fornire una risposta di primo livello
+        o consentire il successivo ricontatto.
+      </p>
+      <p>
+        I dati conferiti tramite la Segreteria AI non devono contenere informazioni non necessarie,
+        categorie particolari di dati personali, dati sanitari, documenti, codici fiscali o dettagli
+        relativi a vertenze, procedimenti disciplinari o situazioni personali delicate. In questi casi
+        l’utente è invitato a utilizzare i canali ufficiali della sede o a parlare direttamente con un
+        referente.
+      </p>
+      <p>
+        I contenuti delle richieste sono conservati solo per il tempo strettamente necessario alla gestione,
+        rielaborazione tecnica e indirizzamento della richiesta, salvo eventuali esigenze di sicurezza,
+        prevenzione di abusi, obblighi di legge o necessità di tutela. Eventuali ulteriori tempi tecnici
+        di conservazione applicati dal fornitore sono disciplinati dai relativi accordi di servizio e
+        trattamento dati.
       </p>
 
       <h2>Conservazione</h2>
