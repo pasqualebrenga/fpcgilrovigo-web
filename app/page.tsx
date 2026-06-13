@@ -117,9 +117,9 @@ function DigitaCgilCard() {
         style={{
           width: 62,
           height: 62,
-          borderRadius: 16,
-          background: "#fff",
-          border: "1px solid rgba(0,0,0,0.10)",
+          borderRadius: 18,
+          background: "#d70a2e",
+          border: "1px solid rgba(212,0,0,0.22)",
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
@@ -127,7 +127,7 @@ function DigitaCgilCard() {
           overflow: "hidden",
         }}
       >
-        <Image src="/images/brand/digita-cgil-icon.png" alt="" width={50} height={50} sizes="50px" />
+        <Image src="/images/brand/digita-cgil-icon.png" alt="" width={62} height={62} sizes="62px" />
       </a>
 
       <div style={{ minWidth: 0 }}>
