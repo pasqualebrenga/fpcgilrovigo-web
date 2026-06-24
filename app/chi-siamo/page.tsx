@@ -126,7 +126,7 @@ const PERSONE: Persona[] = [
     ruolo: "Segretaria",
     deleghe: "Igiene Ambientale, IPAB socio-sanitario, Socio-sanitario privato, Previdenza Complementare, Formazione, Politiche di Genere",
     settori:
-      "Ecoambiente, IPAB e case di Riposo Private, Cooperative sociali, Perseo / Previdenza Cooperativa / Previambiente",
+      "Ecoambiente, IPAB e case di Riposo Private, Cooperative sociali, Perseo / Previdenza Complementare / Previambiente",
     telefono: "3450623870",
     email: "fp.ro.denanni@veneto.cgil.it",
     foto: "/segreteria/denanni.jpg",
@@ -146,7 +146,7 @@ const PERSONE: Persona[] = [
     nome: "Silvia Saccardin",
     ruolo: "Segretaria",
     deleghe: "Sanità Pubblica, Previdenza Complementare, Formazione, Convenzioni",
-    settori: "ULSS5 Polesana, Perseo, Previdenza Cooperativa, Previambiente, Formazione concorsi, Formazione delegati",
+    settori: "ULSS5 Polesana, Perseo, Previdenza Complementare, Formazione concorsi, Formazione delegati",
     email: "fp.ro.saccardin@veneto.cgil.it",
     foto: "/segreteria/saccardin.jpg",
   },
