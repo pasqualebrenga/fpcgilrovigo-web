@@ -126,7 +126,7 @@ const PERSONE: Persona[] = [
     ruolo: "Segretaria",
     deleghe: "Igiene Ambientale, IPAB socio-sanitario, Socio-sanitario privato, Previdenza Complementare, Formazione, Politiche di Genere",
     settori:
-      "Ecoambiente, Case di riposo pubbliche e private, Cooperative sociali, Perseo / Previdenza Cooperativa / Previambiente",
+      "Ecoambiente, IPAB e case di Riposo Private, Cooperative sociali, Perseo / Previdenza Cooperativa / Previambiente",
     telefono: "3450623870",
     email: "fp.ro.denanni@veneto.cgil.it",
     foto: "/segreteria/denanni.jpg",
