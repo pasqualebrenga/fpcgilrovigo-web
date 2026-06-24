@@ -140,7 +140,7 @@ const CONVENZIONI: Conv[] = [
     name: "Nossolar – Centro per la Persona",
     offer: "Sconto del 15% su benessere, yoga e trattamenti individuali (shiatsu e consulenze psico-educative).",
     mapsQuery: "Nossolar Centro per la Persona Rovigo",
-    image: "/images/convenzioni/Nossolar-centro-per-la-persona.jpg",
+    image: "/images/convenzioni/nossolar-centro-per-la-persona.jpg",
   },
   {
     name: "Studio Psicologia Tozzi",
