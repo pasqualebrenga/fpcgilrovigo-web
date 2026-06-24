@@ -27,8 +27,9 @@ Se la domanda riguarda un caso personale, una vertenza, salute, procedimenti dis
 Non chiedere codice fiscale, indirizzo privato, dati sanitari, documenti personali o dettagli disciplinari.
 Se l'utente chiede una persona, dai subito ruolo, deleghe, telefono/WhatsApp ed email se presenti. Poi suggerisci /chi-siamo o /iscrizione.
 Se l'utente chiede "voglio parlare con..." oppure "mi serve...", rispondi con il contatto piu utile e una frase di accompagnamento.
+Se l'utente dice che lavora in ospedale, ULSS5, sanita pubblica o Azienda ULSS5 Polesana, non trattare "Rovigo" come Comune: chiedi prima se è dirigente medico/sanitario oppure lavoratore/lavoratrice del comparto. Se è dirigente medico/sanitario, indirizza a Pasquale Brenga; se è comparto sanita pubblica, indirizza a Riccardo Mantovan.
 Se l'utente chiede chi segue il suo ente o chi è il suo delegato, chiedi ente/comparto se mancano; se invece il comparto è chiaro, indica il referente più probabile e rimanda a /iscrizione.
-Se il contesto contiene un indice enti o ruoli con Comune/IPAB/Dirigenza Medica e Sanitaria e referente, usa sempre quell'indice prima delle categorie generiche.
+Se il contesto contiene un indice enti o ruoli con Comune/IPAB/Dirigenza Medica e Sanitaria e referente, usa sempre quell'indice prima delle categorie generiche, tranne quando la frase contiene ospedale/ULSS/sanita pubblica: in quel caso prima chiarisci comparto o dirigenza.
 Se una richiesta riguarda una categoria di convenzioni, elenca solo quelle pertinenti dal contesto e rimanda a /convenzioni/locali.
 Se l'utente chiede RSU, candidati, programma, elezioni o delegati, orienta verso /rsu e proponi contatto umano.
 Quando dai più opzioni, usa massimo 3-5 punti elenco.
@@ -103,6 +104,45 @@ function formatEntityAnswer(assignment: (typeof entityAssignments)[number]) {
   return `Per ${assignment.entity} il riferimento è ${person.name}, ${person.role}. ${contacts ? `${contacts}. ` : ""}Trovi il riepilogo in /chi-siamo; per essere indirizzato con precisione puoi usare anche /iscrizione.`;
 }
 
+function isPublicHealthcareQuery(query: string) {
+  const normalizedQuery = normalizeText(query);
+  return ["ospedale", "ulss", "ulss5", "azienda ulss", "sanita pubblica", "sanitario pubblico"].some((word) => normalizedQuery.includes(normalizeText(word)));
+}
+
+function hasManagementSignal(query: string) {
+  const normalizedQuery = normalizeText(query);
+  return ["dirigenza", "dirigente", "medico", "medici", "farmacista", "farmacisti", "fisico", "fisici", "biologo", "biologi", "chimico", "chimici", "psicologo", "psicologi", "veterinario", "veterinari"].some((word) =>
+    normalizedQuery.includes(normalizeText(word))
+  );
+}
+
+function hasHealthcareStaffSignal(query: string) {
+  const normalizedQuery = normalizeText(query);
+  return ["comparto", "infermiere", "infermieri", "oss", "operatore socio sanitario", "tecnico", "tecnici", "amministrativo", "amministrativi", "ostetrica", "ostetriche", "fisioterapista", "fisioterapisti"].some((word) =>
+    normalizedQuery.includes(normalizeText(word))
+  );
+}
+
+function formatPublicHealthcareClarification() {
+  return "Se lavori in ospedale o in ULSS5 Polesana devo capire una cosa per indirizzarti bene: sei dirigente medico/sanitario oppure lavoratore/lavoratrice del comparto sanità pubblica? Per la dirigenza medica e sanitaria il riferimento è Pasquale Brenga; per il comparto sanità pubblica il riferimento è Riccardo Mantovan.";
+}
+
+function formatPublicHealthcareStaffAnswer() {
+  const person = people.find((item) => item.name === "Riccardo Mantovan");
+  if (!person) return "Per il comparto sanità pubblica il riferimento indicato è Riccardo Mantovan. Puoi usare anche /iscrizione per essere indirizzato con precisione.";
+
+  const whatsappUrl = person.phone ? `https://wa.me/39${person.phone.replace(/\D/g, "")}` : null;
+  const contacts = [
+    person.phone ? `Telefono: ${person.phone}` : null,
+    whatsappUrl ? `WhatsApp: ${whatsappUrl}` : null,
+    person.email ? `Email: ${person.email}` : null,
+  ]
+    .filter(Boolean)
+    .join(". ");
+
+  return `Per il comparto sanità pubblica e l'ospedale il riferimento è ${person.name}, ${person.role}. ${contacts ? `${contacts}. ` : ""}Trovi il riepilogo in /chi-siamo; per essere indirizzato con precisione puoi usare anche /iscrizione.`;
+}
+
 function findEntityAssignment(query: string) {
   const normalizedQuery = normalizeText(query);
 
@@ -174,6 +214,19 @@ async function fallbackAnswer(messages: ChatMessage[]) {
   const person = people.find((p) => personMatches(p.name, normalizedLast));
   if (person) {
     return formatPersonAnswer(person);
+  }
+
+  if (isPublicHealthcareQuery(normalizedLast)) {
+    if (hasManagementSignal(normalizedLast)) {
+      const medicalManagementAssignment = entityAssignments.find((assignment) => assignment.type === "dirigenza-sanitaria");
+      if (medicalManagementAssignment) return formatEntityAnswer(medicalManagementAssignment);
+    }
+
+    if (hasHealthcareStaffSignal(normalizedLast)) {
+      return formatPublicHealthcareStaffAnswer();
+    }
+
+    return formatPublicHealthcareClarification();
   }
 
   const entityAssignment = findEntityAssignment(normalizedLast);

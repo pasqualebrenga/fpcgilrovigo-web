@@ -218,7 +218,7 @@ export const categoryHints = [
   {
     area: "Sanità pubblica e ULSS5 Polesana",
     words: ["sanita pubblica", "ulss", "ulss5", "ospedale", "distretto"],
-    answer: "Per sanita pubblica e ULSS5 Polesana i riferimenti principali sono Riccardo Mantovan e Pasquale Brenga, in base al tema specifico. Per dirigenza medica e sanitaria il riferimento indicato e Pasquale Brenga.",
+    answer: "Per sanita pubblica, ospedale e ULSS5 Polesana bisogna distinguere: comparto sanita pubblica riferimento Riccardo Mantovan; dirigenza medica e sanitaria riferimento Pasquale Brenga. Se l'utente non specifica, chiedi se e dirigente medico/sanitario oppure lavoratore/lavoratrice del comparto.",
   },
   {
     area: "Sanità privata, IPAB e socio-sanitario",
@@ -444,6 +444,7 @@ ${categoryText}
 
 Indice enti:
 - Dirigenza Medica e Sanitaria: riferimento Pasquale Brenga. Include medici e tutte le figure della dirigenza sanitaria: ${medicalManagementText}.
+- Ospedale, Azienda ULSS5 Polesana, ULSS5 e sanita pubblica a Rovigo non vanno trattati come Comune di Rovigo. Se l'utente dice "lavoro in ospedale a Rovigo" o frasi simili, chiedi prima se e dirigente medico/sanitario oppure lavoratore/lavoratrice del comparto. Se e dirigenza medica/sanitaria: Pasquale Brenga. Se e comparto sanita pubblica: Riccardo Mantovan.
 - Comune di Adria e Comune di Rovigo: riferimento Riccardo Mantovan.
 - Altri Comuni della provincia di Rovigo: riferimento Pasquale Brenga. Elenco: ${brengaComuniText}.
 - IPAB della provincia di Rovigo, case di riposo, RSA e centri servizi anziani: riferimento Sabrina Venzo. Vale anche se l'utente scrive "IPAB di [Comune]", "Casa di riposo di [Comune]", "Centro servizi anziani [Comune]" o formule simili per un Comune della provincia. Strutture IPAB indicate nell'elenco RO: ${ipabStructuresText}.
