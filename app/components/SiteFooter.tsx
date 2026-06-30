@@ -32,6 +32,33 @@ export default function SiteFooter() {
           style={{
             display: "flex",
             flexWrap: "wrap",
+            gap: 12,
+            alignItems: "center",
+            marginBottom: 12,
+            fontSize: 13,
+          }}
+        >
+          <span className="muted" style={{ fontWeight: 800 }}>
+            Aree di tutela:
+          </span>
+          <a href="/sanita-pubblica-ulss5-rovigo" style={linkStyle}>
+            Sanità pubblica
+          </a>
+          <a href="/enti-locali-comuni-rovigo" style={linkStyle}>
+            Enti locali
+          </a>
+          <a href="/ipab-case-riposo-rovigo" style={linkStyle}>
+            IPAB e case di riposo
+          </a>
+          <a href="/funzioni-centrali-rovigo" style={linkStyle}>
+            Funzioni centrali
+          </a>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
             gap: 10,
             alignItems: "center",
             justifyContent: "space-between",

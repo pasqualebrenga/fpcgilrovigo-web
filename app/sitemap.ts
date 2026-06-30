@@ -10,9 +10,13 @@ const routes = [
   "/convenzioni/locali",
   "/convenzioni/nazionali",
   "/formazione",
+  "/funzioni-centrali-rovigo",
+  "/enti-locali-comuni-rovigo",
+  "/ipab-case-riposo-rovigo",
   "/iscrizione",
   "/news",
   "/rsu",
+  "/sanita-pubblica-ulss5-rovigo",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

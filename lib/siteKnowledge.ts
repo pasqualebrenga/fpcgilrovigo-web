@@ -34,6 +34,26 @@ export const sitePages = [
     summary: "Percorso guidato per indirizzare l'utente al referente corretto in base a settore e ente.",
   },
   {
+    title: "Sanità pubblica e ULSS5 Polesana",
+    path: "/sanita-pubblica-ulss5-rovigo",
+    summary: "Pagina pratica per lavoratrici e lavoratori di ospedale, distretti, sanità pubblica e ULSS5 Polesana; distingue comparto e dirigenza medica o sanitaria.",
+  },
+  {
+    title: "Enti locali e Comuni della provincia di Rovigo",
+    path: "/enti-locali-comuni-rovigo",
+    summary: "Pagina pratica per Comuni, Provincia e altri enti locali del territorio di Rovigo.",
+  },
+  {
+    title: "IPAB, case di riposo e socio-sanitario",
+    path: "/ipab-case-riposo-rovigo",
+    summary: "Pagina pratica per IPAB, case di riposo, RSA, centri servizi anziani e socio-sanitario.",
+  },
+  {
+    title: "Funzioni centrali a Rovigo",
+    path: "/funzioni-centrali-rovigo",
+    summary: "Pagina pratica per Ministeri, Agenzia delle Entrate, INPS, ACI e uffici pubblici statali.",
+  },
+  {
     title: "Chi siamo",
     path: "/chi-siamo",
     summary: "Segreteria FP CGIL Rovigo, ruoli, deleghe, settori, contatti telefonici, WhatsApp ed email.",
@@ -218,22 +238,22 @@ export const categoryHints = [
   {
     area: "Sanità pubblica e ULSS5 Polesana",
     words: ["sanita pubblica", "ulss", "ulss5", "ospedale", "distretto"],
-    answer: "Per sanita pubblica, ospedale e ULSS5 Polesana bisogna distinguere: comparto sanita pubblica riferimento Riccardo Mantovan; dirigenza medica e sanitaria riferimento Pasquale Brenga. Se l'utente non specifica, chiedi se e dirigente medico/sanitario oppure lavoratore/lavoratrice del comparto.",
+    answer: "Per sanita pubblica, ospedale e ULSS5 Polesana bisogna distinguere: comparto sanita pubblica riferimento Riccardo Mantovan; dirigenza medica e sanitaria riferimento Pasquale Brenga. Se l'utente non specifica, chiedi se e dirigente medico/sanitario oppure lavoratore/lavoratrice del comparto. Pagina utile: /sanita-pubblica-ulss5-rovigo.",
   },
   {
     area: "Sanità privata, IPAB e socio-sanitario",
     words: ["sanita privata", "case di cura", "ipab", "casa di riposo", "cooperative sociali", "socio sanitario"],
-    answer: "Per sanita privata, IPAB e socio-sanitario i riferimenti indicati sono Pasquale Brenga, Sabrina Venzo e Roberta Denanni, a seconda dell'ente.",
+    answer: "Per sanita privata, IPAB e socio-sanitario i riferimenti indicati sono Pasquale Brenga, Sabrina Venzo e Roberta Denanni, a seconda dell'ente. Pagina utile: /ipab-case-riposo-rovigo.",
   },
   {
     area: "Funzioni Locali",
     words: ["comune", "comuni", "provincia", "funzioni locali", "enti locali", "camera di commercio", "cur"],
-    answer: "Per Funzioni Locali ed enti locali i riferimenti indicati sono Riccardo Mantovan, Pasquale Brenga e Sabrina Venzo, a seconda dell'ente.",
+    answer: "Per Funzioni Locali ed enti locali i riferimenti indicati sono Riccardo Mantovan, Pasquale Brenga e Sabrina Venzo, a seconda dell'ente. Pagina utile: /enti-locali-comuni-rovigo.",
   },
   {
     area: "Funzioni Centrali",
     words: ["ministero", "ministeri", "agenzia entrate", "inps", "aci", "funzioni centrali"],
-    answer: "Per Funzioni Centrali il riferimento indicato e Riccardo Mantovan.",
+    answer: "Per Funzioni Centrali il riferimento indicato e Riccardo Mantovan. Pagina utile: /funzioni-centrali-rovigo.",
   },
   {
     area: "Igiene ambientale",

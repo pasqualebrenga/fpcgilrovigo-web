@@ -338,25 +338,25 @@ function PracticalSearchSection() {
     {
       title: "Sanità pubblica e ULSS5 Polesana",
       text: "Ospedale, distretti, comparto sanità pubblica e dirigenza medica o sanitaria.",
-      href: "/iscrizione",
+      href: "/sanita-pubblica-ulss5-rovigo",
       icon: <HeartPulse size={20} />,
     },
     {
       title: "Enti locali e Comuni",
       text: "Comuni della provincia di Rovigo, Provincia, Camera di Commercio, CUR e altri enti.",
-      href: "/iscrizione",
+      href: "/enti-locali-comuni-rovigo",
       icon: <Building2 size={20} />,
     },
     {
       title: "IPAB e case di riposo",
       text: "Strutture socio-sanitarie, centri servizi anziani, case di riposo e assistenza territoriale.",
-      href: "/iscrizione",
+      href: "/ipab-case-riposo-rovigo",
       icon: <ShieldCheck size={20} />,
     },
     {
       title: "Funzioni centrali",
       text: "Ministeri, Agenzia delle Entrate, INPS, ACI e uffici pubblici statali.",
-      href: "/chi-siamo",
+      href: "/funzioni-centrali-rovigo",
       icon: <Landmark size={20} />,
     },
   ];

@@ -313,6 +313,43 @@ export default function ChiSiamoPage() {
         })}
       </div>
 
+      <section
+        style={{
+          borderRadius: 16,
+          border: "1px solid rgba(0,0,0,0.10)",
+          background: "#fff",
+          padding: 16,
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "flex-end" }}>
+          <div>
+            <h2 className="h2" style={{ margin: 0 }}>
+              Non sai chi segue il tuo ente?
+            </h2>
+            <p className="muted" style={{ margin: "8px 0 0", lineHeight: 1.5, maxWidth: 760 }}>
+              Puoi orientarti per area di lavoro oppure usare il percorso guidato per arrivare al referente corretto.
+            </p>
+          </div>
+          <Link className="btn" href="/iscrizione" style={{ borderRadius: 999, padding: "12px 16px", fontWeight: 950, background: FP_RED, borderColor: FP_RED, color: "#fff" }}>
+            Percorso guidato
+          </Link>
+        </div>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
+          <Link className="btn" href="/sanita-pubblica-ulss5-rovigo" style={{ borderRadius: 999, padding: "10px 14px", fontWeight: 900 }}>
+            Sanità pubblica
+          </Link>
+          <Link className="btn" href="/enti-locali-comuni-rovigo" style={{ borderRadius: 999, padding: "10px 14px", fontWeight: 900 }}>
+            Enti locali
+          </Link>
+          <Link className="btn" href="/ipab-case-riposo-rovigo" style={{ borderRadius: 999, padding: "10px 14px", fontWeight: 900 }}>
+            IPAB e case di riposo
+          </Link>
+          <Link className="btn" href="/funzioni-centrali-rovigo" style={{ borderRadius: 999, padding: "10px 14px", fontWeight: 900 }}>
+            Funzioni centrali
+          </Link>
+        </div>
+      </section>
+
       <div className="card">
         <h2 className="h2">Nota</h2>
         <div className="muted">I pulsanti WhatsApp aprono una chat con messaggio precompilato (modificabile prima dell’invio).</div>
