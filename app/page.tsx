@@ -1,7 +1,9 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
+  Building2,
   Newspaper,
   PhoneCall,
   Mail,
@@ -10,11 +12,22 @@ import {
   Sparkles,
   Dot,
   Smartphone,
+  HeartPulse,
+  Landmark,
 } from "lucide-react";
 import { getFpHomepageNews, fpSources } from "../lib/fpnews";
 
 // 1 volta al giorno (24h)
 export const revalidate = 86400;
+
+export const metadata: Metadata = {
+  title: "FP CGIL Rovigo - Sindacato pubblico impiego, sanità, enti locali e IPAB",
+  description:
+    "FP CGIL Rovigo tutela lavoratrici e lavoratori del pubblico impiego a Rovigo e provincia: sanità pubblica e ULSS5, enti locali, IPAB, funzioni centrali, iscrizione, convenzioni e RSU.",
+  alternates: {
+    canonical: "/",
+  },
+};
 
 const FP_RED = "#d40000";
 const DIGITA_APP_STORE_URL = "https://apps.apple.com/it/app/digita-cgil/id1457216187";
@@ -320,6 +333,116 @@ function HomeNewsCard({ n }: { n: NewsItem }) {
   );
 }
 
+function PracticalSearchSection() {
+  const items = [
+    {
+      title: "Sanità pubblica e ULSS5 Polesana",
+      text: "Ospedale, distretti, comparto sanità pubblica e dirigenza medica o sanitaria.",
+      href: "/iscrizione",
+      icon: <HeartPulse size={20} />,
+    },
+    {
+      title: "Enti locali e Comuni",
+      text: "Comuni della provincia di Rovigo, Provincia, Camera di Commercio, CUR e altri enti.",
+      href: "/iscrizione",
+      icon: <Building2 size={20} />,
+    },
+    {
+      title: "IPAB e case di riposo",
+      text: "Strutture socio-sanitarie, centri servizi anziani, case di riposo e assistenza territoriale.",
+      href: "/iscrizione",
+      icon: <ShieldCheck size={20} />,
+    },
+    {
+      title: "Funzioni centrali",
+      text: "Ministeri, Agenzia delle Entrate, INPS, ACI e uffici pubblici statali.",
+      href: "/chi-siamo",
+      icon: <Landmark size={20} />,
+    },
+  ];
+
+  return (
+    <section aria-labelledby="servizi-pratici-fp-cgil-rovigo">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          gap: 14,
+          alignItems: "flex-end",
+          flexWrap: "wrap",
+        }}
+      >
+        <div>
+          <Pill>
+            <MapPin size={15} /> Rovigo e provincia
+          </Pill>
+          <h2 id="servizi-pratici-fp-cgil-rovigo" className="h2" style={{ margin: "10px 0 0" }}>
+            Sindacato pubblico impiego a Rovigo
+          </h2>
+          <p className="muted" style={{ margin: "8px 0 0", lineHeight: 1.5, maxWidth: 820 }}>
+            FP CGIL Rovigo segue lavoratrici e lavoratori dei servizi pubblici: sanità, enti locali,
+            funzioni centrali, IPAB e socio-sanitario. Se non sai chi contattare, il percorso guidato ti
+            indirizza al referente corretto.
+          </p>
+        </div>
+
+        <Link
+          className="btn"
+          href="/iscrizione"
+          style={{ borderRadius: 999, padding: "12px 16px", fontWeight: 950, background: FP_RED, borderColor: FP_RED, color: "#fff" }}
+        >
+          Trova il referente <ArrowRight size={18} />
+        </Link>
+      </div>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+          gap: 12,
+          marginTop: 14,
+        }}
+      >
+        {items.map((item) => (
+          <Link
+            key={item.title}
+            href={item.href}
+            style={{
+              border: "1px solid rgba(0,0,0,0.10)",
+              borderRadius: 14,
+              background: "#fff",
+              padding: 14,
+              textDecoration: "none",
+              color: "inherit",
+              display: "block",
+              minHeight: 150,
+            }}
+          >
+            <div
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 12,
+                background: "rgba(212,0,0,0.10)",
+                color: FP_RED,
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {item.icon}
+            </div>
+            <h3 style={{ margin: "12px 0 0", fontSize: 18, lineHeight: 1.15, fontWeight: 950 }}>{item.title}</h3>
+            <p className="muted" style={{ margin: "8px 0 0", lineHeight: 1.45 }}>
+              {item.text}
+            </p>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default async function HomePage() {
   const items = (await getFpHomepageNews(3)) as NewsItem[];
   const hero = items[0];
@@ -503,6 +626,8 @@ export default async function HomePage() {
           </div>
         </div>
       </div>
+
+      <PracticalSearchSection />
 
       {/* STRISCIA “IN EVIDENZA” */}
       <div
