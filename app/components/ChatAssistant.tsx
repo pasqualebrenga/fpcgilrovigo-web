@@ -33,10 +33,14 @@ const INTERNAL_LINKS = new Set([
   "/convenzioni/locali",
   "/convenzioni/nazionali",
   "/cookie-policy",
+  "/enti-locali-comuni-rovigo",
+  "/funzioni-centrali-rovigo",
+  "/ipab-case-riposo-rovigo",
   "/iscrizione",
   "/news",
   "/privacy",
   "/rsu",
+  "/sanita-pubblica-ulss5-rovigo",
 ]);
 
 function splitTrailingPunctuation(value: string) {
@@ -476,7 +480,8 @@ export default function ChatAssistant() {
               </button>
             </form>
             <div className="fpChatNote">
-              Non inserire dati sensibili. Per casi personali usa i contatti ufficiali. <a href="/contatti">Vai a Contatti</a> <ExternalLink size={11} aria-hidden="true" />
+              I messaggi sono elaborati tramite OpenAI. Non inserire dati sensibili o dettagli di vertenze.
+              Per casi personali usa i contatti ufficiali. <a href="/privacy">Privacy</a> · <a href="/contatti">Contatti</a> <ExternalLink size={11} aria-hidden="true" />
             </div>
           </div>
         </section>

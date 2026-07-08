@@ -311,6 +311,7 @@ export async function POST(req: Request) {
       },
       body: JSON.stringify({
         model: MODEL,
+        store: false,
         instructions: `${SYSTEM_PROMPT}\n\nCONTESTO CONTROLLATO:\n${knowledgeContext}`,
         input: messages.map((message) => ({
           role: message.role,

@@ -1,10 +1,10 @@
 export const metadata = {
-  title: "Cookie Policy – FP CGIL Rovigo",
+  title: "Cookie Policy - FP CGIL Rovigo",
 };
 
-export default function CookiePolicyPage() {
-  const updated = new Date().toLocaleDateString("it-IT");
+const UPDATED = "2 luglio 2026";
 
+export default function CookiePolicyPage() {
   return (
     <div style={{ maxWidth: 900, margin: "0 auto", lineHeight: 1.65 }}>
       <h1>Cookie Policy</h1>
@@ -46,6 +46,18 @@ export default function CookiePolicyPage() {
         da parte dell’utente. Cliccando su link verso siti terzi, l’utente accede invece a servizi che
         applicano le proprie informative e possono impostare cookie secondo le rispettive regole.
       </p>
+      <p>
+        La mappa incorporata è fornita da <b>Google Maps</b> e non viene caricata prima della scelta
+        dell'utente. I semplici collegamenti a WhatsApp, social network, Google Maps e siti esterni non
+        installano cookie tramite questo sito; il trattamento da parte del servizio esterno inizia quando
+        l'utente apre volontariamente il collegamento.
+      </p>
+
+      <h2>Analytics e profilazione</h2>
+      <p>
+        Il sito non utilizza Google Analytics, pixel pubblicitari, cookie di profilazione o sistemi di
+        tracciamento per finalità commerciali.
+      </p>
 
       <h2>Come gestire o cancellare le preferenze</h2>
       <p>
@@ -55,7 +67,7 @@ export default function CookiePolicyPage() {
       </p>
 
       <p style={{ marginTop: 24, fontSize: 13, opacity: 0.75 }}>
-        Ultimo aggiornamento: {updated}
+        Ultimo aggiornamento: {UPDATED}
       </p>
     </div>
   );

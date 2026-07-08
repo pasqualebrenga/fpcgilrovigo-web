@@ -29,9 +29,10 @@ function getCookie(name: string): string | null {
 
 function setCookie(name: string, value: string, maxDays: number) {
   const maxAge = maxDays * 24 * 60 * 60;
+  const secure = window.location.protocol === "https:" ? "; Secure" : "";
   document.cookie = `${name}=${encodeURIComponent(
     value
-  )}; Path=/; Max-Age=${maxAge}; SameSite=Lax`;
+  )}; Path=/; Max-Age=${maxAge}; SameSite=Lax${secure}`;
 }
 
 export default function CookieBanner() {
