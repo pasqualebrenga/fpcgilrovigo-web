@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getFpHomepageNews } from "../../../lib/fpnews";
-import { buildStaticKnowledge, categoryHints, entityAssignments, localConventions, officialContacts, people } from "../../../lib/siteKnowledge";
+import { buildStaticKnowledge, categoryHints, entityAssignments, insuranceBenefits, localConventions, officialContacts, people } from "../../../lib/siteKnowledge";
 
 export const runtime = "nodejs";
 
@@ -31,6 +31,7 @@ Se l'utente dice che lavora in ospedale, ULSS5, sanita pubblica o Azienda ULSS5 
 Se l'utente chiede chi segue il suo ente o chi è il suo delegato, chiedi ente/comparto se mancano; se invece il comparto è chiaro, indica il referente più probabile e rimanda a /iscrizione.
 Se il contesto contiene un indice enti o ruoli con Comune/IPAB/Dirigenza Medica e Sanitaria e referente, usa sempre quell'indice prima delle categorie generiche, tranne quando la frase contiene ospedale/ULSS/sanita pubblica: in quel caso prima chiarisci comparto o dirigenza.
 Se una richiesta riguarda una categoria di convenzioni, elenca solo quelle pertinenti dal contesto e rimanda a /convenzioni/locali.
+Se una richiesta riguarda assicurazioni, polizze, coperture assicurative, colpa grave, responsabilita amministrativa/contabile o tutela legale per iscritti, rispondi usando la sezione Assicurazioni FP per te e rimanda a /convenzioni. Non confondere queste domande con enti locali o iscrizione.
 Se l'utente chiede RSU, candidati, programma, elezioni o delegati, orienta verso /rsu e proponi contatto umano.
 Quando dai più opzioni, usa massimo 3-5 punti elenco.
 Quando utile, indica una pagina del sito con percorso breve.
@@ -172,6 +173,41 @@ function formatConventionAnswer(matches: typeof localConventions) {
   return `Sì, ho trovato queste convenzioni pertinenti:\n${items}\n\nTrovi dettagli e condizioni in /convenzioni/locali.`;
 }
 
+function isInsuranceQuery(query: string) {
+  const normalizedQuery = normalizeText(query);
+  return [
+    "assicurazione",
+    "assicurazioni",
+    "polizza",
+    "polizze",
+    "copertura assicurativa",
+    "coperture assicurative",
+    "colpa grave",
+    "rc colpa",
+    "responsabilita amministrativa",
+    "responsabilita contabile",
+    "tutela legale",
+    "sinistro",
+    "sinistri",
+  ].some((word) => normalizedQuery.includes(normalizeText(word)));
+}
+
+function formatInsuranceAnswer() {
+  const included = insuranceBenefits
+    .filter((item) => item.type.toLowerCase().includes("inclusa"))
+    .slice(0, 3)
+    .map((item) => `- ${item.name}: ${item.audience}`)
+    .join("\n");
+
+  const individual = insuranceBenefits
+    .filter((item) => item.type.toLowerCase().includes("individuale"))
+    .slice(0, 3)
+    .map((item) => `- ${item.name}: ${item.audience}`)
+    .join("\n");
+
+  return `Sì. Nella pagina /convenzioni trovi le assicurazioni FP per te per iscritte e iscritti.\n\nIncluse nella tessera FP CGIL:\n${included}\n\nAd adesione individuale:\n${individual}\n\nPer dettagli e modulistica vai su /convenzioni.`;
+}
+
 function formatNewsContext(news: Awaited<ReturnType<typeof getFpHomepageNews>>) {
   if (!news.length) return "- News fpcgil.it non disponibili in questo momento.";
 
@@ -214,6 +250,10 @@ async function fallbackAnswer(messages: ChatMessage[]) {
   const person = people.find((p) => personMatches(p.name, normalizedLast));
   if (person) {
     return formatPersonAnswer(person);
+  }
+
+  if (isInsuranceQuery(normalizedLast)) {
+    return formatInsuranceAnswer();
   }
 
   if (isPublicHealthcareQuery(normalizedLast)) {
@@ -296,6 +336,11 @@ export async function POST(req: Request) {
 
     if (messages.length === 0) {
       return NextResponse.json({ answer: "Dimmi pure di cosa hai bisogno: iscrizione, contatti, convenzioni, formazione o supporto sindacale." });
+    }
+
+    const lastMessage = messages[messages.length - 1]?.content || "";
+    if (isInsuranceQuery(lastMessage)) {
+      return NextResponse.json({ answer: formatInsuranceAnswer(), mode: "direct", reason: "insurance_query" });
     }
 
     if (!process.env.OPENAI_API_KEY) {

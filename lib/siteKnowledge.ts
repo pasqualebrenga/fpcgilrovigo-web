@@ -66,7 +66,7 @@ export const sitePages = [
   {
     title: "Convenzioni",
     path: "/convenzioni",
-    summary: "Ingresso alle convenzioni locali e nazionali riservate agli iscritti.",
+    summary: "Ingresso alle convenzioni locali, nazionali e alle assicurazioni FP per te riservate agli iscritti.",
   },
   {
     title: "Convenzioni locali",
@@ -92,6 +92,51 @@ export const sitePages = [
     title: "RSU",
     path: "/rsu",
     summary: "Sezione dedicata a cosa sono le RSU, come si formano, cosa fanno, programma FP CGIL Rovigo e contatti per candidarsi o sapere chi segue il proprio ente.",
+  },
+];
+
+export const insuranceBenefits = [
+  {
+    name: "RC Colpa Grave Sanitaria",
+    type: "Inclusa nella tessera FP CGIL",
+    audience: "Comparto pubblico e privato",
+    summary: "Per personale non dirigente e non medico dei comparti pubblici e privati soggetti alla Legge Gelli.",
+    page: "/convenzioni",
+  },
+  {
+    name: "Tutela Legale",
+    type: "Inclusa nella tessera FP CGIL",
+    audience: "Aree dirigenza",
+    summary: "Per medici, specializzandi, veterinari, dirigenti sanitari e dirigenti della pubblica amministrazione iscritti FP CGIL.",
+    page: "/convenzioni",
+  },
+  {
+    name: "Responsabilità amministrativa e contabile",
+    type: "Inclusa nella tessera FP CGIL",
+    audience: "Comparti pubblici",
+    summary: "Per personale non dirigente della pubblica amministrazione.",
+    page: "/convenzioni",
+  },
+  {
+    name: "RC Colpa Grave",
+    type: "Ad adesione individuale",
+    audience: "Dirigenza FFLL, FFCC e professionisti",
+    summary: "Copertura individuale per dirigenti amministrativi, tecnici e area professionisti della pubblica amministrazione.",
+    page: "/convenzioni",
+  },
+  {
+    name: "RC Colpa Grave + Responsabilità Patrimoniale",
+    type: "Ad adesione individuale",
+    audience: "Medici e dirigenti SSN pubblici e privati",
+    summary: "Copertura individuale per medici, specializzandi, veterinari, dirigenti sanitari e professioni sanitarie.",
+    page: "/convenzioni",
+  },
+  {
+    name: "Tutela Legale",
+    type: "Ad adesione individuale",
+    audience: "Comparti pubblici",
+    summary: "Copertura individuale per dipendenti pubblici, Corte dei Conti e opzione procedimenti penali.",
+    page: "/convenzioni",
   },
 ];
 
@@ -437,6 +482,7 @@ export function buildStaticKnowledge() {
   const conventionsText = localConventions
     .map((conv) => `- ${conv.name}: ${conv.offer} Tag: ${conv.tags.join(", ")}. Pagina: ${conv.page}. ${conv.phone ? `Telefono: ${conv.phone}.` : ""}`)
     .join("\n");
+  const insuranceText = insuranceBenefits.map((item) => `- ${item.name}: ${item.type}. Destinatari: ${item.audience}. ${item.summary} Pagina: ${item.page}.`).join("\n");
   const categoryText = categoryHints.map((hint) => `- ${hint.area}: ${hint.answer} Parole utili: ${hint.words.join(", ")}.`).join("\n");
   const brengaComuniText = brengaComuni.join(", ");
   const ipabStructuresText = ipabStructures.map((structure) => structure.name).join(", ");
@@ -458,6 +504,11 @@ ${peopleText}
 
 Convenzioni locali:
 ${conventionsText}
+
+Assicurazioni FP per te:
+${insuranceText}
+- Se l'utente chiede assicurazioni, polizze, coperture assicurative, colpa grave, tutela legale o "assicurazioni per iscritti", rispondi che ci sono coperture assicurative per iscritte e iscritti e rimanda a /convenzioni.
+- Non rimandare a /enti-locali-comuni-rovigo per domande generiche sulle assicurazioni.
 
 Orientamento per categoria:
 ${categoryText}
@@ -487,6 +538,7 @@ RSU:
 
 Regole operative:
 - Le convenzioni sono riservate agli iscritti; per dubbi rimandare a /convenzioni/locali o ai contatti ufficiali.
+- Le assicurazioni FP per te sono nella pagina /convenzioni; se l'utente chiede "abbiamo assicurazioni per gli iscritti?", rispondi prima su assicurazioni e non sui referenti di categoria.
 - Se l'utente chiede una persona, rispondi con ruolo, deleghe, telefono/WhatsApp ed email se presenti.
 - Se l'utente chiede una convenzione per tema, elenca solo le convenzioni pertinenti e chiudi con /convenzioni/locali.
 - Se l'utente chiede contatto umano, proponi subito telefono sede, email e la pagina /contatti.

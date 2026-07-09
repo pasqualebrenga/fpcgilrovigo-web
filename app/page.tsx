@@ -672,7 +672,7 @@ export default async function HomePage() {
                 News aggiornate automaticamente da fpcgil.it → <span style={{ marginLeft: 10, fontWeight: 900 }}>News</span>
               </span>
               <span>
-                Convenzioni locali + nazionali (PDF) → <span style={{ marginLeft: 10, fontWeight: 900 }}>Convenzioni</span>
+                Nuovi prospetti assicurativi FP per te → <span style={{ marginLeft: 10, fontWeight: 900 }}>Convenzioni</span>
               </span>
               <span>
                 Per iscrizione: usa il percorso guidato → <span style={{ marginLeft: 10, fontWeight: 900 }}>Iscrizione</span>
@@ -681,7 +681,7 @@ export default async function HomePage() {
                 News aggiornate automaticamente da fpcgil.it → <span style={{ marginLeft: 10, fontWeight: 900 }}>News</span>
               </span>
               <span>
-                Convenzioni locali + nazionali (PDF) → <span style={{ marginLeft: 10, fontWeight: 900 }}>Convenzioni</span>
+                Nuovi prospetti assicurativi FP per te → <span style={{ marginLeft: 10, fontWeight: 900 }}>Convenzioni</span>
               </span>
             </div>
           </div>
