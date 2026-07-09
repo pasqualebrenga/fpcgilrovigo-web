@@ -669,16 +669,10 @@ export default async function HomePage() {
                 Per iscrizione: usa il percorso guidato → <span style={{ marginLeft: 10, fontWeight: 900 }}>Iscrizione</span>
               </span>
               <span>
-                News aggiornate automaticamente da fpcgil.it → <span style={{ marginLeft: 10, fontWeight: 900 }}>News</span>
-              </span>
-              <span>
                 Nuovi prospetti assicurativi FP per te → <span style={{ marginLeft: 10, fontWeight: 900 }}>Convenzioni</span>
               </span>
               <span>
                 Per iscrizione: usa il percorso guidato → <span style={{ marginLeft: 10, fontWeight: 900 }}>Iscrizione</span>
-              </span>
-              <span>
-                News aggiornate automaticamente da fpcgil.it → <span style={{ marginLeft: 10, fontWeight: 900 }}>News</span>
               </span>
               <span>
                 Nuovi prospetti assicurativi FP per te → <span style={{ marginLeft: 10, fontWeight: 900 }}>Convenzioni</span>
