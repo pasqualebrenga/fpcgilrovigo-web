@@ -4,13 +4,16 @@ export type FpNewsItem = {
   date?: string;
   excerpt?: string;
   image?: string; // featured / og:image
-  source: "rss" | "html";
+  source: "wp-json" | "rss" | "html";
 };
 
 type RssItem = Record<string, unknown>;
+type WpPost = Record<string, unknown>;
 
 const CATEGORY_URL = "https://www.fpcgil.it/category/_in_homepage/";
 const FEED_URL = "https://www.fpcgil.it/category/_in_homepage/feed/";
+const WP_JSON_URL =
+  "https://www.fpcgil.it/wp-json/wp/v2/posts?categories=276&_fields=id,date,link,title,excerpt,yoast_head_json";
 
 function stripTags(input: string) {
   return input
@@ -23,6 +26,8 @@ function stripTags(input: string) {
 
 function decodeEntities(s: string) {
   return s
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCodePoint(Number.parseInt(code, 16)))
     .replace(/&amp;/g, "&")
     .replace(/&quot;/g, '"')
     .replace(/&#039;/g, "'")
@@ -87,6 +92,37 @@ function pickOgImageFromHtml(html: string): string | undefined {
   return undefined;
 }
 
+function pickImageFromWpPost(post: WpPost): string | undefined {
+  const yoast = post?.yoast_head_json;
+  if (yoast && typeof yoast === "object") {
+    const images = (yoast as RssItem)?.og_image;
+    const first = Array.isArray(images) ? (images[0] as RssItem | undefined) : undefined;
+    const url = first?.url;
+    if (typeof url === "string" && url.startsWith("http")) return decodeEntities(url);
+  }
+
+  const embedded = post?._embedded;
+  if (!embedded || typeof embedded !== "object") return undefined;
+
+  const media = (embedded as RssItem)?.["wp:featuredmedia"];
+  const first = Array.isArray(media) ? (media[0] as RssItem | undefined) : undefined;
+  const sourceUrl = first?.source_url;
+  if (typeof sourceUrl === "string" && sourceUrl.startsWith("http")) return decodeEntities(sourceUrl);
+
+  const sizes = first?.media_details;
+  if (!sizes || typeof sizes !== "object") return undefined;
+  const full = (sizes as RssItem)?.sizes;
+  if (!full || typeof full !== "object") return undefined;
+
+  const preferred = ["large", "medium_large", "full", "post-thumbnail"];
+  for (const key of preferred) {
+    const candidate = ((full as RssItem)?.[key] as RssItem | undefined)?.source_url;
+    if (typeof candidate === "string" && candidate.startsWith("http")) return decodeEntities(candidate);
+  }
+
+  return undefined;
+}
+
 async function enrichWithImages(items: FpNewsItem[], maxToEnrich = 10): Promise<FpNewsItem[]> {
   const out = [...items];
   await Promise.all(
@@ -135,6 +171,42 @@ async function fetchRss(limit: number): Promise<FpNewsItem[]> {
 
     if (mapped.some((x) => !x.image)) {
       mapped = await enrichWithImages(mapped, Math.min(10, mapped.length));
+    }
+
+    return mapped;
+  } catch {
+    return [];
+  }
+}
+
+async function fetchWpJson(limit: number): Promise<FpNewsItem[]> {
+  try {
+    const url = `${WP_JSON_URL}&per_page=${Math.max(1, Math.min(30, limit))}`;
+    const res = await fetch(url, { next: { revalidate: 1800 } });
+    if (!res.ok) return [];
+
+    const posts = (await res.json()) as WpPost[];
+    if (!Array.isArray(posts)) return [];
+
+    let mapped = posts
+      .map((post) => {
+        const renderedTitle = (post?.title as RssItem | undefined)?.rendered;
+        const renderedExcerpt = (post?.excerpt as RssItem | undefined)?.rendered;
+        const title = stripTags(decodeEntities(String(renderedTitle ?? "")));
+        const url = String(post?.link ?? "").trim();
+        const date = formatNewsDate(post?.date ? String(post.date) : undefined);
+        const excerpt = renderedExcerpt
+          ? stripTags(decodeEntities(String(renderedExcerpt))).replace(/\[[^\]]+\]$/, "").trim().slice(0, 240)
+          : undefined;
+        const image = pickImageFromWpPost(post);
+        if (!title || !url) return null;
+        return { title, url, date, excerpt, image, source: "wp-json" as const };
+      })
+      .filter(Boolean)
+      .slice(0, limit) as FpNewsItem[];
+
+    if (mapped.some((x) => !x.image)) {
+      mapped = await enrichWithImages(mapped, Math.min(6, mapped.length));
     }
 
     return mapped;
@@ -194,14 +266,14 @@ function dedupMerge(a: FpNewsItem[], b: FpNewsItem[]): FpNewsItem[] {
 }
 
 export async function getFpHomepageNews(limit = 12): Promise<FpNewsItem[]> {
-  // RSS è la prima scelta, ma a volte torna 1 solo item o è “strano”.
-  // Quindi: prendiamo RSS + HTML e uniamo.
-  const [rss, html] = await Promise.all([fetchRss(limit), fetchHtml(limit)]);
-  const merged = dedupMerge(rss, html);
+  // L'API WordPress è la fonte più stabile; RSS/HTML restano fallback se cambia qualcosa lato nazionale.
+  const [wpJson, rss, html] = await Promise.all([fetchWpJson(limit), fetchRss(limit), fetchHtml(limit)]);
+  const merged = dedupMerge(wpJson, dedupMerge(rss, html));
   return merged.slice(0, limit);
 }
 
 export const fpSources = {
   CATEGORY_URL,
   FEED_URL,
+  WP_JSON_URL,
 };
