@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ExternalLink, FileText, ShieldCheck } from "lucide-react";
+import { ExternalLink, FileText, ShieldCheck } from "lucide-react";
 
 const insuranceGroups = [
   {
@@ -13,7 +13,6 @@ const insuranceGroups = [
         summary:
           "Per personale non dirigente e non medico dei comparti pubblici e privati soggetti alla Legge Gelli.",
         highlight: "Massimale 750.000 euro, retroattività e ultrattività 10 anni.",
-        page: "https://www.fpcgil.it/pagina-fpperte/personale-sanitario-pubblico-e-privato/",
         docs: [
           ["Polizza assicurativa", "https://www.fpcgil.it/wp-content/uploads/2026/07/Polizza-Sanitari.pdf"],
           [
@@ -36,7 +35,6 @@ const insuranceGroups = [
         summary:
           "Per medici, specializzandi, veterinari, dirigenti sanitari e dirigenti della pubblica amministrazione iscritti FP CGIL.",
         highlight: "Anticipo spese legali fino a 50.000 euro per sinistro.",
-        page: "https://www.fpcgil.it/pagina-fpperte/tutela-legale/",
         docs: [
           [
             "Volantino tutela legale",
@@ -50,7 +48,6 @@ const insuranceGroups = [
         summary:
           "Per personale non dirigente della pubblica amministrazione, con coperture collegate alla responsabilità amministrativa e contabile.",
         highlight: "Massimale 1.500.000 euro, retroattività e ultrattività 10 anni.",
-        page: "https://www.fpcgil.it/pagina-fpperte/responsabilita-amministrativa-e-amministrativo-contabile/",
         docs: [
           ["Polizza assicurativa", "https://www.fpcgil.it/wp-content/uploads/2026/07/Polizza-Pubblici.pdf"],
           [
@@ -79,7 +76,6 @@ const insuranceGroups = [
         summary:
           "Soluzione individuale per dirigenti amministrativi, tecnici e area professionisti della pubblica amministrazione.",
         highlight: "Massimali personalizzabili da 500.000 a 5.000.000 euro.",
-        page: "https://www.fpcgil.it/pagina-fpperte/sei-un-dirigente-della-pa-area-funzioni-locali-e-funzioni-centrali/",
         docs: [
           [
             "Volantino dirigenti PA",
@@ -93,7 +89,6 @@ const insuranceGroups = [
         summary:
           "Per medici, specializzandi, veterinari, dirigenti sanitari e professioni sanitarie, anche convenzionati.",
         highlight: "Massimale 1.000.000 euro con possibilità di personalizzazione.",
-        page: "https://www.fpcgil.it/pagina-fpperte/sei-un-medico-della-sanita-pubblica-o-privata-o-un-dirigente-del-ssn-iscritto-alla-fp-cgil/",
         docs: [
           [
             "Volantino nazionale",
@@ -107,7 +102,6 @@ const insuranceGroups = [
         summary:
           "Polizza individuale per dipendenti pubblici: procedimenti davanti alla Corte dei Conti e, nell'opzione completa, procedimenti penali.",
         highlight: "Massimali da 25.000 a 100.000 euro.",
-        page: "https://www.fpcgil.it/pagina-fpperte/prodotti-a-integrazione/",
         docs: [
           [
             "Volantino tutela legale dipendenti pubblici",
@@ -480,22 +474,6 @@ export default function ConvenzioniIndexPage() {
                     ))}
                   </div>
 
-                  <a
-                    href={item.page}
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: 8,
-                      color: group.tone,
-                      fontWeight: 950,
-                      textDecoration: "none",
-                      marginTop: 2,
-                    }}
-                  >
-                    Scheda completa FP nazionale <ArrowRight size={16} />
-                  </a>
                 </article>
               ))}
             </div>
