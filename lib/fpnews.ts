@@ -14,6 +14,11 @@ const CATEGORY_URL = "https://www.fpcgil.it/category/_in_homepage/";
 const FEED_URL = "https://www.fpcgil.it/category/_in_homepage/feed/";
 const WP_JSON_URL =
   "https://www.fpcgil.it/wp-json/wp/v2/posts?categories=276&_fields=id,date,link,title,excerpt,yoast_head_json";
+const FP_FETCH_HEADERS = {
+  Accept: "application/json, application/rss+xml, text/html;q=0.9, */*;q=0.8",
+  "User-Agent":
+    "Mozilla/5.0 (compatible; FP-CGIL-Rovigo-NewsBot/1.0; +https://www.fpcgilrovigo.it)",
+};
 
 function stripTags(input: string) {
   return input
@@ -129,7 +134,7 @@ async function enrichWithImages(items: FpNewsItem[], maxToEnrich = 10): Promise<
     out.slice(0, maxToEnrich).map(async (it, idx) => {
       if (it.image) return;
       try {
-        const res = await fetch(it.url, { next: { revalidate: 86400 } });
+        const res = await fetch(it.url, { headers: FP_FETCH_HEADERS, next: { revalidate: 86400 } });
         if (!res.ok) return;
         const html = await res.text();
         const img = pickOgImageFromHtml(html);
@@ -144,7 +149,7 @@ async function enrichWithImages(items: FpNewsItem[], maxToEnrich = 10): Promise<
 
 async function fetchRss(limit: number): Promise<FpNewsItem[]> {
   try {
-    const res = await fetch(FEED_URL, { next: { revalidate: 1800 } });
+    const res = await fetch(FEED_URL, { headers: FP_FETCH_HEADERS, next: { revalidate: 1800 } });
     if (!res.ok) return [];
 
     const xml = await res.text();
@@ -182,7 +187,7 @@ async function fetchRss(limit: number): Promise<FpNewsItem[]> {
 async function fetchWpJson(limit: number): Promise<FpNewsItem[]> {
   try {
     const url = `${WP_JSON_URL}&per_page=${Math.max(1, Math.min(30, limit))}`;
-    const res = await fetch(url, { next: { revalidate: 1800 } });
+    const res = await fetch(url, { headers: FP_FETCH_HEADERS, next: { revalidate: 1800 } });
     if (!res.ok) return [];
 
     const posts = (await res.json()) as WpPost[];
@@ -217,7 +222,7 @@ async function fetchWpJson(limit: number): Promise<FpNewsItem[]> {
 
 async function fetchHtml(limit: number): Promise<FpNewsItem[]> {
   try {
-    const res = await fetch(CATEGORY_URL, { next: { revalidate: 1800 } });
+    const res = await fetch(CATEGORY_URL, { headers: FP_FETCH_HEADERS, next: { revalidate: 1800 } });
     if (!res.ok) return [];
 
     const html = await res.text();
