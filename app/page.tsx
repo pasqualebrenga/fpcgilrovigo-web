@@ -17,8 +17,8 @@ import {
 } from "lucide-react";
 import { getFpHomepageNews, fpSources } from "../lib/fpnews";
 
-// Aggiorna automaticamente le news nazionali ogni 30 minuti.
-export const revalidate = 1800;
+// Aggiorna automaticamente le news nazionali ogni 12 ore.
+export const revalidate = 43200;
 
 export const metadata: Metadata = {
   title: "FP CGIL Rovigo - Sindacato pubblico impiego, sanità, enti locali e IPAB",
