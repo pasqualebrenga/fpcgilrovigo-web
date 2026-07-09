@@ -150,7 +150,10 @@ async function enrichWithImages(items: FpNewsItem[], maxToEnrich = 10): Promise<
 async function fetchRss(limit: number): Promise<FpNewsItem[]> {
   try {
     const res = await fetch(FEED_URL, { headers: FP_FETCH_HEADERS, next: { revalidate: 1800 } });
-    if (!res.ok) return [];
+    if (!res.ok) {
+      console.warn("FP news RSS fetch failed", { status: res.status, statusText: res.statusText });
+      return [];
+    }
 
     const xml = await res.text();
     const { XMLParser } = await import("fast-xml-parser");
@@ -179,7 +182,8 @@ async function fetchRss(limit: number): Promise<FpNewsItem[]> {
     }
 
     return mapped;
-  } catch {
+  } catch (error) {
+    console.warn("FP news RSS error", error);
     return [];
   }
 }
@@ -188,10 +192,16 @@ async function fetchWpJson(limit: number): Promise<FpNewsItem[]> {
   try {
     const url = `${WP_JSON_URL}&per_page=${Math.max(1, Math.min(30, limit))}`;
     const res = await fetch(url, { headers: FP_FETCH_HEADERS, next: { revalidate: 1800 } });
-    if (!res.ok) return [];
+    if (!res.ok) {
+      console.warn("FP news WP JSON fetch failed", { status: res.status, statusText: res.statusText });
+      return [];
+    }
 
     const posts = (await res.json()) as WpPost[];
-    if (!Array.isArray(posts)) return [];
+    if (!Array.isArray(posts)) {
+      console.warn("FP news WP JSON unexpected payload", { type: typeof posts });
+      return [];
+    }
 
     let mapped = posts
       .map((post) => {
@@ -215,7 +225,8 @@ async function fetchWpJson(limit: number): Promise<FpNewsItem[]> {
     }
 
     return mapped;
-  } catch {
+  } catch (error) {
+    console.warn("FP news WP JSON error", error);
     return [];
   }
 }
@@ -223,7 +234,10 @@ async function fetchWpJson(limit: number): Promise<FpNewsItem[]> {
 async function fetchHtml(limit: number): Promise<FpNewsItem[]> {
   try {
     const res = await fetch(CATEGORY_URL, { headers: FP_FETCH_HEADERS, next: { revalidate: 1800 } });
-    if (!res.ok) return [];
+    if (!res.ok) {
+      console.warn("FP news HTML fetch failed", { status: res.status, statusText: res.statusText });
+      return [];
+    }
 
     const html = await res.text();
     const results: FpNewsItem[] = [];
@@ -251,7 +265,8 @@ async function fetchHtml(limit: number): Promise<FpNewsItem[]> {
     });
 
     return await enrichWithImages(deduped, Math.min(10, deduped.length));
-  } catch {
+  } catch (error) {
+    console.warn("FP news HTML error", error);
     return [];
   }
 }
@@ -274,6 +289,13 @@ export async function getFpHomepageNews(limit = 12): Promise<FpNewsItem[]> {
   // L'API WordPress è la fonte più stabile; RSS/HTML restano fallback se cambia qualcosa lato nazionale.
   const [wpJson, rss, html] = await Promise.all([fetchWpJson(limit), fetchRss(limit), fetchHtml(limit)]);
   const merged = dedupMerge(wpJson, dedupMerge(rss, html));
+  if (!merged.length) {
+    console.warn("FP news empty after all sources", {
+      wpJson: wpJson.length,
+      rss: rss.length,
+      html: html.length,
+    });
+  }
   return merged.slice(0, limit);
 }
 
