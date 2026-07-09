@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { getFpHomepageNews, fpSources } from "../../lib/fpnews";
 
-// 1 volta al giorno (24h)
-export const revalidate = 86400;
+// Aggiorna automaticamente le news nazionali ogni 30 minuti.
+export const revalidate = 1800;
 
 function safeDate(d?: string) {
   return d ? d : "";

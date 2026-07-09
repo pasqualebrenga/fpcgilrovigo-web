@@ -1,3 +1,7 @@
+import http from "node:http";
+import https from "node:https";
+import { brotliDecompressSync, gunzipSync, inflateSync } from "node:zlib";
+
 export type FpNewsItem = {
   title: string;
   url: string;
@@ -16,9 +20,67 @@ const WP_JSON_URL =
   "https://www.fpcgil.it/wp-json/wp/v2/posts?categories=276&_fields=id,date,link,title,excerpt,yoast_head_json";
 const FP_FETCH_HEADERS = {
   Accept: "application/json, application/rss+xml, text/html;q=0.9, */*;q=0.8",
+  "Accept-Encoding": "identity",
   "User-Agent":
     "Mozilla/5.0 (compatible; FP-CGIL-Rovigo-NewsBot/1.0; +https://www.fpcgilrovigo.it)",
 };
+
+type FpFetchResult = {
+  ok: boolean;
+  status: number;
+  statusText: string;
+  body: string;
+};
+
+function decodeResponseBody(buffer: Buffer, encoding?: string): string {
+  if (encoding === "gzip") return gunzipSync(buffer).toString("utf8");
+  if (encoding === "br") return brotliDecompressSync(buffer).toString("utf8");
+  if (encoding === "deflate") return inflateSync(buffer).toString("utf8");
+  return buffer.toString("utf8");
+}
+
+function fetchFpText(url: string, redirects = 3): Promise<FpFetchResult> {
+  return new Promise((resolve, reject) => {
+    const parsed = new URL(url);
+    const client = parsed.protocol === "http:" ? http : https;
+    const req = client.request(
+      parsed,
+      {
+        headers: FP_FETCH_HEADERS,
+        ...(parsed.protocol === "https:" ? { rejectUnauthorized: false } : {}),
+      },
+      (res) => {
+        const status = res.statusCode ?? 0;
+        const location = res.headers.location;
+        if (status >= 300 && status < 400 && location && redirects > 0) {
+          res.resume();
+          resolve(fetchFpText(new URL(location, url).toString(), redirects - 1));
+          return;
+        }
+
+        const chunks: Buffer[] = [];
+        res.on("data", (chunk) => chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk)));
+        res.on("end", () => {
+          try {
+            const body = decodeResponseBody(Buffer.concat(chunks), String(res.headers["content-encoding"] ?? ""));
+            resolve({
+              ok: status >= 200 && status < 300,
+              status,
+              statusText: res.statusMessage ?? "",
+              body,
+            });
+          } catch (error) {
+            reject(error);
+          }
+        });
+      }
+    );
+
+    req.setTimeout(8000, () => req.destroy(new Error("FP news fetch timeout")));
+    req.on("error", reject);
+    req.end();
+  });
+}
 
 function stripTags(input: string) {
   return input
@@ -134,9 +196,9 @@ async function enrichWithImages(items: FpNewsItem[], maxToEnrich = 10): Promise<
     out.slice(0, maxToEnrich).map(async (it, idx) => {
       if (it.image) return;
       try {
-        const res = await fetch(it.url, { headers: FP_FETCH_HEADERS, next: { revalidate: 86400 } });
+        const res = await fetchFpText(it.url);
         if (!res.ok) return;
-        const html = await res.text();
+        const html = res.body;
         const img = pickOgImageFromHtml(html);
         if (img) out[idx] = { ...out[idx], image: img };
       } catch {
@@ -149,13 +211,13 @@ async function enrichWithImages(items: FpNewsItem[], maxToEnrich = 10): Promise<
 
 async function fetchRss(limit: number): Promise<FpNewsItem[]> {
   try {
-    const res = await fetch(FEED_URL, { headers: FP_FETCH_HEADERS, next: { revalidate: 1800 } });
+    const res = await fetchFpText(FEED_URL);
     if (!res.ok) {
       console.warn("FP news RSS fetch failed", { status: res.status, statusText: res.statusText });
       return [];
     }
 
-    const xml = await res.text();
+    const xml = res.body;
     const { XMLParser } = await import("fast-xml-parser");
     const parser = new XMLParser({ ignoreAttributes: false });
 
@@ -191,13 +253,13 @@ async function fetchRss(limit: number): Promise<FpNewsItem[]> {
 async function fetchWpJson(limit: number): Promise<FpNewsItem[]> {
   try {
     const url = `${WP_JSON_URL}&per_page=${Math.max(1, Math.min(30, limit))}`;
-    const res = await fetch(url, { headers: FP_FETCH_HEADERS, next: { revalidate: 1800 } });
+    const res = await fetchFpText(url);
     if (!res.ok) {
       console.warn("FP news WP JSON fetch failed", { status: res.status, statusText: res.statusText });
       return [];
     }
 
-    const posts = (await res.json()) as WpPost[];
+    const posts = JSON.parse(res.body) as WpPost[];
     if (!Array.isArray(posts)) {
       console.warn("FP news WP JSON unexpected payload", { type: typeof posts });
       return [];
@@ -233,13 +295,13 @@ async function fetchWpJson(limit: number): Promise<FpNewsItem[]> {
 
 async function fetchHtml(limit: number): Promise<FpNewsItem[]> {
   try {
-    const res = await fetch(CATEGORY_URL, { headers: FP_FETCH_HEADERS, next: { revalidate: 1800 } });
+    const res = await fetchFpText(CATEGORY_URL);
     if (!res.ok) {
       console.warn("FP news HTML fetch failed", { status: res.status, statusText: res.statusText });
       return [];
     }
 
-    const html = await res.text();
+    const html = res.body;
     const results: FpNewsItem[] = [];
 
     const h3LinkRegex = /<h3[^>]*>\s*<a\s+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>\s*<\/h3>/gi;
