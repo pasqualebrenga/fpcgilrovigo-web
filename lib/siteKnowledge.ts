@@ -1,3 +1,5 @@
+import { signatureCampaigns } from "./signatureCampaigns";
+
 export type SitePerson = {
   name: string;
   role: string;
@@ -92,6 +94,11 @@ export const sitePages = [
     title: "RSU",
     path: "/rsu",
     summary: "Sezione dedicata a cosa sono le RSU, come si formano, cosa fanno, programma FP CGIL Rovigo e contatti per candidarsi o sapere chi segue il proprio ente.",
+  },
+  {
+    title: "Leggi di iniziativa popolare",
+    path: "/leggi-iniziativa-popolare",
+    summary: "Pagina dedicata alle due raccolte firme CGIL: Diritto alla Salute e I diritti non si appaltano, con approfondimenti e link per firmare online.",
   },
 ];
 
@@ -483,6 +490,9 @@ export function buildStaticKnowledge() {
     .map((conv) => `- ${conv.name}: ${conv.offer} Tag: ${conv.tags.join(", ")}. Pagina: ${conv.page}. ${conv.phone ? `Telefono: ${conv.phone}.` : ""}`)
     .join("\n");
   const insuranceText = insuranceBenefits.map((item) => `- ${item.name}: ${item.type}. Destinatari: ${item.audience}. ${item.summary} Pagina: ${item.page}.`).join("\n");
+  const signatureCampaignsText = signatureCampaigns
+    .map((campaign) => `- ${campaign.title}: ${campaign.summary} Claim: ${campaign.claim}. Pagina interna: /leggi-iniziativa-popolare. Approfondimento nazionale: ${campaign.detailUrl}. Firma online: ${campaign.signUrl}.`)
+    .join("\n");
   const categoryText = categoryHints.map((hint) => `- ${hint.area}: ${hint.answer} Parole utili: ${hint.words.join(", ")}.`).join("\n");
   const brengaComuniText = brengaComuni.join(", ");
   const ipabStructuresText = ipabStructures.map((structure) => structure.name).join(", ");
@@ -509,6 +519,11 @@ Assicurazioni FP per te:
 ${insuranceText}
 - Se l'utente chiede assicurazioni, polizze, coperture assicurative, colpa grave, tutela legale o "assicurazioni per iscritti", rispondi che ci sono coperture assicurative per iscritte e iscritti e rimanda a /convenzioni.
 - Non rimandare a /enti-locali-comuni-rovigo per domande generiche sulle assicurazioni.
+
+Leggi di iniziativa popolare e raccolte firme CGIL:
+${signatureCampaignsText}
+- Se l'utente chiede raccolte firme, firme CGIL, "io firmo", diritto alla salute, Servizio Sanitario Nazionale, appalti, "i diritti non si appaltano", stesso lavoro stesso contratto o proposte di legge, rimanda prima alla pagina /leggi-iniziativa-popolare.
+- Se chiede dove firmare, indica che nella pagina /leggi-iniziativa-popolare trova le due proposte e i pulsanti di firma online.
 
 Orientamento per categoria:
 ${categoryText}

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getFpHomepageNews } from "../../../lib/fpnews";
 import { buildStaticKnowledge, categoryHints, entityAssignments, insuranceBenefits, localConventions, officialContacts, people } from "../../../lib/siteKnowledge";
+import { signatureCampaigns } from "../../../lib/signatureCampaigns";
 
 export const runtime = "nodejs";
 
@@ -32,6 +33,7 @@ Se l'utente chiede chi segue il suo ente o chi è il suo delegato, chiedi ente/c
 Se il contesto contiene un indice enti o ruoli con Comune/IPAB/Dirigenza Medica e Sanitaria e referente, usa sempre quell'indice prima delle categorie generiche, tranne quando la frase contiene ospedale/ULSS/sanita pubblica: in quel caso prima chiarisci comparto o dirigenza.
 Se una richiesta riguarda una categoria di convenzioni, elenca solo quelle pertinenti dal contesto e rimanda a /convenzioni/locali.
 Se una richiesta riguarda assicurazioni, polizze, coperture assicurative, colpa grave, responsabilita amministrativa/contabile o tutela legale per iscritti, rispondi usando la sezione Assicurazioni FP per te e rimanda a /convenzioni. Non confondere queste domande con enti locali o iscrizione.
+Se l'utente chiede raccolte firme, firme online, proposte di legge, "io firmo", diritto alla salute, Servizio Sanitario Nazionale, appalti o "i diritti non si appaltano", rispondi indicando la pagina /leggi-iniziativa-popolare. Distingui le due raccolte: Diritto alla Salute e I diritti non si appaltano. Se chiede dove firmare, usa i link ufficiali forniti nel contesto.
 Se l'utente chiede RSU, candidati, programma, elezioni o delegati, orienta verso /rsu e proponi contatto umano.
 Quando dai più opzioni, usa massimo 3-5 punti elenco.
 Quando utile, indica una pagina del sito con percorso breve.
@@ -192,6 +194,51 @@ function isInsuranceQuery(query: string) {
   ].some((word) => normalizedQuery.includes(normalizeText(word)));
 }
 
+function isSignatureCampaignQuery(query: string) {
+  const normalizedQuery = normalizeText(query);
+  return [
+    "raccolta firme",
+    "raccolte firme",
+    "firma online",
+    "firmare online",
+    "dove firmo",
+    "io firmo",
+    "proposta di legge",
+    "proposte di legge",
+    "iniziativa popolare",
+    "diritto alla salute",
+    "servizio sanitario nazionale",
+    "rilancio del servizio sanitario",
+    "appalti",
+    "i diritti non si appaltano",
+    "stesso lavoro stesso contratto",
+    "stesso lavoro, stesso contratto",
+  ].some((word) => normalizedQuery.includes(normalizeText(word)));
+}
+
+function formatSignatureCampaignAnswer(query: string) {
+  const normalizedQuery = normalizeText(query);
+  const matches = signatureCampaigns.filter((campaign) => {
+    const haystack = normalizeText(`${campaign.title} ${campaign.claim} ${campaign.label} ${campaign.summary}`);
+    return (
+      haystack.includes("salute") && (normalizedQuery.includes("salute") || normalizedQuery.includes("sanitario")) ||
+      haystack.includes("appalti") && (normalizedQuery.includes("appalt") || normalizedQuery.includes("stesso lavoro")) ||
+      normalizedQuery.includes("raccolta firme") ||
+      normalizedQuery.includes("raccolte firme") ||
+      normalizedQuery.includes("io firmo") ||
+      normalizedQuery.includes("iniziativa popolare") ||
+      normalizedQuery.includes("proposta di legge")
+    );
+  });
+
+  const campaigns = matches.length ? matches : signatureCampaigns;
+  const items = campaigns
+    .map((campaign) => `- ${campaign.title}: ${campaign.claim}. Firma online: ${campaign.signUrl}`)
+    .join("\n");
+
+  return `Sì. Abbiamo una pagina dedicata alle due raccolte firme CGIL: /leggi-iniziativa-popolare.\n\n${items}\n\nDa lì puoi leggere le proposte e usare i pulsanti per firmare online.`;
+}
+
 function formatInsuranceAnswer() {
   const included = insuranceBenefits
     .filter((item) => item.type.toLowerCase().includes("inclusa"))
@@ -254,6 +301,10 @@ async function fallbackAnswer(messages: ChatMessage[]) {
 
   if (isInsuranceQuery(normalizedLast)) {
     return formatInsuranceAnswer();
+  }
+
+  if (isSignatureCampaignQuery(normalizedLast)) {
+    return formatSignatureCampaignAnswer(normalizedLast);
   }
 
   if (isPublicHealthcareQuery(normalizedLast)) {
@@ -341,6 +392,10 @@ export async function POST(req: Request) {
     const lastMessage = messages[messages.length - 1]?.content || "";
     if (isInsuranceQuery(lastMessage)) {
       return NextResponse.json({ answer: formatInsuranceAnswer(), mode: "direct", reason: "insurance_query" });
+    }
+
+    if (isSignatureCampaignQuery(lastMessage)) {
+      return NextResponse.json({ answer: formatSignatureCampaignAnswer(lastMessage), mode: "direct", reason: "signature_campaign_query" });
     }
 
     if (!process.env.OPENAI_API_KEY) {
