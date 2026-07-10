@@ -93,6 +93,405 @@ a:hover {
   line-height: 0; /* evita micro-gap sotto l'immagine */
 }
 
+/* ===== Popup raccolta firme ===== */
+.signaturePopupOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(0, 0, 0, 0.64);
+  backdrop-filter: blur(8px);
+  overflow-y: auto;
+}
+
+.signaturePopupDialog {
+  width: min(940px, 100%);
+  max-height: calc(100vh - 36px);
+  overflow-y: auto;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.36);
+}
+
+.signaturePopupClose {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  z-index: 2;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.signaturePopupTop {
+  padding: 28px 84px 22px 28px;
+  color: #fff;
+  background:
+    linear-gradient(135deg, rgba(212, 0, 0, 0.98), rgba(212, 0, 0, 0.88) 42%, rgba(17, 17, 17, 0.98)),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.10) 0 8px, transparent 8px 16px);
+}
+
+.signaturePopupBadge,
+.signaturePageBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 7px 11px;
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.signaturePopupBadge {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.signaturePopupTop h2 {
+  margin: 13px 0 0;
+  max-width: 760px;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 0.98;
+  font-weight: 950;
+}
+
+.signaturePopupTop p {
+  margin: 12px 0 0;
+  max-width: 760px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.signaturePopupCards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: 16px;
+  background:
+    linear-gradient(180deg, rgba(212, 0, 0, 0.045), rgba(255, 255, 255, 0)),
+    #fff;
+}
+
+.signaturePopupCard {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  gap: 14px;
+  min-height: 244px;
+  padding: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.signaturePopupLogoWrap {
+  display: grid;
+  place-items: center;
+  align-self: start;
+  width: 132px;
+  height: 132px;
+  border-radius: 16px;
+  background: rgba(212, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.signaturePopupLogo,
+.signaturePageLogo {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.signaturePopupCardBody {
+  min-width: 0;
+}
+
+.signaturePopupLabel,
+.signaturePageLabel {
+  color: var(--fp-red);
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.35px;
+}
+
+.signaturePopupCard h3 {
+  margin: 5px 0 0;
+  font-size: 24px;
+  line-height: 1.05;
+  font-weight: 950;
+}
+
+.signaturePopupCard p {
+  margin: 9px 0 0;
+  color: var(--muted);
+  line-height: 1.42;
+}
+
+.signaturePopupActions,
+.signaturePageActions {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin-top: 13px;
+}
+
+.signaturePopupButton,
+.signaturePageButton,
+.signaturePageHeroButton,
+.signaturePopupFooterLink,
+.signaturePopupPlain {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 950;
+  text-decoration: none;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+}
+
+.signaturePopupButton:hover,
+.signaturePageButton:hover,
+.signaturePageHeroButton:hover,
+.signaturePopupFooterLink:hover,
+.signaturePopupPlain:hover {
+  text-decoration: none;
+}
+
+.signaturePopupButtonRed,
+.signaturePageButtonRed {
+  background: var(--fp-red);
+  border-color: var(--fp-red);
+  color: #fff;
+}
+
+.signaturePopupButtonLight,
+.signaturePageButtonLight,
+.signaturePageHeroButton {
+  background: #fff;
+  color: var(--text);
+}
+
+.signaturePopupFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px 16px;
+}
+
+.signaturePopupPlain {
+  cursor: pointer;
+  background: transparent;
+  color: var(--muted);
+}
+
+.signaturePopupFooterLink {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+/* ===== Pagina leggi iniziativa popolare ===== */
+.signaturePage {
+  display: grid;
+  gap: 16px;
+  padding: 14px 0 44px;
+}
+
+.signaturePageHero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 18px;
+  padding: 28px;
+  border-radius: 18px;
+  color: #fff;
+  background:
+    linear-gradient(135deg, rgba(212, 0, 0, 0.98), rgba(212, 0, 0, 0.86) 42%, rgba(17, 17, 17, 0.98)),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.10) 0 8px, transparent 8px 16px);
+  overflow: hidden;
+}
+
+.signaturePageBadge {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.signaturePageHero h1 {
+  margin: 14px 0 0;
+  max-width: 760px;
+  font-size: clamp(34px, 5vw, 62px);
+  line-height: 0.95;
+  font-weight: 950;
+}
+
+.signaturePageHero p {
+  margin: 14px 0 0;
+  max-width: 760px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 18px;
+}
+
+.signaturePageHeroButton {
+  flex: 0 0 auto;
+  color: #111827;
+  border-color: rgba(255, 255, 255, 0.30);
+}
+
+.signaturePageGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.signaturePageCard {
+  padding: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.signaturePageCardIntro {
+  display: grid;
+  grid-template-columns: 168px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+}
+
+.signaturePageCard h2 {
+  margin: 6px 0 0;
+  font-size: clamp(28px, 3.6vw, 42px);
+  line-height: 1;
+  font-weight: 950;
+}
+
+.signaturePageCard p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  line-height: 1.5;
+  font-size: 16px;
+}
+
+.signaturePageClaim {
+  margin-top: 16px;
+  border-left: 6px solid var(--fp-red);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: rgba(212, 0, 0, 0.07);
+  font-size: 20px;
+  line-height: 1.15;
+  font-weight: 950;
+}
+
+.signaturePagePoints {
+  display: grid;
+  gap: 9px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.signaturePagePoints li {
+  position: relative;
+  padding-left: 22px;
+  color: rgba(17, 24, 39, 0.86);
+  line-height: 1.42;
+}
+
+.signaturePagePoints li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--fp-red);
+}
+
+@media (max-width: 860px) {
+  .signaturePopupCards,
+  .signaturePageGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .signaturePageHero {
+    display: grid;
+    align-items: start;
+  }
+}
+
+@media (max-width: 640px) {
+  .signaturePopupOverlay {
+    padding: 10px;
+    place-items: start center;
+  }
+
+  .signaturePopupDialog {
+    max-height: calc(100vh - 20px);
+    border-radius: 16px;
+  }
+
+  .signaturePopupTop {
+    padding: 22px 70px 20px 18px;
+  }
+
+  .signaturePopupCards {
+    padding: 12px;
+  }
+
+  .signaturePopupCard,
+  .signaturePageCardIntro {
+    grid-template-columns: 1fr;
+  }
+
+  .signaturePopupLogoWrap {
+    width: 112px;
+    height: 112px;
+  }
+
+  .signaturePopupLogoWrap,
+  .signaturePageLogo {
+    justify-self: start;
+  }
+
+  .signaturePopupFooter {
+    align-items: stretch;
+    flex-direction: column-reverse;
+  }
+
+  .signaturePopupPlain,
+  .signaturePopupFooterLink,
+  .signaturePopupButton,
+  .signaturePageButton,
+  .signaturePageHeroButton {
+    width: 100%;
+  }
+
+  .signaturePageHero,
+  .signaturePageCard {
+    padding: 18px;
+  }
+}
+
 /* ===== Header stile FP (stacco con righine diagonali) ===== */
 .fpHeader {
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);

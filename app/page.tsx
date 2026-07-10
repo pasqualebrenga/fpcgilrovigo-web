@@ -16,6 +16,7 @@ import {
   Landmark,
 } from "lucide-react";
 import { getFpHomepageNews, fpSources } from "../lib/fpnews";
+import SignaturePopup from "./components/SignaturePopup";
 
 // Aggiorna automaticamente le news nazionali ogni 12 ore.
 export const revalidate = 43200;
@@ -450,6 +451,8 @@ export default async function HomePage() {
 
   return (
     <div className="fpHomeGrid">
+      <SignaturePopup />
+
       <style>{`
         @keyframes fpFloat {
           0% { transform: translate3d(0,0,0); opacity: .85; }
