@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight, ExternalLink, PenLine } from "lucide-react";
+import { ExternalLink, PenLine } from "lucide-react";
 
 import { signatureCampaigns } from "../../lib/signatureCampaigns";
 
@@ -28,9 +27,6 @@ export default function PopularLawsPage() {
             leggere la proposta e dove firmare online.
           </p>
         </div>
-        <Link className="signaturePageHeroButton" href="/contatti">
-          Hai bisogno di aiuto? <ArrowRight size={18} />
-        </Link>
       </section>
 
       <section className="signaturePageGrid" aria-label="Proposte di legge">
