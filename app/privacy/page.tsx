@@ -44,6 +44,11 @@ export default function PrivacyPage() {
           contenuto audio, trascrizione, sintesi, recapiti ed eventuali informazioni comunicate
           volontariamente durante la conversazione.
         </li>
+        <li>
+          <b>Proposte di convenzione</b>: dati aziendali, dati del referente, contatti, descrizione della
+          proposta, condizioni commerciali, logo, immagini, volantini o altri materiali caricati tramite il
+          modulo dedicato.
+        </li>
       </ul>
 
       <h2>Finalità e basi giuridiche</h2>
@@ -65,6 +70,11 @@ export default function PrivacyPage() {
         <li>
           <b>Contenuti esterni</b>: caricamento di servizi come Google Maps esclusivamente dopo la scelta
           dell'utente, ai sensi dell'art. 6, par. 1, lett. a) GDPR e dell'art. 122 del Codice Privacy.
+        </li>
+        <li>
+          <b>Valutazione delle proposte di convenzione</b>: gestione delle richieste inviate da attività,
+          strutture e aziende interessate a proporre vantaggi agli iscritti, sulla base della richiesta del
+          proponente e del legittimo interesse del titolare a valutare collaborazioni territoriali.
         </li>
       </ul>
 
@@ -114,6 +124,7 @@ export default function PrivacyPage() {
         <li><b>Vercel</b>, per hosting, distribuzione del sito, sicurezza e log tecnici;</li>
         <li><b>OpenAI Ireland Ltd.</b>, per l'elaborazione dei messaggi di Quadrato Rosso;</li>
         <li><b>Fonio</b>, per il servizio telefonico, la registrazione, la trascrizione e l'inoltro delle richieste;</li>
+        <li><b>Resend</b>, per l'invio tecnico delle email generate dal modulo "Proponi una convenzione";</li>
         <li><b>Google Maps</b>, solo quando l'utente abilita o apre volontariamente il servizio;</li>
         <li>personale e collaboratori FLFP CGIL autorizzati e istruiti per la gestione delle richieste.</li>
       </ul>
@@ -141,6 +152,11 @@ export default function PrivacyPage() {
         <li>
           <b>Email e richieste di contatto</b>: per il tempo necessario a rispondere e gestire la richiesta,
           oltre gli eventuali termini richiesti dalla legge o dalla tutela dei diritti del titolare.
+        </li>
+        <li>
+          <b>Proposte di convenzione</b>: per il tempo necessario alla valutazione, al ricontatto e
+          all'eventuale gestione della convenzione, oltre gli eventuali termini richiesti dalla legge o dalla
+          tutela dei diritti del titolare.
         </li>
       </ul>
 

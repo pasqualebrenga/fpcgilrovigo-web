@@ -9,6 +9,7 @@ const routes = [
   "/convenzioni",
   "/convenzioni/locali",
   "/convenzioni/nazionali",
+  "/proponi-convenzione",
   "/formazione",
   "/funzioni-centrali-rovigo",
   "/enti-locali-comuni-rovigo",

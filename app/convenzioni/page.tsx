@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, FileText, ShieldCheck } from "lucide-react";
+import { ArrowRight, ExternalLink, FileText, Handshake, ShieldCheck } from "lucide-react";
 
 const insuranceGroups = [
   {
@@ -493,6 +493,62 @@ export default function ConvenzioniIndexPage() {
           </Link>
         </div>
       </div>
+
+      <section
+        style={{
+          borderRadius: 16,
+          border: "1px solid rgba(212,0,0,0.16)",
+          background:
+            "linear-gradient(135deg, rgba(212,0,0,0.08) 0%, rgba(255,255,255,1) 52%, rgba(0,0,0,0.04) 100%)",
+          padding: 18,
+          display: "grid",
+          gridTemplateColumns: "auto minmax(0,1fr) auto",
+          gap: 14,
+          alignItems: "center",
+        }}
+        className="proposalConvenzioniCta"
+      >
+        <div
+          style={{
+            width: 52,
+            height: 52,
+            borderRadius: 14,
+            background: "#d40000",
+            color: "#fff",
+            display: "grid",
+            placeItems: "center",
+          }}
+        >
+          <Handshake size={26} />
+        </div>
+        <div>
+          <div style={{ color: "#d40000", fontWeight: 950, textTransform: "uppercase", fontSize: 12 }}>
+            Per aziende e strutture
+          </div>
+          <h2 className="h2" style={{ margin: "4px 0 0" }}>
+            Vuoi proporre una convenzione agli iscritti?
+          </h2>
+          <div className="muted" style={{ lineHeight: 1.45 }}>
+            Invia una proposta dedicata a iscritte e iscritti FP CGIL Rovigo: sconti, pacchetti, servizi o vantaggi
+            territoriali.
+          </div>
+        </div>
+        <Link
+          className="btn"
+          href="/proponi-convenzione"
+          style={{
+            borderRadius: 999,
+            padding: "12px 16px",
+            fontWeight: 950,
+            background: "#d40000",
+            borderColor: "#d40000",
+            color: "#fff",
+            whiteSpace: "nowrap",
+          }}
+        >
+          Proponi convenzione <ArrowRight size={18} />
+        </Link>
+      </section>
     </div>
   );
 }

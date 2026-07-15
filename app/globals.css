@@ -427,9 +427,342 @@ a:hover {
   background: var(--fp-red);
 }
 
+/* ===== Proposta convenzione ===== */
+.proposalPage {
+  display: grid;
+  gap: 16px;
+  padding: 14px 0 44px;
+}
+
+.proposalBack {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  border-radius: 999px;
+  padding: 10px 13px;
+  font-weight: 900;
+  text-decoration: none;
+  background: #fff;
+}
+
+.proposalBack:hover {
+  text-decoration: none;
+  border-color: rgba(212, 0, 0, 0.28);
+}
+
+.proposalHero {
+  border-radius: 18px;
+  padding: 28px;
+  color: #fff;
+  background:
+    linear-gradient(135deg, rgba(212, 0, 0, 0.98), rgba(212, 0, 0, 0.86) 44%, rgba(17, 17, 17, 0.98)),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.10) 0 8px, transparent 8px 16px);
+  overflow: hidden;
+}
+
+.proposalBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.proposalHero h1 {
+  margin: 14px 0 0;
+  max-width: 860px;
+  font-size: clamp(34px, 5vw, 60px);
+  line-height: 0.96;
+  font-weight: 950;
+}
+
+.proposalHero p {
+  margin: 14px 0 0;
+  max-width: 820px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 18px;
+}
+
+.proposalIntroGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.proposalIntroGrid article {
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  border-radius: 14px;
+  background: #fff;
+  padding: 16px;
+}
+
+.proposalIntroGrid svg {
+  color: var(--fp-red);
+}
+
+.proposalIntroGrid h2 {
+  margin: 8px 0 0;
+  font-size: 18px;
+  line-height: 1.15;
+  font-weight: 950;
+}
+
+.proposalIntroGrid p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  line-height: 1.42;
+}
+
+.proposalForm {
+  display: grid;
+  gap: 14px;
+}
+
+.proposalSuccess {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  border: 1px solid rgba(22, 163, 74, 0.22);
+  border-radius: 14px;
+  background: rgba(22, 163, 74, 0.08);
+  color: #14532d;
+  padding: 14px;
+}
+
+.proposalError {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  border: 1px solid rgba(212, 0, 0, 0.22);
+  border-radius: 14px;
+  background: rgba(212, 0, 0, 0.08);
+  color: #7f1d1d;
+  padding: 14px;
+}
+
+.proposalSuccess strong,
+.proposalSuccess span,
+.proposalError strong,
+.proposalError span {
+  display: block;
+}
+
+.proposalFormSection {
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  border-radius: 16px;
+  background: #fff;
+  padding: 16px;
+}
+
+.proposalSectionHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.proposalSectionHeader > span {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: var(--fp-red);
+  color: #fff;
+  font-weight: 950;
+}
+
+.proposalSectionHeader h2 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.15;
+  font-weight: 950;
+}
+
+.proposalSectionHeader p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  line-height: 1.42;
+}
+
+.proposalFormGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.proposalField {
+  display: grid;
+  gap: 6px;
+}
+
+.proposalFieldWide {
+  grid-column: 1 / -1;
+}
+
+.proposalField span {
+  font-size: 13px;
+  font-weight: 900;
+  color: rgba(17, 24, 39, 0.86);
+}
+
+.proposalField b {
+  color: var(--fp-red);
+}
+
+.proposalField input,
+.proposalField select,
+.proposalField textarea {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: 12px;
+  background: #fff;
+  padding: 11px 12px;
+  color: var(--text);
+  font: inherit;
+  outline: none;
+}
+
+.proposalField textarea {
+  resize: vertical;
+}
+
+.proposalField input:focus,
+.proposalField select:focus,
+.proposalField textarea:focus {
+  border-color: rgba(212, 0, 0, 0.55);
+  box-shadow: 0 0 0 4px rgba(212, 0, 0, 0.08);
+}
+
+.proposalFiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.proposalFileField {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  min-height: 96px;
+  border: 1px dashed rgba(212, 0, 0, 0.35);
+  border-radius: 14px;
+  padding: 14px;
+  background: rgba(212, 0, 0, 0.04);
+  cursor: pointer;
+}
+
+.proposalFileField input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.proposalFileIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  color: var(--fp-red);
+  border: 1px solid rgba(212, 0, 0, 0.18);
+}
+
+.proposalFileField strong,
+.proposalFileField small {
+  display: block;
+}
+
+.proposalFileField small {
+  margin-top: 3px;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.proposalFileSummary {
+  margin-top: 10px;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.proposalChecks {
+  display: grid;
+  gap: 10px;
+}
+
+.proposalChecks label {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: rgba(17, 24, 39, 0.86);
+  line-height: 1.42;
+}
+
+.proposalChecks input {
+  margin-top: 4px;
+  accent-color: var(--fp-red);
+}
+
+.proposalFormFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border-radius: 16px;
+  background: #111;
+  color: #fff;
+  padding: 16px;
+}
+
+.proposalFormFooter strong,
+.proposalFormFooter span {
+  display: block;
+}
+
+.proposalFormFooter span {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.proposalFormFooter button {
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 16px;
+  background: var(--fp-red);
+  color: #fff;
+  font: inherit;
+  font-weight: 950;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.proposalFormFooter button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
 @media (max-width: 860px) {
   .signaturePopupCards,
-  .signaturePageGrid {
+  .signaturePageGrid,
+  .proposalIntroGrid {
     grid-template-columns: 1fr;
   }
 
@@ -487,8 +820,28 @@ a:hover {
   }
 
   .signaturePageHero,
-  .signaturePageCard {
+  .signaturePageCard,
+  .proposalHero,
+  .proposalFormSection {
     padding: 18px;
+  }
+
+  .proposalFormGrid,
+  .proposalFiles {
+    grid-template-columns: 1fr;
+  }
+
+  .proposalFormFooter,
+  .proposalConvenzioniCta {
+    grid-template-columns: 1fr !important;
+  }
+
+  .proposalFormFooter {
+    align-items: stretch;
+  }
+
+  .proposalFormFooter button {
+    justify-content: center;
   }
 }
 
