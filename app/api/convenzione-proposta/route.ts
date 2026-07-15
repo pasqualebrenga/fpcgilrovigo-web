@@ -3,7 +3,11 @@ import { NextResponse } from "next/server";
 export const runtime = "nodejs";
 
 const TO_EMAIL = "fp.ro.brenga@veneto.cgil.it";
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "FP CGIL Rovigo <onboarding@resend.dev>";
+const configuredFromEmail = process.env.RESEND_FROM_EMAIL;
+const FROM_EMAIL =
+  configuredFromEmail && !configuredFromEmail.includes("fpcgilrovigo.it")
+    ? configuredFromEmail
+    : "FP CGIL Rovigo <onboarding@resend.dev>";
 const REPLY_TO_EMAIL = "fp.ro.brenga@veneto.cgil.it";
 const MAX_FILE_SIZE = 2 * 1024 * 1024;
 const MAX_TOTAL_ATTACHMENT_SIZE = 4 * 1024 * 1024;
