@@ -32,6 +32,7 @@ Se l'utente dice che lavora in ospedale, ULSS5, sanita pubblica o Azienda ULSS5 
 Se l'utente chiede chi segue il suo ente o chi è il suo delegato, chiedi ente/comparto se mancano; se invece il comparto è chiaro, indica il referente più probabile e rimanda a /iscrizione.
 Se il contesto contiene un indice enti o ruoli con Comune/IPAB/Dirigenza Medica e Sanitaria e referente, usa sempre quell'indice prima delle categorie generiche, tranne quando la frase contiene ospedale/ULSS/sanita pubblica: in quel caso prima chiarisci comparto o dirigenza.
 Se una richiesta riguarda una categoria di convenzioni, elenca solo quelle pertinenti dal contesto e rimanda a /convenzioni/locali.
+Se a scrivere è un'azienda, una struttura, un'attività, un negozio, uno studio o un professionista che vuole proporre una convenzione, offrire uno sconto, diventare convenzionato o inviare materiali, rispondi indicando /proponi-convenzione. Non elencare le convenzioni esistenti in questo caso.
 Se una richiesta riguarda assicurazioni, polizze, coperture assicurative, colpa grave, responsabilita amministrativa/contabile o tutela legale per iscritti, rispondi usando la sezione Assicurazioni FP per te e rimanda a /convenzioni. Non confondere queste domande con enti locali o iscrizione.
 Se l'utente chiede raccolte firme, firme online, proposte di legge, "io firmo", diritto alla salute, Servizio Sanitario Nazionale, appalti o "i diritti non si appaltano", rispondi indicando la pagina /leggi-iniziativa-popolare. Distingui le due raccolte: Diritto alla Salute e I diritti non si appaltano. Se chiede dove firmare, usa i link ufficiali forniti nel contesto.
 Se l'utente chiede RSU, candidati, programma, elezioni o delegati, orienta verso /rsu e proponi contatto umano.
@@ -175,6 +176,47 @@ function formatConventionAnswer(matches: typeof localConventions) {
   return `Sì, ho trovato queste convenzioni pertinenti:\n${items}\n\nTrovi dettagli e condizioni in /convenzioni/locali.`;
 }
 
+function isConventionProposalQuery(query: string) {
+  const normalizedQuery = normalizeText(query);
+  const proposerSignals = [
+    "azienda",
+    "attivita",
+    "struttura",
+    "negozio",
+    "studio",
+    "professionista",
+    "ristorante",
+    "hotel",
+    "stabilimento",
+    "centro",
+    "servizio",
+  ].some((word) => normalizedQuery.includes(normalizeText(word)));
+
+  const actionSignals = [
+    "proporre una convenzione",
+    "proposta convenzione",
+    "proporre convenzione",
+    "fare una convenzione",
+    "fare convenzione",
+    "convenzionarsi",
+    "convenzionarmi",
+    "diventare convenzionato",
+    "diventare convenzionata",
+    "offrire uno sconto",
+    "offrire sconto",
+    "sconto agli iscritti",
+    "pacchetto dedicato",
+    "inviare una proposta",
+    "caricare il logo",
+  ].some((word) => normalizedQuery.includes(normalizeText(word)));
+
+  return actionSignals || (proposerSignals && normalizedQuery.includes("convenzion"));
+}
+
+function formatConventionProposalAnswer() {
+  return "Sì. Se una struttura, un’azienda, uno studio o un’attività vuole proporre una convenzione agli iscritti FP CGIL Rovigo può usare il modulo dedicato: /proponi-convenzione. Nel form inserisce dati aziendali, referente, contatti, tipo di vantaggio, condizioni e può caricare logo o materiali. L’invio non approva automaticamente la convenzione: la proposta viene valutata dalla sede.";
+}
+
 function isInsuranceQuery(query: string) {
   const normalizedQuery = normalizeText(query);
   return [
@@ -303,6 +345,10 @@ async function fallbackAnswer(messages: ChatMessage[]) {
     return formatInsuranceAnswer();
   }
 
+  if (isConventionProposalQuery(normalizedLast)) {
+    return formatConventionProposalAnswer();
+  }
+
   if (isSignatureCampaignQuery(normalizedLast)) {
     return formatSignatureCampaignAnswer(normalizedLast);
   }
@@ -390,6 +436,10 @@ export async function POST(req: Request) {
     }
 
     const lastMessage = messages[messages.length - 1]?.content || "";
+    if (isConventionProposalQuery(lastMessage)) {
+      return NextResponse.json({ answer: formatConventionProposalAnswer(), mode: "direct", reason: "convention_proposal_query" });
+    }
+
     if (isInsuranceQuery(lastMessage)) {
       return NextResponse.json({ answer: formatInsuranceAnswer(), mode: "direct", reason: "insurance_query" });
     }

@@ -81,6 +81,11 @@ export const sitePages = [
     summary: "Documento PDF con convenzioni nazionali.",
   },
   {
+    title: "Proponi una convenzione",
+    path: "/proponi-convenzione",
+    summary: "Modulo dedicato ad aziende, strutture, attività e professionisti che vogliono proporre una convenzione per iscritte e iscritti FP CGIL Rovigo.",
+  },
+  {
     title: "News",
     path: "/news",
     summary: "News aggregate automaticamente da fpcgil.it e rimando alla fonte nazionale.",
@@ -515,6 +520,13 @@ ${peopleText}
 Convenzioni locali:
 ${conventionsText}
 
+Proposte di nuove convenzioni:
+- Pagina interna: /proponi-convenzione
+- Serve ad aziende, attività, studi professionali, strutture e servizi che vogliono proporre una convenzione agli iscritti FP CGIL Rovigo.
+- Il modulo raccoglie dati aziendali, referente, contatti, categoria, tipo di vantaggio, descrizione della proposta, condizioni, durata e materiali come logo, immagine, volantino o listino.
+- L'invio non approva automaticamente la convenzione: la proposta viene valutata dalla sede.
+- Se l'utente parla come azienda, attività, struttura o professionista e chiede di convenzionarsi, proporre una convenzione, diventare convenzionato, offrire uno sconto o inviare una proposta, rimanda a /proponi-convenzione.
+
 Assicurazioni FP per te:
 ${insuranceText}
 - Se l'utente chiede assicurazioni, polizze, coperture assicurative, colpa grave, tutela legale o "assicurazioni per iscritti", rispondi che ci sono coperture assicurative per iscritte e iscritti e rimanda a /convenzioni.
@@ -553,6 +565,7 @@ RSU:
 
 Regole operative:
 - Le convenzioni sono riservate agli iscritti; per dubbi rimandare a /convenzioni/locali o ai contatti ufficiali.
+- Se a scrivere è una struttura o un'azienda che vuole convenzionarsi, non elencare le convenzioni esistenti: manda a /proponi-convenzione.
 - Le assicurazioni FP per te sono nella pagina /convenzioni; se l'utente chiede "abbiamo assicurazioni per gli iscritti?", rispondi prima su assicurazioni e non sui referenti di categoria.
 - Se l'utente chiede una persona, rispondi con ruolo, deleghe, telefono/WhatsApp ed email se presenti.
 - Se l'utente chiede una convenzione per tema, elenca solo le convenzioni pertinenti e chiudi con /convenzioni/locali.
