@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export const runtime = "nodejs";
 
 const TO_EMAIL = "fp.ro.brenga@veneto.cgil.it";
-const FROM_EMAIL = "FP CGIL Rovigo <noreply@fpcgilrovigo.it>";
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "FP CGIL Rovigo <noreply@fpcgilrovigo.it>";
 const REPLY_TO_EMAIL = "fp.ro.brenga@veneto.cgil.it";
 const MAX_FILE_SIZE = 2 * 1024 * 1024;
 const MAX_TOTAL_ATTACHMENT_SIZE = 4 * 1024 * 1024;
@@ -253,7 +253,22 @@ export async function POST(req: Request) {
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
       console.warn("Resend proposal email failed", response.status, data);
-      return NextResponse.json({ error: "Non sono riuscito a inviare la proposta. Riprova tra poco." }, { status: 502 });
+      const resendMessage =
+        typeof data?.message === "string"
+          ? data.message
+          : typeof data?.error === "string"
+            ? data.error
+            : typeof data?.error?.message === "string"
+              ? data.error.message
+              : "";
+      return NextResponse.json(
+        {
+          error: resendMessage
+            ? `Resend ha rifiutato l'invio: ${resendMessage}`
+            : "Non sono riuscito a inviare la proposta. Riprova tra poco.",
+        },
+        { status: 502 }
+      );
     }
 
     return NextResponse.json({ ok: true, id: data.id || null });
