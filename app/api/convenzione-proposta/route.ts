@@ -7,9 +7,9 @@ const FROM_EMAIL =
   configuredFromEmail && !configuredFromEmail.includes("fpcgilrovigo.it")
     ? configuredFromEmail
     : "FP CGIL Rovigo <onboarding@resend.dev>";
-const TO_EMAIL =
-  process.env.CONVENZIONI_TO_EMAIL ||
-  (FROM_EMAIL.includes("onboarding@resend.dev") ? "pasquale.brenga@gmail.com" : "fp.ro.brenga@veneto.cgil.it");
+const TO_EMAIL = FROM_EMAIL.includes("onboarding@resend.dev")
+  ? "pasquale.brenga@gmail.com"
+  : process.env.CONVENZIONI_TO_EMAIL || "fp.ro.brenga@veneto.cgil.it";
 const REPLY_TO_EMAIL = "fp.ro.brenga@veneto.cgil.it";
 const MAX_FILE_SIZE = 2 * 1024 * 1024;
 const MAX_TOTAL_ATTACHMENT_SIZE = 4 * 1024 * 1024;
