@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Facebook, Instagram, Linkedin } from "lucide-react";
+import { ChevronDown, Facebook, Instagram, Linkedin, LockKeyhole } from "lucide-react";
 
 type NavItem = {
   label: string;
@@ -75,9 +75,9 @@ export default function SiteHeader() {
 
         .rvInner {
           display: grid;
-          grid-template-columns: auto 1fr auto;
+          grid-template-columns: auto minmax(0, 1fr) auto;
           align-items: center;
-          gap: 14px;
+          gap: 12px;
           padding: 12px 0 11px;
         }
 
@@ -100,7 +100,7 @@ export default function SiteHeader() {
           display: flex;
           align-items: center;
           flex-wrap: wrap;
-          gap: 2px;
+          gap: 1px;
           min-height: 52px;
         }
 
@@ -110,9 +110,9 @@ export default function SiteHeader() {
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0;
-          font-size: 19px;
+          font-size: 18px;
           line-height: 1;
-          padding: 12px 4px;
+          padding: 12px 3px;
           border-radius: 4px;
           display: inline-flex;
           align-items: center;
@@ -140,7 +140,7 @@ export default function SiteHeader() {
         .rvSocial {
           display: inline-flex;
           align-items: center;
-          gap: 8px;
+          gap: 7px;
           justify-self: end; /* segue sempre il bordo destro */
         }
         .rvSocialBtn {
@@ -159,6 +159,17 @@ export default function SiteHeader() {
           border-color: rgba(212,0,0,0.35);
           background: rgba(212,0,0,0.08);
           color: #d40000;
+        }
+        .rvReservedBtn {
+          border-color: rgba(212,0,0,0.54);
+          border-width: 2px;
+          color: #d40000;
+          background: rgba(255,255,255,0.96);
+        }
+        .rvReservedBtn:hover {
+          border-color: #d40000;
+          background: rgba(212,0,0,0.10);
+          color: #a90000;
         }
 
         @media (max-width: 1180px) {
@@ -192,6 +203,7 @@ export default function SiteHeader() {
             grid-column: 2;
             grid-row: 1;
             justify-self: start;
+            gap: 6px;
           }
           .rvNav {
             grid-column: 1 / -1;
@@ -222,8 +234,8 @@ export default function SiteHeader() {
             column-gap: 8px;
           }
           .rvSocialBtn {
-            width: 34px;
-            height: 34px;
+            width: 32px;
+            height: 32px;
           }
           .rvLogo {
             max-height: 64px;
@@ -287,6 +299,15 @@ export default function SiteHeader() {
             >
               <Linkedin size={18} />
             </a>
+
+            <Link
+              className="rvSocialBtn rvReservedBtn"
+              href="/area-delegati/login"
+              aria-label="Area riservata delegati"
+              title="Area delegati"
+            >
+              <LockKeyhole size={18} />
+            </Link>
           </div>
         </div>
       </div>
