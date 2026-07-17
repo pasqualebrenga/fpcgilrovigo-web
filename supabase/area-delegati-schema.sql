@@ -8,9 +8,11 @@ create table if not exists public.authorized_delegates (
   email text not null unique,
   full_name text not null,
   group_key text not null default 'sanita',
-  role text not null default 'delegate' check (role in ('admin', 'delegate')),
+  role text not null default 'delegate' check (role in ('superadmin', 'admin', 'delegate')),
   status text not null default 'invited' check (status in ('invited', 'active', 'suspended')),
   invited_at timestamptz,
+  invite_link text,
+  invite_expires_at timestamptz,
   accepted_at timestamptz,
   auth_user_id uuid unique references auth.users(id) on delete set null,
   created_at timestamptz not null default now(),
@@ -22,7 +24,7 @@ create table if not exists public.profiles (
   email text not null unique,
   full_name text not null,
   group_key text not null default 'sanita',
-  role text not null default 'delegate' check (role in ('admin', 'delegate')),
+  role text not null default 'delegate' check (role in ('superadmin', 'admin', 'delegate')),
   active boolean not null default true,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -114,7 +116,23 @@ as $$
     select 1
     from public.profiles
     where id = auth.uid()
-      and role = 'admin'
+      and role in ('admin', 'superadmin')
+      and active = true
+  );
+$$;
+
+create or replace function public.is_area_superadmin()
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select exists (
+    select 1
+    from public.profiles
+    where id = auth.uid()
+      and role = 'superadmin'
       and active = true
   );
 $$;
@@ -144,23 +162,23 @@ create policy "Admins can manage authorized delegates"
 on public.authorized_delegates
 for all
 to authenticated
-using (public.is_area_admin())
-with check (public.is_area_admin());
+using (public.is_area_superadmin())
+with check (public.is_area_superadmin());
 
 drop policy if exists "Users can read own profile" on public.profiles;
 create policy "Users can read own profile"
 on public.profiles
 for select
 to authenticated
-using (id = auth.uid() or public.is_area_admin());
+using (id = auth.uid() or public.is_area_superadmin());
 
 drop policy if exists "Admins can manage profiles" on public.profiles;
 create policy "Admins can manage profiles"
 on public.profiles
 for all
 to authenticated
-using (public.is_area_admin())
-with check (public.is_area_admin());
+using (public.is_area_superadmin())
+with check (public.is_area_superadmin());
 
 drop policy if exists "Delegates can read group events" on public.delegate_events;
 create policy "Delegates can read group events"

@@ -821,13 +821,18 @@ a:hover {
   border-radius: 14px;
   padding: 14px;
   background: rgba(0, 0, 0, 0.20);
-  display: grid;
-  gap: 6px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .healthDelegatesHeroPanel strong,
 .healthDelegatesHeroPanel span {
   display: block;
+}
+
+.healthDelegatesHeroPanel strong {
+  line-height: 1.1;
 }
 
 .healthDelegatesHeroPanel span {
@@ -1473,6 +1478,122 @@ a:hover {
   margin: 7px 0 12px;
   color: var(--muted);
   line-height: 1.38;
+}
+
+.healthDelegatesUserList {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.healthDelegatesUserList article {
+  display: grid;
+  gap: 10px;
+  align-items: start;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  border-radius: 12px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.018);
+}
+
+.healthDelegatesUserList strong,
+.healthDelegatesUserList span,
+.healthDelegatesUserList em {
+  display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.healthDelegatesUserList strong {
+  font-size: 14px;
+  line-height: 1.25;
+  font-weight: 950;
+}
+
+.healthDelegatesUserList em {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.healthDelegatesUserList a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+  margin-top: 6px;
+  color: var(--fp-red);
+  font-size: 12px;
+  font-weight: 950;
+  text-decoration: none;
+}
+
+.healthDelegatesCopyLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+  margin-top: 6px;
+  border: 1px solid rgba(212, 0, 0, 0.18);
+  border-radius: 999px;
+  padding: 7px 9px;
+  background: rgba(212, 0, 0, 0.08);
+  color: var(--fp-red);
+  font-size: 12px;
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.healthDelegatesUserList article > div:last-child {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 5px;
+}
+
+.healthDelegatesUserList article > div:last-child span {
+  border-radius: 999px;
+  padding: 5px 8px;
+  background: rgba(212, 0, 0, 0.08);
+  color: var(--fp-red);
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.healthDelegatesUserActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 5px;
+  width: 100%;
+}
+
+.healthDelegatesUserActions form,
+.healthDelegatesUserActionForm {
+  margin: 0;
+}
+
+.healthDelegatesUserActions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 999px;
+  padding: 7px 9px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.healthDelegatesUserActions button.danger {
+  border-color: rgba(212, 0, 0, 0.18);
+  background: rgba(212, 0, 0, 0.08);
+  color: var(--fp-red);
 }
 
 .healthDelegatesForm {

@@ -16,7 +16,13 @@ Lo script crea:
 - fascicoli
 - file collegati ai fascicoli
 - bucket privato `delegate-area-private`
-- policy RLS per admin/delegati
+- policy RLS per superadmin/admin/delegati
+
+Se lo schema era gia stato creato prima dell'introduzione del ruolo `superadmin`, lanciare anche:
+
+```text
+supabase/area-delegati-godmode.sql
+```
 
 ## 2. Variabili ambiente
 
@@ -32,22 +38,23 @@ SUPABASE_SERVICE_ROLE_KEY
 
 La `SUPABASE_SERVICE_ROLE_KEY` serve solo lato server per inviti e operazioni admin. Non va mai usata nel browser.
 
-## 3. Primo admin
+## 3. Primo superadmin
 
-Dopo aver creato il primo utente admin con Supabase Auth, inserire una riga in `profiles` con:
+Dopo aver creato il primo utente con Supabase Auth, inserire o aggiornare una riga in `profiles` con:
 
 ```text
-role = admin
+role = superadmin
 group_key = sanita
 active = true
 ```
 
-Da quel momento l'admin potra gestire inviti, eventi, fascicoli e file.
+Da quel momento il superadmin potra invitare nuovi utenti e assegnare i ruoli.
 
 ## 4. Flusso previsto
 
-1. Admin invita delegato via email.
+1. Superadmin invita delegato o admin via email.
 2. Delegato crea password dal link di invito.
 3. Il sito crea/aggancia il profilo autorizzato.
 4. Delegato vede solo contenuti del proprio gruppo.
-5. Admin vede anche strumenti di caricamento e modifica.
+5. Admin vede strumenti di caricamento e modifica.
+6. Superadmin vede anche la gestione utenti.
