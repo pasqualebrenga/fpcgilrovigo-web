@@ -105,6 +105,26 @@ export const sitePages = [
     path: "/leggi-iniziativa-popolare",
     summary: "Pagina dedicata alle due raccolte firme CGIL: Diritto alla Salute e I diritti non si appaltano, con approfondimenti e link per firmare online.",
   },
+  {
+    title: "Dentro il Quadrato",
+    path: "/dentro-il-quadrato",
+    summary: "Spazio di approfondimento sui contratti pubblici con calcolatori lordi orientativi CCNL 2025-2027 per Sanità pubblica, Funzioni locali e Funzioni centrali.",
+  },
+  {
+    title: "Calcolatore Sanità pubblica",
+    path: "/dentro-il-quadrato/sanita-pubblica",
+    summary: "Calcolatore per aumenti, indennità e arretrati del CCNL Sanità pubblica 2025-2027.",
+  },
+  {
+    title: "Calcolatore Funzioni locali",
+    path: "/dentro-il-quadrato/funzioni-locali",
+    summary: "Calcolatore per aumenti, differenziali, indennità di comparto e arretrati del CCNL Funzioni locali 2025-2027.",
+  },
+  {
+    title: "Calcolatore Funzioni centrali",
+    path: "/dentro-il-quadrato/funzioni-centrali",
+    summary: "Calcolatore per aumenti, differenziali e arretrati del CCNL Funzioni centrali 2025-2027.",
+  },
 ];
 
 export const insuranceBenefits = [

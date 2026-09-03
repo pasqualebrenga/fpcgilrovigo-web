@@ -14,6 +14,7 @@ import {
   Smartphone,
   HeartPulse,
   Landmark,
+  Calculator,
 } from "lucide-react";
 import { getFpHomepageNews, fpSources } from "../lib/fpnews";
 import SignaturePopup from "./components/SignaturePopup";
@@ -444,6 +445,37 @@ function PracticalSearchSection() {
   );
 }
 
+function DentroQuadratoPromo() {
+  return (
+    <section className="dqHomePromo dentroQuadratoShell" aria-labelledby="dentro-il-quadrato-home">
+      <div>
+        <div className="dqHomePromoKicker">
+          <Calculator size={15} /> Dentro il Quadrato
+        </div>
+        <h2 id="dentro-il-quadrato-home">Contratto, aumenti e arretrati in chiaro.</h2>
+        <p>
+          Tre calcolatori per Sanità pubblica, Funzioni locali e Funzioni centrali: scegli il comparto,
+          inserisci l&apos;inquadramento e guarda una simulazione lorda orientativa del CCNL 2025-2027.
+        </p>
+        <div className="dqHomePromoActions">
+          <Link href="/dentro-il-quadrato">
+            Apri i calcolatori <ArrowRight size={18} />
+          </Link>
+        </div>
+      </div>
+      <div className="dqMark" aria-hidden="true">
+        <Image
+          src="/images/dentro-il-quadrato/logo-rovigo.webp"
+          alt=""
+          width={192}
+          height={192}
+          className="dqLogoImage"
+        />
+      </div>
+    </section>
+  );
+}
+
 export default async function HomePage() {
   const items = (await getFpHomepageNews(3)) as NewsItem[];
   const hero = items[0];
@@ -629,6 +661,8 @@ export default async function HomePage() {
           </div>
         </div>
       </div>
+
+      <DentroQuadratoPromo />
 
       <PracticalSearchSection />
 
