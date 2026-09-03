@@ -19,6 +19,8 @@ export type LocalDifferentialRule = {
   maxCount: number;
 };
 
+export type OvertimeRates = [number, number, number, number];
+
 const levels: Record<string, [string, number, number][]> = {
   "Operatori": [["A1",21399.16,22815.51],["A2",21659.31,23075.66],["A3",22062.09,23478.44],["A4",22405.33,23821.68],["A5",22815.12,24231.47],["A6",23176.61,24592.96]],
   "Operatori esperti": [["B1",22298.50,23774.39],["B2",22626.47,24102.36],["B3",23428.99,24904.88],["B4",23746.50,25222.39],["B5",24103.42,25579.31],["B6",24499.26,25975.15],["B7",25357.71,26833.60],["B8",25878.15,27354.04]],
@@ -53,4 +55,15 @@ export function findContractRow(inquadramento: string) {
 
 export function differentialRuleForLocalArea(area: string) {
   return localDifferentialRules.find((item) => item.area === area)!;
+}
+
+export function calculateLocalOvertimeRates(annualSalary: number): OvertimeRates {
+  const ordinaryHourly = annualSalary / 1872;
+
+  return [
+    ordinaryHourly,
+    ordinaryHourly * 1.15,
+    ordinaryHourly * 1.30,
+    ordinaryHourly * 1.50,
+  ];
 }

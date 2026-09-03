@@ -118,7 +118,7 @@ export const sitePages = [
   {
     title: "Calcolatore Funzioni locali",
     path: "/dentro-il-quadrato/funzioni-locali",
-    summary: "Calcolatore per aumenti, differenziali, indennità di comparto e arretrati del CCNL Funzioni locali 2025-2027.",
+    summary: "Calcolatore per aumenti, differenziali, indennità di comparto, arretrati e nuovi valori dello straordinario del CCNL Funzioni locali 2025-2027.",
   },
   {
     title: "Calcolatore Funzioni centrali",

@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { contractGroups, differentialRuleForLocalArea, findContractRow } from "@/lib/contract-2025-2027";
+import { calculateLocalOvertimeRates, contractGroups, differentialRuleForLocalArea, findContractRow } from "@/lib/contract-2025-2027";
 
 const money = new Intl.NumberFormat("it-IT", { style: "currency", currency: "EUR", minimumFractionDigits: 2 });
 
@@ -22,6 +22,7 @@ export default function RisultatoClient() {
   const comparto2027 = (row.comparto2026 + row.compartoIncremento2027) * factor;
   const aumentoComplessivoMese = (row.aumento2027 + row.compartoIncremento2027) * factor;
   const aumentoComplessivoAnno = (row.aumento2027 * 13 + row.compartoIncremento2027 * 12) * factor;
+  const overtime = calculateLocalOvertimeRates(row.tabellare2027 + newDifferentialsAnnual);
 
   async function share() {
     const data = {
@@ -85,6 +86,20 @@ export default function RisultatoClient() {
           <p>al mese dal 1° luglio 2027</p>
           <small>incremento di {value(row.compartoIncremento2027)} rispetto al 2026</small>
         </article>
+      </section>
+
+      <section className="overtime-section">
+        <div>
+          <span className="card-kicker">Nuovi valori orari</span>
+          <h2>Quanto vale lo straordinario</h2>
+          <p>Valori calcolati sul tabellare 2027 e sui differenziali selezionati. Il part-time non cambia il valore orario.</p>
+        </div>
+        <div className="overtime-values">
+          <article><span>Ordinario</span><b>{money.format(overtime[0])}</b></article>
+          <article><span>Diurno +15%</span><b>{money.format(overtime[1])}</b></article>
+          <article><span>Festivo/notturno +30%</span><b>{money.format(overtime[2])}</b></article>
+          <article><span>Festivo e notturno +50%</span><b>{money.format(overtime[3])}</b></article>
+        </div>
       </section>
 
       <section className="variable-resources">

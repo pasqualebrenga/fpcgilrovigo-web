@@ -27,7 +27,7 @@ export default function ChooseContractPage() {
           <div>
             <span className="sector-icon" aria-hidden="true">⌂</span>
             <h2>Enti<br />locali</h2>
-            <p>Calcola tabellare, indennità di comparto e arretrati.</p>
+            <p>Calcola tabellare, indennità di comparto, arretrati e straordinari.</p>
           </div>
           <strong>Entra nel calcolatore <span>→</span></strong>
         </Link>

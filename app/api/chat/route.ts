@@ -35,7 +35,7 @@ Se una richiesta riguarda una categoria di convenzioni, elenca solo quelle perti
 Se a scrivere è un'azienda, una struttura, un'attività, un negozio, uno studio o un professionista che vuole proporre una convenzione, offrire uno sconto, diventare convenzionato o inviare materiali, rispondi indicando /proponi-convenzione. Non elencare le convenzioni esistenti in questo caso.
 Se una richiesta riguarda assicurazioni, polizze, coperture assicurative, colpa grave, responsabilita amministrativa/contabile o tutela legale per iscritti, rispondi usando la sezione Assicurazioni FP per te e rimanda a /convenzioni. Non confondere queste domande con enti locali o iscrizione.
 Se l'utente chiede raccolte firme, firme online, proposte di legge, "io firmo", diritto alla salute, Servizio Sanitario Nazionale, appalti o "i diritti non si appaltano", rispondi indicando la pagina /leggi-iniziativa-popolare. Distingui le due raccolte: Diritto alla Salute e I diritti non si appaltano. Se chiede dove firmare, usa i link ufficiali forniti nel contesto.
-Se l'utente chiede aumenti contrattuali, arretrati, calcolo stipendio, simulazione del CCNL 2025-2027 o "quanto mi spetta", rispondi indicando Dentro il Quadrato: /dentro-il-quadrato. Se il comparto è chiaro usa il link specifico: /dentro-il-quadrato/sanita-pubblica, /dentro-il-quadrato/funzioni-locali oppure /dentro-il-quadrato/funzioni-centrali.
+Se l'utente chiede rinnovo CCNL, nuovo CCNL, nuovo contratto, aumenti contrattuali, arretrati, calcolo stipendio, simulazione del CCNL 2025-2027, straordinari o "quanto mi spetta", rispondi indicando Dentro il Quadrato: /dentro-il-quadrato. Se il comparto è chiaro usa il link specifico: /dentro-il-quadrato/sanita-pubblica, /dentro-il-quadrato/funzioni-locali oppure /dentro-il-quadrato/funzioni-centrali.
 Se l'utente chiede RSU, candidati, programma, elezioni o delegati, orienta verso /rsu e proponi contatto umano.
 Quando dai più opzioni, usa massimo 3-5 punti elenco.
 Quando utile, indica una pagina del sito con percorso breve.
@@ -266,18 +266,33 @@ function isContractCalculatorQuery(query: string) {
     "aumenti",
     "arretrati",
     "arretrato",
+    "busta paga",
     "calcolo stipendio",
     "calcolatore",
-    "simulazione",
-    "quanto mi spetta",
-    "quanto prendo",
+    "ccnl",
+    "contratto nazionale",
     "contratto 2025",
     "contratto 2026",
     "contratto 2027",
+    "simulazione",
+    "stipendio",
+    "tabellare",
+    "quanto mi spetta",
+    "quanto prendo",
     "ccnl 2025",
     "ccnl 2026",
     "ccnl 2027",
+    "nuovo ccnl",
     "nuovo contratto",
+    "nuovo rinnovo",
+    "rinnovo",
+    "rinnovo ccnl",
+    "rinnovo contratto",
+    "rinnovo contrattuale",
+    "straordinari",
+    "straordinario",
+    "valore orario",
+    "valori orari",
     "dentro il quadrato",
   ].some((word) => normalizedQuery.includes(normalizeText(word)));
 }
@@ -298,7 +313,7 @@ function formatContractCalculatorAnswer(query: string) {
     label = "il calcolatore Funzioni centrali";
   }
 
-  return `Per aumenti, arretrati e simulazioni del CCNL 2025-2027 abbiamo creato Dentro il Quadrato. Apri ${label}: ${path}. Il calcolo è lordo e orientativo: scegli comparto, inquadramento e orario, poi puoi vedere il risultato.`;
+  return `Sì. Per il rinnovo del CCNL 2025-2027 abbiamo creato Dentro il Quadrato: ${path}. Da lì puoi vedere aumenti, arretrati e simulazioni lorde orientative. Apri ${label}, scegli comparto, inquadramento e orario, poi calcoli il risultato.`;
 }
 
 function formatSignatureCampaignAnswer(query: string) {

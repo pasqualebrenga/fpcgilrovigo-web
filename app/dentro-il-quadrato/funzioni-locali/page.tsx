@@ -40,7 +40,7 @@ export default function HomePage() {
           <Link className="back-sector" href="/dentro-il-quadrato">← Scegli un altro comparto</Link>
           <span className="eyebrow"><i /> CCNL Funzioni Locali 2025–2027</span>
           <h1>Il nuovo contratto,<br /><em>senza giri di parole.</em></h1>
-          <p className="hero-lead">Scopri cosa cambia davvero nella tua busta paga: aumenti, arretrati e indennità, calcolati sul tuo inquadramento.</p>
+          <p className="hero-lead">Scopri cosa cambia davvero nella tua busta paga: aumenti, arretrati, indennità e straordinari, calcolati sul tuo inquadramento.</p>
           <div className="hero-highlights">
             <div><strong>7,2%</strong><span>incremento fisso e ricorrente</span></div>
             <div><strong>3 tranche</strong><span>aumenti dal 2025 al 2027</span></div>
