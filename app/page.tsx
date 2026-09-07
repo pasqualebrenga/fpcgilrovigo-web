@@ -452,10 +452,10 @@ function DentroQuadratoPromo() {
         <div className="dqHomePromoKicker">
           <Calculator size={15} /> Dentro il Quadrato
         </div>
-        <h2 id="dentro-il-quadrato-home">Contratto, aumenti e arretrati in chiaro.</h2>
+        <h2 id="dentro-il-quadrato-home">Rinnovo CCNL 2025-2027: aumenti e arretrati in chiaro.</h2>
         <p>
           Tre calcolatori per Sanità pubblica, Funzioni locali e Funzioni centrali: scegli il comparto,
-          inserisci l&apos;inquadramento e guarda una simulazione lorda orientativa del CCNL 2025-2027.
+          inserisci l&apos;inquadramento e guarda una simulazione lorda orientativa di busta paga, arretrati e valori collegati al nuovo contratto.
         </p>
         <div className="dqHomePromoActions">
           <Link href="/dentro-il-quadrato">

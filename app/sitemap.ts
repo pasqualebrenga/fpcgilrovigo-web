@@ -31,6 +31,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${SITE_URL}${route}`,
     lastModified: now,
     changeFrequency: route === "" || route === "/news" ? "daily" : "weekly",
-    priority: route === "" ? 1 : route === "/iscrizione" || route === "/contatti" ? 0.9 : 0.7,
+    priority: route === ""
+      ? 1
+      : route === "/dentro-il-quadrato"
+        ? 0.95
+        : route.startsWith("/dentro-il-quadrato/")
+          ? 0.9
+          : route === "/iscrizione" || route === "/contatti"
+            ? 0.9
+            : 0.7,
   }));
 }
