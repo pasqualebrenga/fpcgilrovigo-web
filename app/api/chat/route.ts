@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { getFpHomepageNews } from "../../../lib/fpnews";
 import { buildStaticKnowledge, categoryHints, entityAssignments, insuranceBenefits, localConventions, officialContacts, people } from "../../../lib/siteKnowledge";
-import { signatureCampaigns } from "../../../lib/signatureCampaigns";
 
 export const runtime = "nodejs";
 
@@ -34,7 +33,7 @@ Se il contesto contiene un indice enti o ruoli con Comune/IPAB/Dirigenza Medica 
 Se una richiesta riguarda una categoria di convenzioni, elenca solo quelle pertinenti dal contesto e rimanda a /convenzioni/locali.
 Se a scrivere è un'azienda, una struttura, un'attività, un negozio, uno studio o un professionista che vuole proporre una convenzione, offrire uno sconto, diventare convenzionato o inviare materiali, rispondi indicando /proponi-convenzione. Non elencare le convenzioni esistenti in questo caso.
 Se una richiesta riguarda assicurazioni, polizze, coperture assicurative, colpa grave, responsabilita amministrativa/contabile o tutela legale per iscritti, rispondi usando la sezione Assicurazioni FP per te e rimanda a /convenzioni. Non confondere queste domande con enti locali o iscrizione.
-Se l'utente chiede raccolte firme, firme online, proposte di legge, "io firmo", diritto alla salute, Servizio Sanitario Nazionale, appalti o "i diritti non si appaltano", rispondi indicando la pagina /leggi-iniziativa-popolare. Distingui le due raccolte: Diritto alla Salute e I diritti non si appaltano. Se chiede dove firmare, usa i link ufficiali forniti nel contesto.
+Le raccolte firme "Diritto alla Salute" e "I diritti non si appaltano" sono concluse. Se l'utente le cerca, comunica che la campagna è terminata e rimanda a /news o /contatti per aggiornamenti. Non fornire vecchi link di firma né invitare a firmare, anche se presenti nella cronologia o nelle notizie.
 Se l'utente chiede rinnovo CCNL, nuovo CCNL, nuovo contratto, aumenti contrattuali, arretrati, calcolo stipendio, simulazione del CCNL 2025-2027, straordinari o "quanto mi spetta", rispondi indicando Dentro il Quadrato: /dentro-il-quadrato. Se il comparto è chiaro usa il link specifico: /dentro-il-quadrato/sanita-pubblica, /dentro-il-quadrato/funzioni-locali oppure /dentro-il-quadrato/funzioni-centrali.
 Se l'utente chiede RSU, candidati, programma, elezioni o delegati, orienta verso /rsu e proponi contatto umano.
 Quando dai più opzioni, usa massimo 3-5 punti elenco.
@@ -250,9 +249,7 @@ function isSignatureCampaignQuery(query: string) {
     "proposte di legge",
     "iniziativa popolare",
     "diritto alla salute",
-    "servizio sanitario nazionale",
     "rilancio del servizio sanitario",
-    "appalti",
     "i diritti non si appaltano",
     "stesso lavoro stesso contratto",
     "stesso lavoro, stesso contratto",
@@ -316,27 +313,8 @@ function formatContractCalculatorAnswer(query: string) {
   return `Sì. Per il rinnovo del CCNL 2025-2027 abbiamo creato Dentro il Quadrato: ${path}. Da lì puoi vedere aumenti, arretrati e simulazioni lorde orientative. Apri ${label}, scegli comparto, inquadramento e orario, poi calcoli il risultato.`;
 }
 
-function formatSignatureCampaignAnswer(query: string) {
-  const normalizedQuery = normalizeText(query);
-  const matches = signatureCampaigns.filter((campaign) => {
-    const haystack = normalizeText(`${campaign.title} ${campaign.claim} ${campaign.label} ${campaign.summary}`);
-    return (
-      haystack.includes("salute") && (normalizedQuery.includes("salute") || normalizedQuery.includes("sanitario")) ||
-      haystack.includes("appalti") && (normalizedQuery.includes("appalt") || normalizedQuery.includes("stesso lavoro")) ||
-      normalizedQuery.includes("raccolta firme") ||
-      normalizedQuery.includes("raccolte firme") ||
-      normalizedQuery.includes("io firmo") ||
-      normalizedQuery.includes("iniziativa popolare") ||
-      normalizedQuery.includes("proposta di legge")
-    );
-  });
-
-  const campaigns = matches.length ? matches : signatureCampaigns;
-  const items = campaigns
-    .map((campaign) => `- ${campaign.title}: ${campaign.claim}. Firma online: ${campaign.signUrl}`)
-    .join("\n");
-
-  return `Sì. Abbiamo una pagina dedicata alle due raccolte firme CGIL: /leggi-iniziativa-popolare.\n\n${items}\n\nDa lì puoi leggere le proposte e usare i pulsanti per firmare online.`;
+function formatSignatureCampaignAnswer() {
+  return 'Le raccolte firme CGIL "Diritto alla Salute" e "I diritti non si appaltano" sono concluse. La sezione dedicata e i pulsanti per firmare sono stati rimossi dal sito. Per aggiornamenti puoi consultare /news oppure contattarci tramite /contatti.';
 }
 
 function formatInsuranceAnswer() {
@@ -408,7 +386,7 @@ async function fallbackAnswer(messages: ChatMessage[]) {
   }
 
   if (isSignatureCampaignQuery(normalizedLast)) {
-    return formatSignatureCampaignAnswer(normalizedLast);
+    return formatSignatureCampaignAnswer();
   }
 
   if (isContractCalculatorQuery(normalizedLast)) {
@@ -507,7 +485,7 @@ export async function POST(req: Request) {
     }
 
     if (isSignatureCampaignQuery(lastMessage)) {
-      return NextResponse.json({ answer: formatSignatureCampaignAnswer(lastMessage), mode: "direct", reason: "signature_campaign_query" });
+      return NextResponse.json({ answer: formatSignatureCampaignAnswer(), mode: "direct", reason: "signature_campaign_query" });
     }
 
     if (isContractCalculatorQuery(lastMessage)) {
