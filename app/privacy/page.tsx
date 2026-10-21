@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Privacy Policy - FP CGIL Rovigo",
+  title: "Privacy Policy",
   description: "Informativa sul trattamento dei dati personali del sito FP CGIL Rovigo e dei servizi Quadrato Rosso e Segreteria AI.",
 };
 

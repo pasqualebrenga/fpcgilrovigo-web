@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "../metadata";
 import Link from "next/link";
 import { ArrowRight, Landmark, Mail, MessageCircle } from "lucide-react";
 
 const FP_RED = "#d40000";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/funzioni-centrali-rovigo",
   title: "Funzioni centrali a Rovigo",
   description:
     "FP CGIL Rovigo segue lavoratrici e lavoratori delle funzioni centrali: Ministeri, Agenzia delle Entrate, INPS, ACI e uffici pubblici statali nel territorio di Rovigo.",
-  alternates: {
-    canonical: "/funzioni-centrali-rovigo",
-  },
-};
+});
 
 function AreaLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (

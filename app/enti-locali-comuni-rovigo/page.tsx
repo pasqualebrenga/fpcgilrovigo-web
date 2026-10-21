@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "../metadata";
 import Link from "next/link";
 import { ArrowRight, Building2, MapPin, MessageCircle } from "lucide-react";
 
 const FP_RED = "#d40000";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/enti-locali-comuni-rovigo",
   title: "Enti locali e Comuni della provincia di Rovigo",
   description:
     "FP CGIL Rovigo segue lavoratrici e lavoratori di Comuni, Provincia ed enti locali del territorio. Orientamento per Comune di Rovigo, Comune di Adria e altri Comuni della provincia.",
-  alternates: {
-    canonical: "/enti-locali-comuni-rovigo",
-  },
-};
+});
 
 function AreaLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (

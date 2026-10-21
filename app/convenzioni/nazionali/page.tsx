@@ -1,4 +1,13 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "../../metadata";
 import Link from "next/link";
+
+export const metadata: Metadata = pageMetadata({
+  path: "/convenzioni/nazionali",
+  title: "Convenzioni nazionali",
+  description:
+    "Le convenzioni nazionali CGIL riservate alle iscritte e agli iscritti FP CGIL: elenco completo e condizioni in formato PDF.",
+});
 
 const PDF_PATH = "/docs/convenzioni-nazionali.pdf";
 

@@ -29,10 +29,6 @@ export const metadata: Metadata = {
     "convenzioni CGIL Rovigo",
     "RSU Rovigo",
   ],
-  alternates: {
-    canonical: "/",
-  },
-
   robots: {
     index: true,
     follow: true,
@@ -70,7 +66,6 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: "FP CGIL Rovigo",
     description: DESCRIPTION,
-    url: "/",
     images: [
       {
         url: "/opengraph-image.png",
@@ -88,3 +83,36 @@ export const metadata: Metadata = {
     images: ["/twitter-image.png"],
   },
 };
+
+/**
+ * Metadata per una singola pagina: imposta canonical, og:url e descrizione
+ * specifici della pagina, mantenendo immagini e impostazioni social del sito.
+ * (In Next.js un `openGraph` definito in una pagina sostituisce del tutto
+ * quello del layout, per questo lo ricostruiamo qui.)
+ */
+export function pageMetadata({
+  path,
+  title,
+  description,
+}: {
+  path: string;
+  title: string;
+  description: string;
+}): Metadata {
+  return {
+    title,
+    description,
+    alternates: { canonical: path },
+    openGraph: {
+      ...metadata.openGraph,
+      title: `${title} | ${SITE_NAME}`,
+      description,
+      url: path,
+    },
+    twitter: {
+      ...metadata.twitter,
+      title: `${title} | ${SITE_NAME}`,
+      description,
+    },
+  };
+}

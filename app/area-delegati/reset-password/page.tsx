@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { ResetPasswordForm } from "./reset-password-form";
 
 export const metadata: Metadata = {
-  title: "Imposta Password - Area Delegati FP CGIL Rovigo",
+  title: "Imposta password - Area Delegati",
   description: "Impostazione password per l'area delegati FP CGIL Rovigo.",
   robots: {
     index: false,

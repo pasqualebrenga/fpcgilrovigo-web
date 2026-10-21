@@ -26,7 +26,7 @@ import { CopyInviteLink } from "./copy-invite-link";
 import { DeleteConfirmForm } from "./delete-confirm-form";
 
 export const metadata: Metadata = {
-  title: "Area Delegati Sanità - FP CGIL Rovigo",
+  title: "Area Delegati Sanità",
   description: "Area riservata per delegati sanità FP CGIL Rovigo.",
   robots: {
     index: false,

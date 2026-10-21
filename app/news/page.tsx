@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "../metadata";
 import Link from "next/link";
 import { getFpHomepageNews, fpSources } from "../../lib/fpnews";
+
+export const metadata: Metadata = pageMetadata({
+  path: "/news",
+  title: "News",
+  description:
+    "Le notizie in evidenza della FP CGIL nazionale su contratti, sanità, enti locali e funzioni centrali, selezionate da FP CGIL Rovigo.",
+});
 
 // Aggiorna automaticamente le news nazionali ogni 12 ore.
 export const revalidate = 43200;
