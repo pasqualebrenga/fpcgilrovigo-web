@@ -14,7 +14,6 @@ const routes = [
   "/dentro-il-quadrato/sanita-pubblica",
   "/dentro-il-quadrato/funzioni-locali",
   "/dentro-il-quadrato/funzioni-centrali",
-  "/formazione",
   "/funzioni-centrali-rovigo",
   "/enti-locali-comuni-rovigo",
   "/ipab-case-riposo-rovigo",

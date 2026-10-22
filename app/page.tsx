@@ -16,18 +16,20 @@ import {
   Landmark,
   Calculator,
 } from "lucide-react";
+import { metadata as siteMetadata } from "./metadata";
 import { getFpHomepageNews, fpSources } from "../lib/fpnews";
 
 // Aggiorna automaticamente le news nazionali ogni 12 ore.
 export const revalidate = 43200;
 
 export const metadata: Metadata = {
-  title: "FP CGIL Rovigo - Sindacato pubblico impiego, sanità, enti locali e IPAB",
+  title: { absolute: "FP CGIL Rovigo | Sindacato pubblico impiego, sanità, enti locali e IPAB" },
   description:
     "FP CGIL Rovigo tutela lavoratrici e lavoratori del pubblico impiego a Rovigo e provincia: sanità pubblica e ULSS5, enti locali, IPAB, funzioni centrali, iscrizione, convenzioni e RSU.",
   alternates: {
     canonical: "/",
   },
+  openGraph: { ...siteMetadata.openGraph, url: "/" },
 };
 
 const FP_RED = "#d40000";

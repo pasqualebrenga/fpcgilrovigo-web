@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "../metadata";
 import Link from "next/link";
 import { ArrowRight, MessageCircle, ShieldCheck, UsersRound } from "lucide-react";
 
 const FP_RED = "#d40000";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/ipab-case-riposo-rovigo",
   title: "IPAB, case di riposo e socio-sanitario a Rovigo",
   description:
     "FP CGIL Rovigo segue lavoratrici e lavoratori di IPAB, case di riposo, RSA, centri servizi anziani e socio-sanitario nel territorio di Rovigo e provincia.",
-  alternates: {
-    canonical: "/ipab-case-riposo-rovigo",
-  },
-};
+});
 
 function AreaLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (

@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Cookie Policy - FP CGIL Rovigo",
+  title: "Cookie Policy",
 };
 
 const UPDATED = "2 luglio 2026";

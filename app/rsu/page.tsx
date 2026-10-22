@@ -1,6 +1,15 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "../metadata";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, FileText, Mail, MessageCircle, ShieldCheck, UsersRound, Vote } from "lucide-react";
+
+export const metadata: Metadata = pageMetadata({
+  path: "/rsu",
+  title: "RSU: elezioni e candidature",
+  description:
+    "Elezioni RSU con FP CGIL Rovigo: come candidarsi, chi contattare nel tuo ente, programmi e materiali per sanità, enti locali, IPAB e funzioni centrali.",
+});
 
 const FP_RED = "#d40000";
 

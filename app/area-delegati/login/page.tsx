@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { LoginForm } from "./login-form";
 
 export const metadata: Metadata = {
-  title: "Login Area Delegati - FP CGIL Rovigo",
+  title: "Login Area Delegati",
   description: "Accesso riservato all'area delegati FP CGIL Rovigo.",
   robots: {
     index: false,

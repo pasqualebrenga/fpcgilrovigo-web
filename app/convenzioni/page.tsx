@@ -1,6 +1,15 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "../metadata";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ExternalLink, FileText, Handshake, ShieldCheck } from "lucide-react";
+
+export const metadata: Metadata = pageMetadata({
+  path: "/convenzioni",
+  title: "Convenzioni e tutele per iscritti",
+  description:
+    "Vantaggi per iscritte e iscritti FP CGIL Rovigo: coperture assicurative incluse nella tessera, convenzioni locali e nazionali per chi lavora nei servizi pubblici.",
+});
 
 const insuranceGroups = [
   {

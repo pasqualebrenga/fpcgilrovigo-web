@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "../metadata";
 import Link from "next/link";
 import { ArrowLeft, Building2, FileCheck2, MailCheck, ShieldCheck } from "lucide-react";
 
 import ProponiConvenzioneForm from "./ProponiConvenzioneForm";
 
-export const metadata: Metadata = {
-  title: "Proponi una convenzione - FP CGIL Rovigo",
+export const metadata: Metadata = pageMetadata({
+  path: "/proponi-convenzione",
+  title: "Proponi una convenzione",
   description:
     "Modulo per aziende, attività e strutture che vogliono proporre una convenzione dedicata agli iscritti FP CGIL Rovigo.",
-  alternates: {
-    canonical: "/proponi-convenzione",
-  },
-};
+});
 
 export default function ProponiConvenzionePage() {
   return (

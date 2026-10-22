@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "../metadata";
 import Link from "next/link";
 import { ArrowRight, HeartPulse, MessageCircle, UsersRound } from "lucide-react";
 
 const FP_RED = "#d40000";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/sanita-pubblica-ulss5-rovigo",
   title: "Sanità pubblica e ULSS5 Polesana a Rovigo",
   description:
     "FP CGIL Rovigo segue lavoratrici e lavoratori della sanità pubblica, ospedale e ULSS5 Polesana. Orientamento per comparto sanità pubblica e dirigenza medica o sanitaria.",
-  alternates: {
-    canonical: "/sanita-pubblica-ulss5-rovigo",
-  },
-};
+});
 
 function AreaLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
